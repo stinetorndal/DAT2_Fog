@@ -1,15 +1,15 @@
 package app.entities;
 
 public class Customer {
-    private int costumerId;
+    private int customerId;
     private String firstname;
     private String lastname;
     private String address;
-    private int zipcode;
+    private Zipcode zipcode;
     private String email;
 
-    public Customer(int costumerId, String firstname, String lastname, String address, int zipcode, String email) {
-        this.costumerId = costumerId;
+    public Customer(int customerId, String firstname, String lastname, String address, Zipcode zipcode, String email) {
+        this.customerId = customerId;
         this.firstname = firstname;
         this.lastname = lastname;
         this.address = address;
@@ -17,12 +17,12 @@ public class Customer {
         this.email = email;
     }
 
-    public int getCostumerId() {
-        return costumerId;
+    public int getCustomerId() {
+        return customerId;
     }
 
-    public void setCostumerId(int costumerId) {
-        this.costumerId = costumerId;
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 
     public String getFirstname() {
@@ -49,11 +49,11 @@ public class Customer {
         this.address = address;
     }
 
-    public int getZipcode() {
+    public Zipcode getZipcode() {
         return zipcode;
     }
 
-    public void setZipcode(int zipcode) {
+    public void setZipcode(Zipcode zipcode) {
         this.zipcode = zipcode;
     }
 
