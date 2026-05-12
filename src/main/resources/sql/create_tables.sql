@@ -47,7 +47,7 @@ CREATE TABLE public.salespersons (
 
 CREATE TABLE public.customers (
                                   customer_id SERIAL PRIMARY KEY,
-                                  firstname VARCHAR(255) NOT NULL,
+                                  first_name VARCHAR(255) NOT NULL,
                                   last_name VARCHAR(255) NOT NULL,
                                   address VARCHAR(255) NOT NULL,
                                   zipcode INT REFERENCES public.zipcodes(zipcode),
@@ -86,7 +86,7 @@ CREATE TABLE public.orders (
 );
 
 CREATE TABLE public.BOM_lines (
-                                  BOM_linjer_id SERIAL PRIMARY KEY,
+                                  BOM_lines_id SERIAL PRIMARY KEY,
                                   order_id INT REFERENCES public.orders(order_id),
                                   material_id INT REFERENCES public.materials(material_id),
                                   quantity INT NOT NULL,
