@@ -16,7 +16,6 @@ INSERT INTO public.zipcodes (zipcode, city) VALUES (2640, 'Hedehusene');
 INSERT INTO public.zipcodes (zipcode, city) VALUES (2650, 'Hvidovre');
 INSERT INTO public.zipcodes (zipcode, city) VALUES (2660, 'Brøndby Strand');
 INSERT INTO public.zipcodes (zipcode, city) VALUES (2665, 'Vallensbæk Strand');
-INSERT INTO public.zipcodes (zipcode, city) VALUES (2670, 'Greve');
 INSERT INTO public.zipcodes (zipcode, city) VALUES (2670, 'Greve Strand');
 INSERT INTO public.zipcodes (zipcode, city) VALUES (2680, 'Solrød Strand');
 INSERT INTO public.zipcodes (zipcode, city) VALUES (2690, 'Karlslunde');

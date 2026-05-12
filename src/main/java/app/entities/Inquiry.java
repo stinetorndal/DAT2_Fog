@@ -27,6 +27,16 @@ public class Inquiry {
         this.shedWidth = shedWidth;
         this.date = date;
     }
+    public Inquiry(int customerId, int carportLength, int carportWidth, String roofType, int slopeRoof, String siding, int shedLength, int shedWidth) {
+        this.customerId = customerId;
+        this.carportLength = carportLength;
+        this.carportWidth = carportWidth;
+        this.roofType = roofType;
+        this.slopeRoof = slopeRoof;
+        this.siding = siding;
+        this.shedLength = shedLength;
+        this.shedWidth = shedWidth;
+            }
 
     public LocalDateTime getDate() {
         return date;
