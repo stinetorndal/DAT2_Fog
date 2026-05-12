@@ -1,26 +1,26 @@
 package app.entities;
 
 public class Material {
-    private int materialIId;
+    private int materialId;
     private String name;
     private String description;
     private String unit;
     private double pricePerUnit;
 
-    public Material(int materialIId, String name, String description, String unit, double pricePerUnit) {
-        this.materialIId = materialIId;
+    public Material(int materialId, String name, String description, String unit, double pricePerUnit) {
+        this.materialId = materialId;
         this.name = name;
         this.description = description;
         this.unit = unit;
         this.pricePerUnit = pricePerUnit;
     }
 
-    public int getMaterialIId() {
-        return materialIId;
+    public int getMaterialId() {
+        return materialId;
     }
 
-    public void setMaterialIId(int materialIId) {
-        this.materialIId = materialIId;
+    public void setMaterialId(int materialId) {
+        this.materialId = materialId;
     }
 
     public String getName() {
