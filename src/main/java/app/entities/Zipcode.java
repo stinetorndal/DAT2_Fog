@@ -1,22 +1,22 @@
 package app.entities;
 
 public class Zipcode {
-    private int Zipcode;
+    private int zipcode;
     private String city;
 
 
 
     public Zipcode(int zipcode, String city) {
-        Zipcode = zipcode;
+        this.zipcode = zipcode;
         this.city = city;
     }
 
     public int getZipcode() {
-        return Zipcode;
+        return zipcode;
     }
 
     public void setZipcode(int zipcode) {
-        Zipcode = zipcode;
+        this.zipcode = zipcode;
     }
 
     public String getCity() {

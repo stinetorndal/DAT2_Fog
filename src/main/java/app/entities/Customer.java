@@ -8,8 +8,8 @@ public class Customer {
     private Zipcode zipcode;
     private String email;
 
-    public Customer(int costumerId, String firstname, String lastname, String address, Zipcode zipcode, String email) {
-        this.customerId = costumerId;
+    public Customer(int customerId, String firstname, String lastname, String address, Zipcode zipcode, String email) {
+        this.customerId = customerId;
         this.firstname = firstname;
         this.lastname = lastname;
         this.address = address;
@@ -17,12 +17,12 @@ public class Customer {
         this.email = email;
     }
 
-    public int getCostumerId() {
+    public int getCustomerId() {
         return customerId;
     }
 
-    public void setCostumerId(int costumerId) {
-        this.customerId = costumerId;
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 
     public String getFirstname() {
