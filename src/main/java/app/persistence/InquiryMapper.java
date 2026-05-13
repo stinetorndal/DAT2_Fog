@@ -11,7 +11,7 @@ import app.entities.Inquiry;
 
 public class InquiryMapper {
 
-    public static int saveInquiry(Inquiry inquiry, ConnectionPool connectionPool) throws DatabaseException {
+    public int saveInquiry(Inquiry inquiry, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "INSERT INTO inquiries (customer_id, carport_length, carport_width, roof_type," +
                 "slope_roof, siding, shed_length, shed_width) " + "VALUES (?,?,?,?,?,?,?,?)";
 
