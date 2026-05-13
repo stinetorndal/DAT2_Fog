@@ -1,6 +1,6 @@
 package persistence.mappers;
 
-import app.app.exceptions.DatabaseException;
+import app.exceptions.DatabaseException;
 import app.entities.Inquiry;
 import app.persistence.ConnectionPool;
 import app.persistence.InquiryMapper;

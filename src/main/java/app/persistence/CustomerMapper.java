@@ -1,6 +1,6 @@
 package app.persistence;
 
-import app.app.exceptions.DatabaseException;
+import app.exceptions.DatabaseException;
 import app.entities.Customer;
 
 import java.sql.Connection;
