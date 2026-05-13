@@ -3,8 +3,8 @@ import app.config.ThymeleafConfig;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
 
-public static void main(String[] args)
-{
+//Husk Main
+public static void main(String[] args) {
     // Initializing Javalin and Jetty webserver
 
     Javalin app = Javalin.create(config -> {
