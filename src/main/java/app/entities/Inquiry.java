@@ -8,32 +8,23 @@ public class Inquiry {
     private int customerId;
     private int carportLength;
     private int carportWidth;
-    private String roofType;
-    private int slopeRoof;
-    private String siding;
     private int shedLength;
     private int shedWidth;
     private LocalDateTime date;
 
-    public Inquiry(int inquiryId, int customerId, int carportLength, int carportWidth, String roofType, int slopeRoof, String siding, int shedLength, int shedWidth, LocalDateTime date) {
+    public Inquiry(int inquiryId, int customerId, int carportLength, int carportWidth, int shedLength, int shedWidth, LocalDateTime date) {
         this.inquiryId = inquiryId;
         this.customerId = customerId;
         this.carportLength = carportLength;
         this.carportWidth = carportWidth;
-        this.roofType = roofType;
-        this.slopeRoof = slopeRoof;
-        this.siding = siding;
         this.shedLength = shedLength;
         this.shedWidth = shedWidth;
         this.date = date;
     }
-    public Inquiry(int customerId, int carportLength, int carportWidth, String roofType, int slopeRoof, String siding, int shedLength, int shedWidth) {
+    public Inquiry(int customerId, int carportLength, int carportWidth, int shedLength, int shedWidth) {
         this.customerId = customerId;
         this.carportLength = carportLength;
         this.carportWidth = carportWidth;
-        this.roofType = roofType;
-        this.slopeRoof = slopeRoof;
-        this.siding = siding;
         this.shedLength = shedLength;
         this.shedWidth = shedWidth;
             }
@@ -78,29 +69,6 @@ public class Inquiry {
         this.carportWidth = carportWidth;
     }
 
-    public String getRoofType() {
-        return roofType;
-    }
-
-    public void setRoofType(String roofType) {
-        this.roofType = roofType;
-    }
-
-    public int getSlopeRoof() {
-        return slopeRoof;
-    }
-
-    public void setSlopeRoof(int slopeRoof) {
-        this.slopeRoof = slopeRoof;
-    }
-
-    public String getSiding() {
-        return siding;
-    }
-
-    public void setSiding(String siding) {
-        this.siding = siding;
-    }
 
     public int getShedLength() {
         return shedLength;

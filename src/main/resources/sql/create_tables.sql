@@ -67,9 +67,6 @@ CREATE TABLE public.inquiries
     customer_id    INT REFERENCES public.customers (customer_id),
     carport_length INT          NOT NULL,
     carport_width  INT          NOT NULL,
-    roof_type      VARCHAR(255) NOT NULL,
-    slope_roof     INT       DEFAULT 0,
-    siding         VARCHAR(255) NOT NULL,
     shed_length    INT          NOT NULL,
     shed_width     INT          NOT NULL,
     date           TIMESTAMP DEFAULT CURRENT_TIMESTAMP

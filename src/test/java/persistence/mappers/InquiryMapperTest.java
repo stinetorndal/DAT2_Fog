@@ -13,6 +13,7 @@ class InquiryMapperTest {
     private Inquiry testInquiry;
     private ConnectionPool connectionPool;
 
+
     //Arrange / ACT / Assert
 
     @BeforeEach
@@ -29,6 +30,7 @@ class InquiryMapperTest {
 
     @Test
     void saveInquiry()  throws DatabaseException {
+        InquiryMapper inquiryMapper = new InquiryMapper();
         //Arrange
         // Act: Vi kalder din mapper og gemmer det ID, databasen sender retur
         int generatedId = InquiryMapper.saveInquiry(testInquiry, connectionPool);
