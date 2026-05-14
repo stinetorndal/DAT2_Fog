@@ -1,21 +1,55 @@
 package app.entities;
 
+import app.enums.QuoteStatus;
+
 public class Quote {
 
     private int quotationId;
     private int inquiryId;
     private int salespersonId;
     private double price;
-    private String status;
+    private QuoteStatus status;
     private int version;
+
+    private Integer previousQuoteId;
 
     public Quote(int inquiryId, int salespersonId, double price) {
         this.inquiryId = inquiryId;
         this.salespersonId = salespersonId;
         this.price = price;
-        this.status = "pending";
+        this.status = QuoteStatus.PENDING;
         this.version = 1;
     }
+
+    public Quote(int quotationId,int inquiryId, int salespersonId, double price, QuoteStatus status, int version, Integer previousQuoteId) {
+
+        this.quotationId = quotationId;
+        this.inquiryId = inquiryId;
+        this.salespersonId = salespersonId;
+        this.price = price;
+        this.status = status;
+        this.version = version;
+        this.previousQuoteId = previousQuoteId;
+    }
+
+    //creating new version of quote
+
+    public Quote createNewVersion(double newPrice){
+        Quote newQuote = new Quote(this.inquiryId, this.salespersonId,newPrice);
+
+        newQuote.setVersion(this.version +1);
+
+        newQuote.setStatus(QuoteStatus.UPDATED);
+
+        newQuote.setPreviousQuoteId(this.quotationId);
+
+        return newQuote;
+    }
+
+
+
+
+
 
     public int getQuotationId() {
         return quotationId;
@@ -49,11 +83,11 @@ public class Quote {
         this.price = price;
     }
 
-    public String getStatus() {
+    public QuoteStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(QuoteStatus status) {
         this.status = status;
     }
 
@@ -64,4 +98,13 @@ public class Quote {
     public void setVersion(int version) {
         this.version = version;
     }
+
+    public Integer getPreviousQuoteId() {
+        return previousQuoteId;
+    }
+
+    public void setPreviousQuoteId(Integer previousQuoteId) {
+        this.previousQuoteId = previousQuoteId;
+    }
+
 }
