@@ -3,6 +3,7 @@ package app.controllers;
 import app.entities.Inquiry;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
+import app.services.InquiryService;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
