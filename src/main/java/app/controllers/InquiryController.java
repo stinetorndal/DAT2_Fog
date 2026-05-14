@@ -1,8 +1,11 @@
 package app.controllers;
 
+import app.entities.Customer;
 import app.entities.Inquiry;
+import app.entities.Zipcode;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
+import app.services.CustomerService;
 import app.services.InquiryService;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
@@ -28,7 +31,7 @@ public class InquiryController {
 
         try {
             int customerId = handleCustomer(ctx, connectionPool);
-            Inquiry newInquiry = new Inquiry(1, length, width, shedLength, shedWidth);
+            Inquiry newInquiry = new Inquiry(customerId, length, width, shedLength, shedWidth);
             inquiryService.handleInquiry(newInquiry, connectionPool);
             ctx.sessionAttribute("currentInquiry", newInquiry);
             ctx.render("confirmation");
@@ -69,13 +72,19 @@ private int handleCustomer(Context ctx, ConnectionPool connectionPool) throws Da
     String address = ctx.formParam("adresse");
     int zipcode = Integer.parseInt(ctx.formParam("postnummer"));
     String email = ctx.formParam("email");
-    if (email == null || !email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
-        throw new DatabaseException("Email-adressen er ikke gyldig.");
+
+    Zipcode zipcodeObject = new Zipcode(zipcode, "");
+    Customer newCustomer = new Customer(0, firstName, lastName, address, zipcodeObject, email);
+
+    //Send videre til service
+    CustomerService customerService = new CustomerService();
+    return customerService.createCustomer(newCustomer, connectionPool);
+       //Denne skal ind, hvis vi laver regex-check her. Og ellers klarer validator det
+    // throw new DatabaseException("Email-adressen er ikke gyldig.");
+
     }
-        CustomerService customerService = new CustomerService();
-        return customerService.createCustomer(firstName, lastName, address, zipcode, email, connectionPool);
     }
-}
+
 
 
 

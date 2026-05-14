@@ -20,8 +20,4 @@ public class InquiryService {
 
          inquiryMapper.saveInquiry(inquiry, connectionPool);
     }
-
-
-
-
 }

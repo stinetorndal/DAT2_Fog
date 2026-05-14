@@ -1,5 +1,6 @@
 package app.persistence;
 
+import app.enums.MaterialCategory;
 import app.exceptions.DatabaseException;
 import app.entities.Material;
 
