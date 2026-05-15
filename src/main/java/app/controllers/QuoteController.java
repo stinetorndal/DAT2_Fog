@@ -15,14 +15,11 @@ public class QuoteController {
 
     public void addRoutes(Javalin app, ConnectionPool connectionPool) {
 
-        app.post("/quote/update", ctx -> {int quoteId = Integer.parseInt(ctx.formParam("quoteId"));
-
-        double newPrice= Double.parseDouble(ctx.formParam("price"));
-
-        Quote updateQuote = quoteService.updateQuote(quoteId, newPrice);
-
-        ctx.result("New quote version created: " + updateQuote.getVersion());
+        app.post("/quote/update", ctx -> {ctx.result("New quote version created: " + quoteService.updateQuote(ctx.formParam("quoteId"),
+                ctx.formParam("price")).getVersion());
         });
 
     }
+
+
 }

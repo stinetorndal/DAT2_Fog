@@ -14,13 +14,15 @@ public class QuoteService {
     }
 
 
-    public Quote updateQuote(int quoteId, double newPrice) {
+    public Quote updateQuote(String quoteId, String newPrice) {
+        int parsedQuoteId = Integer.parseInt(quoteId);
+        double parsedNewPrice = Double.parseDouble(newPrice);
 
         // Find gammelt tilbud
-        Quote oldQuote = quoteMapper.findQuoteById(quoteId);
+        Quote oldQuote = quoteMapper.findQuoteById(parsedQuoteId);
 
         // Opret ny version
-        Quote newQuote = oldQuote.createNewVersion(newPrice);
+        Quote newQuote = oldQuote.createNewVersion(parsedNewPrice);
 
         // Gem ny version
         quoteMapper.saveQuote(newQuote);
