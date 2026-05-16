@@ -1,6 +1,8 @@
 package app.controllers;
 
+import app.entities.Customer;
 import app.entities.Inquiry;
+import app.entities.Zipcode;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.services.InquiryService;
@@ -36,44 +38,48 @@ public class InquiryController {
             ctx.attribute("message", e.getMessage());
             ctx.render("index.html");
         }
-            }
-
-private int getLength(Context ctx) {
-    return Integer.parseInt(ctx.formParam("længde"));
-}
-
-private int getWidth(Context ctx) {
-    return Integer.parseInt(ctx.formParam("bredde"));
-}
-
-//Hent data fra formular. Citatnavne skal matche html-navne
-//Brug radiobuttons til nedenstående!!! Den med <input type"'radio>
-private int getShedLength(Context ctx) {
-    String hasShed = ctx.formParam("skur_ja_nej");
-    if ("ja".equals(hasShed)) {
-        return Integer.parseInt(ctx.formParam("skur_længde"));
     }
-    return 0;
-}
 
-private int getShedWidth(Context ctx) {
+    private int getLength(Context ctx) {
+        return Integer.parseInt(ctx.formParam("længde"));
+    }
+
+    private int getWidth(Context ctx) {
+        return Integer.parseInt(ctx.formParam("bredde"));
+    }
+
+    //Hent data fra formular. Citatnavne skal matche html-navne
+//Brug radiobuttons til nedenstående!!! Den med <input type"'radio>
+    private int getShedLength(Context ctx) {
+        String hasShed = ctx.formParam("skur_ja_nej");
+        if ("ja".equals(hasShed)) {
+            return Integer.parseInt(ctx.formParam("skur_længde"));
+        }
+        return 0;
+    }
+
+    private int getShedWidth(Context ctx) {
         String hasShed = ctx.formParam("skur_ja_nej");
         if ("ja".equals(hasShed)) {
             return Integer.parseInt(ctx.formParam("skur_bredde"));
         }
         return 0;
-}
-private int handleCustomer(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-    String firstName = ctx.formParam("fornavn");
-    String lastName = ctx.formParam("efternavn");
-    String address = ctx.formParam("adresse");
-    int zipcode = Integer.parseInt(ctx.formParam("postnummer"));
-    String email = ctx.formParam("email");
-    if (email == null || !email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
-        throw new DatabaseException("Email-adressen er ikke gyldig.");
     }
+
+    private int handleCustomer(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        String firstName = ctx.formParam("fornavn");
+        String lastName = ctx.formParam("efternavn");
+        String address = ctx.formParam("adresse");
+        int zipcode = Integer.parseInt(ctx.formParam("postnummer"));
+        String email = ctx.formParam("email");
+        if (email == null || !email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+            throw new DatabaseException("Email-adressen er ikke gyldig.");
+        }
         CustomerService customerService = new CustomerService();
-        return customerService.createCustomer(firstName, lastName, address, zipcode, email, connectionPool);
+        Zipcode zipcodeObject = new Zipcode(zipcode, "");
+        //customer-id sat til 0 fordi ellers skal der laves en ekstra konstruktør
+        Customer customer = new Customer(0, firstName, lastName, address, zipcodeObject, email);
+        return customerService.createCustomer(customer, connectionPool);
     }
 }
 

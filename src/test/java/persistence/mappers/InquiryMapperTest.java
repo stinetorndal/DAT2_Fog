@@ -23,8 +23,7 @@ class InquiryMapperTest {
         String url = System.getenv("DB_URL");
         connectionPool = ConnectionPool.getInstance("postgres", "postgres", "jdbc:postgresql://localhost:5432/%s", "fog_test");
         //connectionPool = ConnectionPool.getInstance(user, pw, url, "fog_test");
-        testInquiry = new Inquiry(1, 600, 400, "Plastmo Ecolite",
-                0, "Træ", 200, 400);
+        testInquiry = new Inquiry(1, 600, 400,  200, 400);
 
     }
 
@@ -33,7 +32,7 @@ class InquiryMapperTest {
         InquiryMapper inquiryMapper = new InquiryMapper();
         //Arrange
         // Act: Vi kalder din mapper og gemmer det ID, databasen sender retur
-        int generatedId = InquiryMapper.saveInquiry(testInquiry, connectionPool);
+        int generatedId = inquiryMapper.saveInquiry(testInquiry, connectionPool);
 
         // Assert: Vi tjekker, om vi fik et ID (hvis det er over 0, er det gemt!)
         assertTrue(generatedId > 0);

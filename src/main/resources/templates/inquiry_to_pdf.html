@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOG Carport-forespørgsel_pdf</title>
+    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="main-container">
+    <div th:replace="~{index :: fog-header}"></div>
+
+    <section class="customer-section">
+        <h2>Kære <span th:text="${customer.firstName}">Fornavn</span>,</h2>
+        <p>Tak for din forespørgsel. Vi har modtaget dine specifikationer og går i gang med at beregne et uforpligtende
+            tilbud til dig.</p><br>
+        <p>Vi vender tilbage indenfor 1-3 hverdage. </p>
+        <p>Har du spørgsmål i mellemtiden, er du velkommen til at kontakte os på salg@fog.dk eller telefon: 12345678</p>
+
+        <p><strong>Dine kontaktoplysninger:</strong><br/>
+            Navn: <span th:text="${customer.firstName} + ' ' + ${customer.lastName}">Kundenavn</span><br/>
+            Adresse: <span th:text="${customer.address}">Testadresse 42</span>, <span
+                    th:text="${customer.zipcode}">0000</span><br/>
+            E-mail: <span th:text="${customer.email}">kunde@email.dk</span></p>
+    </section>
+
+    <hr style="border: 0; border-top: 1px dashed #e3e5e4; margin: 20px 0;"/>
+
+    <section class="details-section">
+        <h3>Du har forespurgt på følgende model:</h3>
+
+        <ul>
+            <li><strong>Carport bredde:</strong> <span th:text="${inquiry.carportWidth}">0</span> cm</li>
+            <li><strong>Carport længde:</strong> <span th:text="${inquiry.carportLength}">0</span> cm</li>
+            <li><strong>Tagtype:</strong> Fladt tag, plast (Plastmo Ecolite)</li>
+        </ul>
+
+        <!-- th:if styrer, om der skal vises skur. Betinget sætning afhængig af brugervalg-->
+        <div th:if="${inquiry.shedLength > 0}" style="margin-top: 15px;">
+            <h3>Medfølgende redskabsrum (skur):</h3>
+            <ul>
+                <li><strong>Skur bredde:</strong> <span th:text="${inquiry.shedWidth}">0</span> cm</li>
+                <li><strong>Skur længde:</strong> <span th:text="${inquiry.shedLength}">0</span> cm</li>
+            </ul>
+        </div>
+    </section>
+
+</div>
+
+</body>
+</html>
