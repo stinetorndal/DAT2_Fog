@@ -18,8 +18,4 @@ public class InquiryService {
     public void handleInquiry(Inquiry inquiry, ConnectionPool connectionPool) throws DatabaseException{
         inquiryMapper.saveInquiry(inquiry, connectionPool);
     }
-
-
-
-
 }

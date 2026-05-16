@@ -50,6 +50,7 @@ private int getWidth(Context ctx) {
 }
 
 //Hent data fra formular. Citatnavne skal matche html-navne
+//Brug radiobuttons til nedenstående!!! Den med <input type"'radio>
 private int getShedLength(Context ctx) {
     String hasShed = ctx.formParam("skur_ja_nej");
     if ("ja".equals(hasShed)) {
@@ -64,22 +65,20 @@ private int getShedWidth(Context ctx) {
             return Integer.parseInt(ctx.formParam("skur_bredde"));
         }
         return 0;
+}
+private int handleCustomer(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    String firstName = ctx.formParam("fornavn");
+    String lastName = ctx.formParam("efternavn");
+    String address = ctx.formParam("adresse");
+    int zipcode = Integer.parseInt(ctx.formParam("postnummer"));
+    String email = ctx.formParam("email");
+    if (email == null || !email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+        throw new DatabaseException("Email-adressen er ikke gyldig.");
     }
-
-    private int handleCustomer(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-        String firstName = ctx.formParam("fornavn");
-        String lastName = ctx.formParam("efternavn");
-        String address = ctx.formParam("adresse");
-        int zipcode = Integer.parseInt(ctx.formParam("postnummer"));
-        String email = ctx.formParam("email");
-        // email = ikke udfyldt eller ikke indeholder tegn og snabel = kast fejl
-        if (email == null || !email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
-            throw new DatabaseException("Email-adressen er ikke gyldig.");
-        }
         CustomerService customerService = new CustomerService();
-        Zipcode zipcodeObject = new Zipcode(zipcode, "");
-        //customer-id sat til 0 fordi ellers skal der laves en ekstra konstruktør
-        Customer customer = new Customer(0, firstName, lastName, address, zipcodeObject, email);
+    Zipcode zipcodeObject = new Zipcode(zipcode, "");
+    //customer-id sat til 0 fordi ellers skal der laves en ekstra konstruktør
+    Customer customer = new Customer(0, firstName, lastName, address, zipcodeObject, email);
         return customerService.createCustomer(customer, connectionPool);
     }
 }

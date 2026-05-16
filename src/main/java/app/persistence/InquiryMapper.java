@@ -36,4 +36,26 @@ public class InquiryMapper {
         }
 
     }
+
+    //TODO midlertidig metode fordi der skal ændres i CustomerMapper.
+    //saveCustomer skal være int ikke void, da den skal returnere kundeid, der skal bruges i CustomerService
+    public int getCustomerById (String email, ConnectionPool connectionPool) throws DatabaseException{
+        String sql = "SELECT customer_id FROM customers WHERE email=?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("customer_id");
+            } else {
+                throw new DatabaseException("FEJL! Kunde oprettet men kan ikke findes i database");
+            }
+        }catch (SQLException e){
+                 throw new DatabaseException("Fejl da kunde_id skulle hentes");
+
+        }
+    }
 }
