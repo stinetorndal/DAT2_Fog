@@ -19,7 +19,7 @@ public class InquiryController {
         InquiryController inquiryController = new InquiryController();
 
         app.get("/inquiry", ctx -> ctx.render("index.html"));
-        app.post("/submit-inquiry", ctx -> inquiryController.createInquiry(ctx, connectionPool));
+        app.post("/submit-inquiry", ctx -> createInquiry(ctx, connectionPool));
     }
 
     private void createInquiry(Context ctx, ConnectionPool connectionPool) {
