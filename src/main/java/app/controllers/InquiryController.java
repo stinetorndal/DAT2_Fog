@@ -31,7 +31,7 @@ public class InquiryController {
 
         try {
             int customerId = handleCustomer(ctx, connectionPool);
-            Inquiry newInquiry = new Inquiry(1, length, width, shedLength, shedWidth);
+            Inquiry newInquiry = new Inquiry(customerId, length, width, shedLength, shedWidth);
             inquiryService.handleInquiry(newInquiry, connectionPool);
             ctx.sessionAttribute("currentInquiry", newInquiry);
             ctx.render("confirmation");
@@ -39,27 +39,26 @@ public class InquiryController {
             ctx.attribute("message", e.getMessage());
             ctx.render("index.html");
         }
-    }
+            }
 
-    private int getLength(Context ctx) {
-        return Integer.parseInt(ctx.formParam("længde"));
-    }
+private int getLength(Context ctx) {
+    return Integer.parseInt(ctx.formParam("længde"));
+}
 
-    private int getWidth(Context ctx) {
-        return Integer.parseInt(ctx.formParam("bredde"));
-    }
+private int getWidth(Context ctx) {
+    return Integer.parseInt(ctx.formParam("bredde"));
+}
 
-    //Hent data fra formular. Citatnavne skal matche html-navne
-//Brug radiobuttons til nedenstående!!! Den med <input type"'radio>
-    private int getShedLength(Context ctx) {
-        String hasShed = ctx.formParam("skur_ja_nej");
-        if ("ja".equals(hasShed)) {
-            return Integer.parseInt(ctx.formParam("skur_længde"));
-        }
-        return 0;
+//Hent data fra formular. Citatnavne skal matche html-navne
+private int getShedLength(Context ctx) {
+    String hasShed = ctx.formParam("skur_ja_nej");
+    if ("ja".equals(hasShed)) {
+        return Integer.parseInt(ctx.formParam("skur_længde"));
     }
+    return 0;
+}
 
-    private int getShedWidth(Context ctx) {
+private int getShedWidth(Context ctx) {
         String hasShed = ctx.formParam("skur_ja_nej");
         if ("ja".equals(hasShed)) {
             return Integer.parseInt(ctx.formParam("skur_bredde"));
@@ -73,6 +72,7 @@ public class InquiryController {
         String address = ctx.formParam("adresse");
         int zipcode = Integer.parseInt(ctx.formParam("postnummer"));
         String email = ctx.formParam("email");
+        // email = ikke udfyldt eller ikke indeholder tegn og snabel = kast fejl
         if (email == null || !email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
             throw new DatabaseException("Email-adressen er ikke gyldig.");
         }

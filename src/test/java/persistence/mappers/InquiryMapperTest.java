@@ -36,7 +36,7 @@ class InquiryMapperTest {
 
         // Assert: Vi tjekker, om vi fik et ID (hvis det er over 0, er det gemt!)
         assertTrue(generatedId > 0);
-        System.out.println("Succes! Forespørgsel gemt i DB med ID: " + generatedId);
+        System.out.println("Succes! Forespørgsel gemt i DB med id: " + generatedId);
     }
 }
 
