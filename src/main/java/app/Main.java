@@ -1,5 +1,6 @@
 package app;
 
+import app.controllers.InquiryController;
 import app.config.SessionConfig;
 import app.config.ThymeleafConfig;
 import app.persistence.ConnectionPool;
@@ -21,6 +22,9 @@ public class Main {
 
         // Routing
         app.get("/", ctx -> ctx.render("index.html"));
+
+        InquiryController inquiryController = new InquiryController();
+        inquiryController.addRoutes(app, connectionPool);
 
     }
 }

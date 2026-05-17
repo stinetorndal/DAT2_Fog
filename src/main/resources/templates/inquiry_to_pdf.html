@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FOG Carport-forespørgsel_pdf</title>
-    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+    <link href="../public/css/styles.css" th:href="@{css/styles.css}" rel="stylesheet"/>
 </head>
 <body>
 <div class="main-container">
@@ -19,7 +19,7 @@
 
         <p><strong>Dine kontaktoplysninger:</strong><br/>
             Navn: <span th:text="${customer.firstName} + ' ' + ${customer.lastName}">Kundenavn</span><br/>
-            Adresse: <span th:text="${customer.address}">Testadresse 42</span>, <span
+            Adresse: <span th:text="${customer.address}">Testadresse 42</span>, <span>
                     th:text="${customer.zipcode}">0000</span><br/>
             E-mail: <span th:text="${customer.email}">kunde@email.dk</span></p>
     </section>
@@ -44,6 +44,9 @@
             </ul>
         </div>
     </section>
+    <div class="download-container">
+        <a href="/download-pdf" class="btn-submit">Download jeres carport-forespørgsel (PDF)</a>
+    </div>
 
 </div>
 

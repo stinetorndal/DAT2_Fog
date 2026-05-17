@@ -14,11 +14,8 @@ public class InquiryControllerTest {
 
     @BeforeAll
     //Statisk fordi sådan er JUnit opbygget
-    static void setUpAll() {
-        String user = System.getenv("DB_USER");
-        String pw = System.getenv("DB_PASS");
-        String url = System.getenv("DB_URL");
-        connectionPool = ConnectionPool.getInstance(user, pw, url, "fog_test");
+    static void setUpClass() {
+        connectionPool = ConnectionPool.getInstance(null, null, null, null);
 
     }
 
@@ -81,3 +78,4 @@ public class InquiryControllerTest {
         return client.send(request, java.net.http.HttpResponse.BodyHandlers.ofString()).statusCode();
     }
 }
+
