@@ -69,7 +69,6 @@ public class Inquiry {
         this.carportWidth = carportWidth;
     }
 
-
     public int getShedLength() {
         return shedLength;
     }

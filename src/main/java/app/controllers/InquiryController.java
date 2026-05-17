@@ -58,7 +58,7 @@ public class InquiryController {
         return 0;
     }
 
-    private int getShedWidth(Context ctx) {
+private int getShedWidth(Context ctx) {
         String hasShed = ctx.formParam("skur_ja_nej");
         if ("ja".equals(hasShed)) {
             return Integer.parseInt(ctx.formParam("skur_bredde"));
@@ -73,11 +73,11 @@ public class InquiryController {
         int zipcode = Integer.parseInt(ctx.formParam("postnummer"));
         String email = ctx.formParam("email");
 
-        Zipcode zipcodeObject = new Zipcode(zipcode);
-        Customer newCustomer = new Customer(firstName, lastName, address, zipcodeObject, email);
+    Zipcode zipcodeObject = new Zipcode(zipcode);
+    Customer newCustomer = new Customer(firstName, lastName, address, zipcodeObject, email);
 
-        //Send videre til service
-        CustomerService customerService = new CustomerService();
-        return customerService.createCustomer(newCustomer, connectionPool);
+    //Send videre til service
+    CustomerService customerService = new CustomerService();
+    return customerService.createCustomer(newCustomer, connectionPool);
     }
 }
