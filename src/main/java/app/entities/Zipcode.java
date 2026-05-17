@@ -11,6 +11,10 @@ public class Zipcode {
         this.city = city;
     }
 
+    public Zipcode(int zipcode) {
+        this.zipcode = zipcode;
+    }
+
     public int getZipcode() {
         return zipcode;
     }

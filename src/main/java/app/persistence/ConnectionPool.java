@@ -45,7 +45,11 @@ public class ConnectionPool {
                                 System.getenv("JDBC_CONNECTION_STRING"),
                                 System.getenv("JDBC_DB"));
                     } else {
-                        ds = createHikariConnectionPool(user, password, url, db);
+                        ds = createHikariConnectionPool(
+                                System.getenv("DB_USER"),
+                                System.getenv("DB_PASS"),
+                                System.getenv("DB_URL"),
+                                System.getenv("DB_NAME"));
                     }
                     instance = new ConnectionPool();
                 }

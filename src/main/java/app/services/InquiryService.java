@@ -13,9 +13,7 @@ public class InquiryService {
     private InquiryMapper inquiryMapper = new InquiryMapper();
 
     public void handleInquiry(Inquiry inquiry, ConnectionPool connectionPool) throws DatabaseException{
-        //forretnings logik put her ind.
-
-         inquiryMapper.saveInquiry(inquiry, connectionPool);
+        inquiryMapper.saveInquiry(inquiry, connectionPool);
     }
 
     public List<Inquiry> getAllInquiries(ConnectionPool connectionPool) throws DatabaseException {

@@ -2,10 +2,14 @@ package app;
 
 import app.config.SessionConfig;
 import app.config.ThymeleafConfig;
+import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
 
 public class Main {
+
+    private static final ConnectionPool connectionPool = ConnectionPool.getInstance(null, null, null, null);
+
     public static void main(String[] args) {
         // Initializing Javalin and Jetty webserver
 
@@ -16,7 +20,6 @@ public class Main {
         }).start(7070);
 
         // Routing
-
         app.get("/", ctx -> ctx.render("index.html"));
 
     }

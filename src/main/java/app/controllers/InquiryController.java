@@ -1,8 +1,10 @@
 package app.controllers;
 
 import app.entities.Inquiry;
+import app.entities.Zipcode;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
+import app.services.CustomerService;
 import app.services.InquiryService;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
@@ -16,6 +18,7 @@ public class InquiryController {
 
     public void addRoutes(Javalin app, ConnectionPool connectionPool) {
         app.get("/inquiry", ctx -> ctx.render("index.html"));
+        app.post("/submit-inquiry", ctx -> createInquiry(ctx, connectionPool));
         app.post("/submit-inquiry", ctx -> createInquiry(ctx, connectionPool));
         app.get("/sales/all-inquiries", ctx -> showAllInquiries(ctx, connectionPool));
         app.get("/sales/inquiry/{id}", ctx -> showInquiry(ctx, connectionPool));
@@ -32,11 +35,13 @@ public class InquiryController {
 
         try {
             int customerId = handleCustomer(ctx, connectionPool);
-            Inquiry newInquiry = new Inquiry(1, length, width, shedLength, shedWidth);
+            Inquiry newInquiry = new Inquiry(customerId, length, width, shedLength, shedWidth);
             inquiryService.handleInquiry(newInquiry, connectionPool);
             ctx.sessionAttribute("currentInquiry", newInquiry);
             ctx.render("confirmation");
         } catch (DatabaseException e) {
+            //"message" fra th-reference i html - her får vi system-fejlmeddelelse
+            //TODO check hvor i html den er - skal måske ændres / opdateres?
             ctx.attribute("message", e.getMessage());
             ctx.render("index.html");
         }
@@ -51,7 +56,6 @@ private int getWidth(Context ctx) {
 }
 
 //Hent data fra formular. Citatnavne skal matche html-navne
-//Brug radiobuttons til nedenstående!!! Den med <input type"'radio>
 private int getShedLength(Context ctx) {
     String hasShed = ctx.formParam("skur_ja_nej");
     if ("ja".equals(hasShed)) {
@@ -73,11 +77,13 @@ private int handleCustomer(Context ctx, ConnectionPool connectionPool) throws Da
     String address = ctx.formParam("adresse");
     int zipcode = Integer.parseInt(ctx.formParam("postnummer"));
     String email = ctx.formParam("email");
-    if (email == null || !email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
-        throw new DatabaseException("Email-adressen er ikke gyldig.");
-    }
-        CustomerService customerService = new CustomerService();
-        return customerService.createCustomer(firstName, lastName, address, zipcode, email, connectionPool);
+
+    Zipcode zipcodeObject = new Zipcode(zipcode);
+    Customer newCustomer = new Customer(firstName, lastName, address, zipcodeObject, email);
+
+    //Send videre til service
+    CustomerService customerService = new CustomerService();
+    return customerService.createCustomer(newCustomer, connectionPool);
     }
 
     public void showAllInquiries(Context ctx, ConnectionPool connectionPool) {
@@ -110,13 +116,3 @@ private int handleCustomer(Context ctx, ConnectionPool connectionPool) throws Da
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
