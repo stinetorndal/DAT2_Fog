@@ -16,8 +16,6 @@ public class InquiryController {
     private InquiryService inquiryService = new InquiryService();
 
     public void addRoutes(Javalin app, ConnectionPool connectionPool) {
-        InquiryController inquiryController = new InquiryController();
-
         app.get("/inquiry", ctx -> ctx.render("index.html"));
         app.post("/submit-inquiry", ctx -> createInquiry(ctx, connectionPool));
     }
@@ -30,69 +28,56 @@ public class InquiryController {
         int shedWidth = getShedWidth(ctx);
 
         try {
-            Customer customer = handleCustomer(ctx, connectionPool);
-            Inquiry newInquiry = new Inquiry(customer.getCustomerId(), length, width, shedLength, shedWidth);
+            int customerId = handleCustomer(ctx, connectionPool);
+            Inquiry newInquiry = new Inquiry(customerId, length, width, shedLength, shedWidth);
             inquiryService.handleInquiry(newInquiry, connectionPool);
-
-            
             ctx.sessionAttribute("currentInquiry", newInquiry);
             ctx.render("confirmation");
         } catch (DatabaseException e) {
+            //"message" fra th-reference i html - her får vi system-fejlmeddelelse
+            //TODO check hvor i html den er - skal måske ændres / opdateres?
             ctx.attribute("message", e.getMessage());
             ctx.render("index.html");
         }
-            }
-
-private int getLength(Context ctx) {
-    return Integer.parseInt(ctx.formParam("længde"));
-}
-
-private int getWidth(Context ctx) {
-    return Integer.parseInt(ctx.formParam("bredde"));
-}
-
-//Hent data fra formular. Citatnavne skal matche html-navne
-//Brug radiobuttons til nedenstående!!! Den med <input type"'radio>
-private int getShedLength(Context ctx) {
-    String hasShed = ctx.formParam("skur_ja_nej");
-    if ("ja".equals(hasShed)) {
-        return Integer.parseInt(ctx.formParam("skur_længde"));
     }
-    return 0;
-}
 
-private int getShedWidth(Context ctx) {
+    private int getLength(Context ctx) {
+        return Integer.parseInt(ctx.formParam("længde"));
+    }
+
+    private int getWidth(Context ctx) {
+        return Integer.parseInt(ctx.formParam("bredde"));
+    }
+
+    //Hent data fra formular. Citatnavne skal matche html-navne
+        private int getShedLength(Context ctx) {
+        String hasShed = ctx.formParam("skur_ja_nej");
+        if ("ja".equals(hasShed)) {
+            return Integer.parseInt(ctx.formParam("skur_længde"));
+        }
+        return 0;
+    }
+
+    private int getShedWidth(Context ctx) {
         String hasShed = ctx.formParam("skur_ja_nej");
         if ("ja".equals(hasShed)) {
             return Integer.parseInt(ctx.formParam("skur_bredde"));
         }
         return 0;
-}
-private Customer handleCustomer(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-    String firstName = ctx.formParam("fornavn");
-    String lastName = ctx.formParam("efternavn");
-    String address = ctx.formParam("adresse");
-    int zipcode = Integer.parseInt(ctx.formParam("postnummer"));
-    String email = ctx.formParam("email");
-    if (email == null || !email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
-        throw new DatabaseException("Email-adressen er ikke gyldig.");
     }
-    CustomerService customerService = new CustomerService();
-    Zipcode zipcodeObject = new Zipcode(zipcode, "");
-    //customer-id sat til 0 fordi ellers skal der laves en ekstra konstruktør
-    Customer customer = new Customer(0, firstName, lastName, address, zipcodeObject, email);
-    int generatedId = customerService.createCustomer(customer, connectionPool);
-    customer.setCustomerId(generatedId);
-    return customer;
+
+    private int handleCustomer(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        String firstName = ctx.formParam("fornavn");
+        String lastName = ctx.formParam("efternavn");
+        String address = ctx.formParam("adresse");
+        int zipcode = Integer.parseInt(ctx.formParam("postnummer"));
+        String email = ctx.formParam("email");
+
+        Zipcode zipcodeObject = new Zipcode(zipcode);
+        Customer newCustomer = new Customer(firstName, lastName, address, zipcodeObject, email);
+
+        //Send videre til service
+        CustomerService customerService = new CustomerService();
+        return customerService.createCustomer(newCustomer, connectionPool);
     }
 }
-
-
-
-
-
-
-
-
-
-

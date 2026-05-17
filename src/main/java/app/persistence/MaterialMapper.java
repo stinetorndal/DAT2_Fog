@@ -13,11 +13,11 @@ import java.util.List;
 
 public class MaterialMapper {
 
-    //TODO skal vi overhovedet bruge denne her metode??? Bliver den ikke ret tung?
+
     public List<Material> getAllMaterials(ConnectionPool connectionPool) throws DatabaseException {
         List<Material> allMaterials = new ArrayList<>();
 
-        String sql = "select * from materials order by materials_id";
+        String sql = "SELECT * FROM materials ORDER BY material_id";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
@@ -52,13 +52,8 @@ public class MaterialMapper {
             ps.setString(1, category.name());
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                int materialId = rs.getInt("material_id");
-                String name = rs.getString("name");
-                String description = rs.getString("description");
-                String unit = rs.getString("unit");
-                double pricePerUnit = rs.getDouble("price_per_unit");
-
-                materialByCategory.add(new Material(materialId, name, description, unit, pricePerUnit));
+                Material material = createMaterialObject(rs);
+                materialByCategory.add(material);
             }
         } catch (SQLException e) {
             throw new DatabaseException("Fejl. Kunne ikke finde materialer." + e.getMessage());
