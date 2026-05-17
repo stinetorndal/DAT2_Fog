@@ -14,18 +14,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class QuoteMapperTest {
 
-    private final static String USER = "";
-    private final static String PASSWORD = "";
-    private final static String URL = "";
-    private static final String DB = "";
-
     private static ConnectionPool connectionPool;
     private static QuoteMapper quoteMapper = new QuoteMapper();
 
     @BeforeAll
     public static void setUpClass() {
         try {
-            connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
+            connectionPool = ConnectionPool.getInstance(null, null, System.getenv("DB_TEST_URL"), null);
 
             try (Connection testConnection = connectionPool.getConnection()) {
                 try (Statement stmt = testConnection.createStatement()) {
@@ -100,24 +95,26 @@ class QuoteMapperTest {
                         "(8000, 'Aarhus')");
 
                 // Indsæt kunder
-                stmt.execute("INSERT INTO test.customers (firstname, last_name, address, zipcode, email) VALUES " +
+                stmt.execute("INSERT INTO test.customers (first_name, last_name, address, zipcode, email) VALUES " +
                         "('Anders', 'Hansen', 'Nørregade 1', 2800, 'anders@mail.dk'), " +
-                        "('Sofie', 'Jensen', 'Vestergade 2', 8000, 'sofie@mail.dk')");
+                        "('Sofie', 'Jensen', 'Vestergade 2', 8000, 'sofie@mail.dk'), " +
+                        "('Oscar', 'Oscarsen', 'Adresse 4', 2800, 'oscar@email.dk')");
 
                 // Indsæt sælgere
-                stmt.execute("INSERT INTO test.salespersons (firstname, last_name, email, password, role) VALUES " +
+                stmt.execute("INSERT INTO test.salespersons (first_name, last_name, email, password, role) VALUES " +
                         "('John', 'Doe', 'john@fog.dk', 'password123', 'salesperson'), " +
                         "('Jane', 'Smith', 'jane@fog.dk', 'password123', 'salesperson')");
 
                 // Indsæt forespørgsler
                 stmt.execute("INSERT INTO test.inquiries (customer_id, carport_length, carport_width, shed_length, shed_width) VALUES " +
                         "(1, 600, 400, 200, 200), " +
-                        "(2, 500, 300, 0, 0)");
+                        "(2, 500, 300, 0, 0), " +
+                        "(3, 400, 500, 0, 0)");
 
                 // Indsæt tilbud
-                stmt.execute("INSERT INTO test.quotes (inquiry_id, salesperson_id, price) VALUES " +
-                        "(1, 1, 12495), " +
-                        "(2, 2, 9995)");
+               /* stmt.execute("INSERT INTO test.quotes (inquiry_id, salesperson_id, price, quotation_number) VALUES " +
+                        "(1, 1, 12495, 100), " +
+                        "(2, 2, 9995, 101)"); */
             }
         } catch (SQLException throwables) {
             fail(throwables.getMessage());
@@ -127,12 +124,21 @@ class QuoteMapperTest {
     @Test
     void createQuote() throws DatabaseException {
         // Arrange
-        Quote quote = new Quote(3, 1, 49995);
+        Quote quote = new Quote(3, 1, 49995, 102);
 
         // Act
         int quotationId = quoteMapper.createQuote(quote, connectionPool);
 
         // Assert
         assertEquals(3, quotationId);
+    }
+
+    @Test
+    void createQuoteInEmptyTabel() throws DatabaseException {
+        Quote quote = new Quote(1, 1, 12495, 100);
+
+        int quotationId = quoteMapper.createQuote(quote, connectionPool);
+
+        assertEquals(1, quotationId);
     }
 }
