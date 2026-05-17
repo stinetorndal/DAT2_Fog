@@ -12,4 +12,8 @@ public class QuoteService {
     public int createQuote(Quote quote, ConnectionPool connectionPool) throws DatabaseException {
         return quoteMapper.createQuote(quote, connectionPool);
     }
+
+    public int getQuotationNumber(ConnectionPool connectionPool) throws DatabaseException {
+        return quoteMapper.getNewestQuotationNumber(connectionPool);
+    }
 }
