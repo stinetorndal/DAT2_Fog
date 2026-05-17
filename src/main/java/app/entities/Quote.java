@@ -7,13 +7,15 @@ public class Quote {
     private int salespersonId;
     private double price;
     private String status;
+    private int quotationNumber;
     private int version;
 
-    public Quote(int inquiryId, int salespersonId, double price) {
+    public Quote(int inquiryId, int salespersonId, double price, int quotationNumber) {
         this.inquiryId = inquiryId;
         this.salespersonId = salespersonId;
         this.price = price;
         this.status = "pending";
+        this.quotationNumber = quotationNumber;
         this.version = 1;
     }
 
@@ -55,6 +57,14 @@ public class Quote {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public int getQuotationNumber() {
+        return quotationNumber;
+    }
+
+    public void setQuotationNumber(int quotationNumber) {
+        this.quotationNumber = quotationNumber;
     }
 
     public int getVersion() {
