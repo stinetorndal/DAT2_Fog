@@ -16,10 +16,8 @@ public class InquiryController {
     private InquiryService inquiryService = new InquiryService();
 
     public void addRoutes(Javalin app, ConnectionPool connectionPool) {
-        InquiryController inquiryController = new InquiryController();
-
         app.get("/inquiry", ctx -> ctx.render("index.html"));
-        app.post("/submit-inquiry", ctx -> inquiryController.createInquiry(ctx, connectionPool));
+        app.post("/submit-inquiry", ctx -> createInquiry(ctx, connectionPool));
     }
 
     private void createInquiry(Context ctx, ConnectionPool connectionPool) {
@@ -52,7 +50,6 @@ private int getWidth(Context ctx) {
 }
 
 //Hent data fra formular. Citatnavne skal matche html-navne
-//Brug radiobuttons til nedenstående!!! Den med <input type"'radio>
 private int getShedLength(Context ctx) {
     String hasShed = ctx.formParam("skur_ja_nej");
     if ("ja".equals(hasShed)) {
@@ -75,14 +72,11 @@ private int handleCustomer(Context ctx, ConnectionPool connectionPool) throws Da
     int zipcode = Integer.parseInt(ctx.formParam("postnummer"));
     String email = ctx.formParam("email");
 
-    Zipcode zipcodeObject = new Zipcode(zipcode, "");
-    Customer newCustomer = new Customer(0, firstName, lastName, address, zipcodeObject, email);
+    Zipcode zipcodeObject = new Zipcode(zipcode);
+    Customer newCustomer = new Customer(firstName, lastName, address, zipcodeObject, email);
 
     //Send videre til service
     CustomerService customerService = new CustomerService();
     return customerService.createCustomer(newCustomer, connectionPool);
-       //Denne skal ind, hvis vi laver regex-check her. Og ellers klarer validator det
-    // throw new DatabaseException("Email-adressen er ikke gyldig.");
-
     }
 }

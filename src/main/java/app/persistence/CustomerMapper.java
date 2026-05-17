@@ -26,8 +26,7 @@ public class CustomerMapper {
             }
             throw new DatabaseException("Fejl ved oprettelse af kunde.");
         } catch (SQLException e) {
-            String msg = "Fejl ved ...";
-            throw new DatabaseException(msg, e.getMessage());
+            throw new DatabaseException("Kunne ikke forbinde til databasen.", e.getMessage());
         }
     }
 }

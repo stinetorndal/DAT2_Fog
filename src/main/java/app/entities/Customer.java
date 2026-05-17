@@ -17,6 +17,14 @@ public class Customer {
         this.email = email;
     }
 
+    public Customer(String firstname, String lastname, String address, Zipcode zipcode, String email) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.address = address;
+        this.zipcode = zipcode;
+        this.email = email;
+    }
+
     public int getCustomerId() {
         return customerId;
     }
