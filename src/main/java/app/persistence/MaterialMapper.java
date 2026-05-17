@@ -1,5 +1,6 @@
 package app.persistence;
 
+import app.enums.MaterialCategory;
 import app.exceptions.DatabaseException;
 import app.entities.Material;
 
@@ -23,13 +24,8 @@ public class MaterialMapper {
         ) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                int materialId = rs.getInt("material_id");
-                String name = rs.getString("name");
-                String description = rs.getString("description");
-                String unit = rs.getString("unit");
-                double pricePerUnit = rs.getDouble("price_per_unit");
-
-                allMaterials.add(new Material(materialId, name, description, unit, pricePerUnit));
+                Material material = createMaterialObject(rs);
+                allMaterials.add(material);
             }
         } catch (SQLException e) {
             throw new DatabaseException("Fejl. Kunne ikke hente materialer." + e.getMessage());
@@ -63,5 +59,16 @@ public class MaterialMapper {
             throw new DatabaseException("Fejl. Kunne ikke finde materialer." + e.getMessage());
         }
         return materialByCategory;
+    }
+
+    private Material createMaterialObject(ResultSet rs) throws SQLException {
+
+        int materialId = rs.getInt("material_id");
+        String name = rs.getString("name");
+        String description = rs.getString("description");
+        String unit = rs.getString("unit");
+        double pricePerUnit = rs.getDouble("price_per_unit");
+
+        return new Material(materialId, name, description, unit, pricePerUnit);
     }
 }

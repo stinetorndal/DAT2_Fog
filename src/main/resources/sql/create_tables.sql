@@ -65,21 +65,22 @@ CREATE TABLE public.inquiries
 (
     inquiry_id     SERIAL PRIMARY KEY,
     customer_id    INT REFERENCES public.customers (customer_id),
-    carport_length INT          NOT NULL,
-    carport_width  INT          NOT NULL,
-    shed_length    INT          NOT NULL,
-    shed_width     INT          NOT NULL,
+    carport_length INT NOT NULL,
+    carport_width  INT NOT NULL,
+    shed_length    INT NOT NULL,
+    shed_width     INT NOT NULL,
     date           TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE public.quotes
 (
-    quotation_id   SERIAL PRIMARY KEY,
-    inquiry_id     INT REFERENCES public.inquiries (inquiry_id),
-    salesperson_id INT REFERENCES public.salespersons (salesperson_id),
-    price          DECIMAL(10, 2) NOT NULL,
-    status         VARCHAR(255)   NOT NULL DEFAULT 'pending',
-    version        INT            NOT NULL DEFAULT 1
+    quotation_id     SERIAL PRIMARY KEY,
+    inquiry_id       INT REFERENCES public.inquiries (inquiry_id),
+    salesperson_id   INT REFERENCES public.salespersons (salesperson_id),
+    price            DECIMAL(10, 2) NOT NULL,
+    status           VARCHAR(255)   NOT NULL DEFAULT 'pending',
+    quotation_number INT NOT NULL,
+    version          INT NOT NULL DEFAULT 1
 );
 
 CREATE TABLE public.orders

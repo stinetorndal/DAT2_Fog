@@ -1,12 +1,12 @@
 package app.persistence;
 
 import app.exceptions.DatabaseException;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.*;
 
 import app.entities.Inquiry;
-
 
 
 public class InquiryMapper {
@@ -29,11 +29,11 @@ public class InquiryMapper {
                 if (rs.next()) {
                     return rs.getInt(1);
                 }
-            throw new DatabaseException("Forespørgsel kunne ikke oprettes");
+                throw new DatabaseException("Forespørgsel kunne ikke oprettes");
             }
         } catch (SQLException e) {
             throw new DatabaseException("Fejl da forespørgsel skulle gemmes: " + e.getMessage());
         }
-
     }
+
 }
