@@ -25,7 +25,8 @@ public class QuoteController {
             if (salesperson != null) {
                 int salespersonId = salesperson.getSalespersonId();
                 double quotePrice = 1234; //her skal der være et kald til beregning.
-                Quote quote = new Quote(inquiryId, salespersonId, quotePrice);
+                int quotationNumber = quoteService.getQuotationNumber(connectionPool);
+                Quote quote = new Quote(inquiryId, salespersonId, quotePrice, quotationNumber);
                 quoteService.createQuote(quote, connectionPool);
                 //TODO skal der komme en meddelelse om, at tilbuddet blev oprettet??
                 ctx.redirect("/sales/all-inquiries"); //redirect() fordi ellers vil url'en stadig vise url'en til den enkelte forespørgsel.
