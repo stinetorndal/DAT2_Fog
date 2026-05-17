@@ -1,9 +1,11 @@
 package controllers;
 
 import app.controllers.InquiryController;
+import app.entities.Inquiry;
 import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
 import io.javalin.testtools.JavalinTest;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,14 +13,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class InquiryControllerTest {
 
-    private ConnectionPool connectionPool;
+    private static ConnectionPool connectionPool;
+    private Inquiry testInquiry;
 
-    @BeforeEach
-    void setUp() {
+    @BeforeAll
+    //Statisk fordi sådan er JUnit opbygget
+    static void setUpAll() {
         String user = System.getenv("DB_USER");
         String pw = System.getenv("DB_PASS");
         String url = System.getenv("DB_URL");
-        connectionPool = ConnectionPool.getInstance("postgres", "postgres", "jdbc:postgresql://localhost:5432/%s", "fog_test");
+        connectionPool = ConnectionPool.getInstance(user, pw, url, "fog_test");
 
     }
 

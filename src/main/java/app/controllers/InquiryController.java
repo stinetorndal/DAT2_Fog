@@ -30,9 +30,11 @@ public class InquiryController {
         int shedWidth = getShedWidth(ctx);
 
         try {
-            int customerId = handleCustomer(ctx, connectionPool);
-            Inquiry newInquiry = new Inquiry(customerId, length, width, shedLength, shedWidth);
+            Customer customer = handleCustomer(ctx, connectionPool);
+            Inquiry newInquiry = new Inquiry(customer.getCustomerId(), length, width, shedLength, shedWidth);
             inquiryService.handleInquiry(newInquiry, connectionPool);
+
+            
             ctx.sessionAttribute("currentInquiry", newInquiry);
             ctx.render("confirmation");
         } catch (DatabaseException e) {
@@ -66,7 +68,7 @@ private int getShedWidth(Context ctx) {
         }
         return 0;
 }
-private int handleCustomer(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+private Customer handleCustomer(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
     String firstName = ctx.formParam("fornavn");
     String lastName = ctx.formParam("efternavn");
     String address = ctx.formParam("adresse");
@@ -75,11 +77,13 @@ private int handleCustomer(Context ctx, ConnectionPool connectionPool) throws Da
     if (email == null || !email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
         throw new DatabaseException("Email-adressen er ikke gyldig.");
     }
-        CustomerService customerService = new CustomerService();
+    CustomerService customerService = new CustomerService();
     Zipcode zipcodeObject = new Zipcode(zipcode, "");
     //customer-id sat til 0 fordi ellers skal der laves en ekstra konstruktør
     Customer customer = new Customer(0, firstName, lastName, address, zipcodeObject, email);
-        return customerService.createCustomer(customer, connectionPool);
+    int generatedId = customerService.createCustomer(customer, connectionPool);
+    customer.setCustomerId(generatedId);
+    return customer;
     }
 }
 

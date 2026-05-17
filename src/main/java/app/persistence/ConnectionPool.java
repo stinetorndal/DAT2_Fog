@@ -20,7 +20,7 @@ public class ConnectionPool {
     /***
      * Private constructor to enforce Singleton pattern.
      */
-    public ConnectionPool() {
+    private ConnectionPool() {
         // Prevent instantiation
     }
 
