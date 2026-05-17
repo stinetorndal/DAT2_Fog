@@ -20,7 +20,7 @@ public class ConnectionPool {
     /***
      * Private constructor to enforce Singleton pattern.
      */
-    public ConnectionPool() {
+    private ConnectionPool() {
         // Prevent instantiation
     }
 
@@ -110,13 +110,3 @@ public class ConnectionPool {
         return new HikariDataSource(config);
     }
 }
-
-/*
-create table IF NOT EXISTS user
-(
-    user_id  serial  primary key,
-    username varchar(50) not null,
-    password varchar(50) not null
-);
-CREATE UNIQUE INDEX IF NOT EXISTS idx_user_name ON user(username);
- */
