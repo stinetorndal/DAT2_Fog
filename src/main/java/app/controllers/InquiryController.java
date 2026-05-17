@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.entities.Customer;
 import app.entities.Inquiry;
 import app.entities.Zipcode;
 import app.exceptions.DatabaseException;
