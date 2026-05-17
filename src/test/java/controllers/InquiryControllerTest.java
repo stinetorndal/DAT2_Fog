@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class InquiryControllerTest {
-    private static ConnectionPool connectionPool;
+        private static ConnectionPool connectionPool;
 
     @BeforeAll
     //Statisk fordi sådan er JUnit opbygget
