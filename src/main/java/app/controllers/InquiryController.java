@@ -36,6 +36,8 @@ public class InquiryController {
             ctx.sessionAttribute("currentInquiry", newInquiry);
             ctx.render("confirmation");
         } catch (DatabaseException e) {
+            //"message" fra th-reference i html - her får vi system-fejlmeddelelse
+            //TODO check hvor i html den er - skal måske ændres / opdateres?
             ctx.attribute("message", e.getMessage());
             ctx.render("index.html");
         }
@@ -83,15 +85,4 @@ private int handleCustomer(Context ctx, ConnectionPool connectionPool) throws Da
     // throw new DatabaseException("Email-adressen er ikke gyldig.");
 
     }
-    }
-
-
-
-
-
-
-
-
-
-
-
+}
