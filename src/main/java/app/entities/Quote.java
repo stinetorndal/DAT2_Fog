@@ -8,20 +8,18 @@ public class Quote {
     private int inquiryId;
     private int salespersonId;
     private double price;
-    private QuoteStatus status;
+    private String status;
     private int version;
-
-    private Integer previousQuoteId;
 
     public Quote(int inquiryId, int salespersonId, double price) {
         this.inquiryId = inquiryId;
         this.salespersonId = salespersonId;
         this.price = price;
-        this.status = QuoteStatus.PENDING;
+        this.status = "PENDING";
         this.version = 1;
     }
 
-    public Quote(int quotationId,int inquiryId, int salespersonId, double price, QuoteStatus status, int version, Integer previousQuoteId) {
+    public Quote(int quotationId,int inquiryId, int salespersonId, double price, String status, int version) {
 
         this.quotationId = quotationId;
         this.inquiryId = inquiryId;
@@ -29,7 +27,6 @@ public class Quote {
         this.price = price;
         this.status = status;
         this.version = version;
-        this.previousQuoteId = previousQuoteId;
     }
 
     //creating new version of quote
@@ -41,7 +38,6 @@ public class Quote {
 
         newQuote.setStatus(QuoteStatus.UPDATED);
 
-        newQuote.setPreviousQuoteId(this.quotationId);
 
         return newQuote;
     }
@@ -97,14 +93,6 @@ public class Quote {
 
     public void setVersion(int version) {
         this.version = version;
-    }
-
-    public Integer getPreviousQuoteId() {
-        return previousQuoteId;
-    }
-
-    public void setPreviousQuoteId(Integer previousQuoteId) {
-        this.previousQuoteId = previousQuoteId;
     }
 
 }

@@ -11,19 +11,19 @@ import java.util.List;
 
 public class QuoteMapper {
 
-    public void saveQuote(Quote quote, ConnectionPool connectionPool) {
-        String sql = "INSERT INTO quotes (quotation_id, inquiry_id, salesperson_id, price, status, version) "
-                + "VALUES (?,?,?,?,?,?)";
+    public int saveQuote(Quote quote, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "INSERT INTO quotes (inquiry_id, salesperson_id, price, status, version) "
+                + "VALUES (?,?,?,?,?)";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            ps.setInt(1, quote.getQuotationId());
-            ps.setInt(2, quote.getInquiryId());
-            ps.setInt(3, quote.getSalespersonId());
-            ps.setDouble(4, quote.getPrice());
-            ps.setString(5, quote.getStatus());
-            ps.setInt(6, quote.getVersion());
+
+            ps.setInt(1, quote.getInquiryId());
+            ps.setInt(2, quote.getSalespersonId());
+            ps.setDouble(3, quote.getPrice());
+            ps.setString(4, quote.getStatus().name());
+            ps.setInt(5, quote.getVersion());
             ps.executeUpdate();
 
             try (ResultSet rs = ps.getGeneratedKeys()) {
@@ -57,13 +57,10 @@ public class QuoteMapper {
                 int inquiryId = rs.getInt("inquiry_id");
                 int salespersonId = rs.getInt("salesperson_id");
                 int price = rs.getInt("price");
-                QuoteStatus status = rs.getString("status");
+                String status = rs.getString("status");
                 int version = rs.getInt("version");
-                LocalDateTime date = rs.getTimestamp("date").toLocalDateTime();
-                // rs.getTimestamp() returnerer en java.sql.Timestamp (gammel SQL-type).
-                // .toLocalDateTime() konverterer den til en moderne LocalDateTime.
 
-                quote = new Quote(id, inquiryId, salespersonId, price, status, version, date);
+                quote = new Quote(id, inquiryId, salespersonId, price, status, version);
             }
         } catch (SQLException e) {
             throw new DatabaseException("Databasefejl: ", e.getMessage());
@@ -90,10 +87,8 @@ public class QuoteMapper {
                 String status = rs.getString("status");
                 int version = rs.getInt("version");
                 LocalDateTime date = rs.getTimestamp("date").toLocalDateTime();
-                // rs.getTimestamp() returnerer en java.sql.Timestamp (gammel SQL-type).
-                // .toLocalDateTime() konverterer den til en moderne LocalDateTime.
 
-                allQuotes.add(new Quote(quotationId, inquiryId, salespersonId, price, status, version, date));
+                allQuotes.add(new Quote(quotationId, inquiryId, salespersonId, price, status, version));
             }
         } catch (SQLException e) {
             throw new DatabaseException("Fejl ved hentning af forespørgsler:", e.getMessage());
