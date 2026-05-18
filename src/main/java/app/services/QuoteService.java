@@ -13,7 +13,7 @@ public class QuoteService {
         this.quoteMapper = new QuoteMapper();
     }
 
-
+/*
     public Quote updateQuote(String quoteId, String newPrice) {
         int parsedQuoteId = Integer.parseInt(quoteId);
         double parsedNewPrice = Double.parseDouble(newPrice);
@@ -29,5 +29,5 @@ public class QuoteService {
 
         return newQuote;
     }
-
+*/
 }
