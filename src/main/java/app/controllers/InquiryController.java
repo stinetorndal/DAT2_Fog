@@ -82,7 +82,7 @@ public class InquiryController {
             //Fortæller browser dette er en pdf-fil
             ctx.contentType("application/pdf");
             //Giver browser besked på download + definerer navn
-            ctx.header("Content-Disposition", "attachment; filename=carport-forespørgsel.pdf");
+            ctx.header("Content-Disposition", "attachment; filename=carport-forespoergsel.pdf");
             //Send bytes ud i browser
             ctx.result(pdfBytes);
         } else {
