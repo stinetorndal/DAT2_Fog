@@ -10,14 +10,15 @@ public class Quote {
     private int quotationNumber;
     private int version;
 
-    public Quote(int inquiryId, int salespersonId, double price, int quotationNumber) {
+    public Quote(int inquiryId, int salespersonId, double price) {
         this.inquiryId = inquiryId;
         this.salespersonId = salespersonId;
         this.price = price;
         this.status = "pending";
-        this.quotationNumber = quotationNumber;
         this.version = 1;
     }
+
+
 
     public int getQuotationId() {
         return quotationId;
