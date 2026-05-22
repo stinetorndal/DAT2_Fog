@@ -6,6 +6,7 @@ import app.entities.Zipcode;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.services.CustomerService;
+import app.services.EmailService;
 import app.services.InquiryService;
 import app.services.PdfService;
 import io.javalin.Javalin;
@@ -16,6 +17,7 @@ public class InquiryController {
 
     private InquiryService inquiryService = new InquiryService();
     private PdfService pdfService = new PdfService();
+    private EmailService emailService = new EmailService();
 
     public void addRoutes(Javalin app, ConnectionPool connectionPool) {
         app.get("/inquiry", ctx -> ctx.render("index.html"));
@@ -44,7 +46,8 @@ public class InquiryController {
             ctx.sessionAttribute("pdfBytes", pdfBytes);
             ctx.attribute("customer", customerInquiryPdf);
             ctx.attribute("inquiry", newInquiry);
-            
+
+            sendConfirmationEmail(customerInquiryPdf);
             ctx.render("inquiry_to_pdf.html");
             
         } catch (DatabaseException e) {
@@ -92,6 +95,20 @@ public class InquiryController {
         }
     }
 
+    //Hjælpemetode til bodyText i email.
+    //TODO bør laves som DTO
+    private void sendConfirmationEmail (Customer customer){
+        String subject = "Bekræftelse på din carport-forespørgsel";
+        //Body-tekst
+        String bodyText = "Kære " + customer.getFirstname() + ",\n\n"
+        + "Tak for din forespørgsel hos Fog\n"
+        + "Vi har modtaget dine specifikationer og går i gang med at beregne et tilbud til dig.\n\n"
+        + "Venlig hilsen, \nFog Byggecenter";
+
+        //Uddelegér til emailservice-forsendelse
+        emailService.sendEmail(customer.getEmail(), subject, bodyText);
+
+    }
     private int getLength(Context ctx) {
         return Integer.parseInt(ctx.formParam("længde"));
     }
