@@ -56,6 +56,9 @@ body {
 .main-title {
     color: var(--color-fog-blue);
     font-size: 28px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-right: 75px;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
@@ -165,7 +168,7 @@ body {
     background-color: var(--color-fog-blue);
     color: var(--color-white);
     border: none;
-    padding: 12px 35px;
+    padding: 25px 35px;
     font-size: 15px;
     font-weight: bold;
     border-radius: 25px;
@@ -173,8 +176,49 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.5px;
     transition: background-color 0.2s ease;
+    margin: 0 10px;
 }
 
 .btn-submit:hover {
     background-color: #00254a;
+}
+.sales-dashboard-btn-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    padding: 60px 0;
+    width: 100%;
+    min-height: 450px;
+    }
+
+.sales-dashboard-large {
+    background-color: var(--color-fog-blue);
+    color: var(--color-white);
+    border: none;
+    padding: 25px 50px; /* Gør knapperne markant større */
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 8px; /* Matcher main-container i stil */
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none; /* Fjerner streg under linket ved <a>-tags */
+    display: inline-block;
+    text-align: center;
+    min-width: 280px; /* Sikrer at knapperne har nøjagtig samme bredde */
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Giver dybde */
+}
+/* Hover-effekt */
+.btn-dashboard-large:hover {
+    background-color: #00254a; /* Mørkere blå */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+/* Vælg denne for at override Capslock, fx sådan: <h2 class="normal-text">Du har valgt alle forespørgsler:</h2> */
+.normal-text {
+    color: var(--color-fog-blue);
+    text-transform: none; /* Tvinger browseren til at vise teksten præcis som skrevet i HTML */
 }

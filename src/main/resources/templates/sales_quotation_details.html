@@ -1,9 +1,90 @@
-<!--  INDHOLD PÅ DENNE SIDE:   -->
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOG Salg - tilbud</title>
+    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
 
-<!-- Denne side indeholder det specifikke tilbud, sælger har valgt på sales_quotations.html
-        Sælger skal kunne
-        1. Rette længde
-        2. Rette bredde
-        3. Rette pris
+<div class="main-container">
+    <header class="header-section">
+        <div class="logo-box">Fog</div>
+        <h1 class="main-title">Tilbud - detaljer</h1>
+    </header>
+</div>
 
--->
+<form action="/update-quotation" method="POST">
+
+    <div class="content-layout">
+
+        <aside class="sidebar-form">
+            <div class="form-group">
+                <span class="form-label-box">KUNDEOPLYSNINGER</span>
+                <input type="text" name="customerName" th:value="${quotation.customerName}" value="[Hent navn]"
+                       class="form-control" placeholder="Navn"/>
+                <input type="text" name="customerAddress" th:value="${quotation.customerAddress}" value="[Hent adresse]"
+                       class="form-control" placeholder="Adresse"/>
+            </div>
+
+            <div class="form-group">
+                <span class="form-label-box">SALGSPRIS (KR.)</span>
+                <input type="number" name="totalPrice" th:value="${quotation.totalPrice}" value="000000"
+                       class="form-control"/>
+            </div>
+        </aside>
+
+        <section class="sidebar-form">
+            <div class="form-group">
+                <span class="form-label-box">CARPORT BREDDE</span>
+                <select class="form-control" name="carportWidth">
+                    <option th:each="w : ${widths}" th:value="${w}" th:text="${w + ' cm'}"
+                            th:selected="${w == quotation.carportWidth}">[Fra tilbud-objekt]
+                    </option>
+                    <option value="default" th:remove="all">Vælg bredde...</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <span class="form-label-box">CARPORT LÆNGDE</span>
+                <select class="form-control" name="carportLength">
+                    <option th:each="l : ${lengths}" th:value="${l}" th:text="${l + ' cm'}"
+                            th:selected="${l == quotation.carportLength}">[Fra tilbud-objekt]
+                    </option>
+                    <option value="default" th:remove="all">Vælg længde...</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <span class="form-label-box">SKUR BREDDE</span>
+                <select class="form-control" name="shedWidth">
+                    <option value="0">Intet skur valgt</option>
+                    <option th:each="sw : ${shedWidths}" th:value="${sw}" th:text="${sw + ' cm'}"
+                            th:selected="${sw == quotation.shedWidth}">[Fra tilbud-objekt]
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <span class="form-label-box">SKUR LÆNGDE</span>
+                <select class="form-control" name="shedLength">
+                    <option value="0">Intet skur valgt</option>
+                    <option th:each="sl : ${shedLengths}" th:value="${sl}" th:text="${sl + ' cm'}"
+                            th:selected="${sl == quotation.shedLength}">[Fra tilbud-objekt]
+                    </option>
+                </select>
+            </div>
+        </section>
+
+    </div>
+    <div class="button-container">
+        <button type="submit" name="action" value="save" class="btn-submit">Gem i database</button>
+        <button type="submit" name="action" value="generate-bom" class="btn-submit">Generer Stykliste</button>
+        <button type="submit" name="action" value="send-customer" class="btn-submit">Send tilbud</button>
+    </div>
+
+</form>
+</div>
+
+</body>
+</html>
