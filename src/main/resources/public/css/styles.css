@@ -64,6 +64,14 @@ body {
 .content-layout {
     display: flex;
     gap: 30px;
+    justify-content: center;
+}
+
+/* 2-Kolonne Layout med mere gap */
+.content-layout-2 {
+    display: flex;
+    gap: 100px;
+    justify-content: center;
 }
 
 /* Venstre side: Formular / Valgmuligheder */
@@ -73,6 +81,10 @@ body {
     display: flex;
     flex-direction: column;
     gap: 15px;
+}
+
+.center-container {
+    text-align: center;
 }
 
 /* Sektion til kundeoplysninger for at skabe luft i formularen */
@@ -161,6 +173,15 @@ body {
     padding-top: 20px;
 }
 
+/* Container uden grå streg */
+.button-container-2 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    padding-top: 10px;
+}
+
 .btn-submit {
     background-color: var(--color-fog-blue);
     color: var(--color-white);
@@ -177,4 +198,21 @@ body {
 
 .btn-submit:hover {
     background-color: #00254a;
+}
+
+.btn {
+    background-color: var(--color-fog-blue);
+    color: var(--color-white);
+    border: none;
+    padding: 12px 35px;
+    font-family: var(--font-main);
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: background-color 0.2s ease;
+    display: inline-block;
 }
