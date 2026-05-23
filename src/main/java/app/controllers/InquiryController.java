@@ -21,7 +21,7 @@ public class InquiryController {
     private CustomerService customerService = new CustomerService();
 
     public void addRoutes(Javalin app, ConnectionPool connectionPool) {
-        app.get("/inquiry", ctx -> ctx.render("index.html"));
+        app.get("/inquiry", ctx -> ctx.render("carport.html"));
         app.post("/submit-inquiry", ctx -> createInquiry(ctx, connectionPool));
         //Kalder metoder, der sender pdf tilbage til browser efter generering
         app.get("/download-pdf", ctx -> downloadPdf(ctx));
@@ -55,7 +55,7 @@ public class InquiryController {
             //"message" fra th-reference i html - her får vi system-fejlmeddelelse
             //TODO check hvor i html den er - skal måske ændres / opdateres?
             ctx.attribute("message", e.getMessage());
-            ctx.render("index.html");
+            ctx.render("carport.html");
         }
     }
 
@@ -87,9 +87,9 @@ public class InquiryController {
             //Send bytes ud i browser
             ctx.result(pdfBytes);
         } else {
-            //Hvis session er udløbet = send bruger tilbage til index.html
+            //Hvis session er udløbet = send bruger tilbage til carport.html
             ctx.attribute("message", "PDF-session er udløbet");
-            ctx.render("index.html");
+            ctx.render("carport.html");
         }
     }
 

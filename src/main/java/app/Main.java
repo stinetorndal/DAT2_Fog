@@ -21,7 +21,7 @@ public class Main {
         }).start(7070);
 
         // Routing
-        app.get("/", ctx -> ctx.render("index.html"));
+        app.get("/", ctx -> ctx.render("carport.html"));
 
         InquiryController inquiryController = new InquiryController();
         inquiryController.addRoutes(app, connectionPool);
