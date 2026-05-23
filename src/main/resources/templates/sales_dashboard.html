@@ -1,0 +1,42 @@
+<!--  INDHOLD PÅ DENNE SIDE:   -->
+
+<!-- Denne side indeholder to knapper:
+        1. Alle forespørgsler
+        2. Alle tilbud
+-->
+
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOG Carport-forespørgsel</title>
+    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="main-container">
+
+    <header class="header-section" th:fragment="fog-header">
+        <div class="logo-box">Fog</div>
+        <h1 class="main-title">Sælger dashboard</h1>
+    </header>
+
+    <!-- action: Hvor skal den hen? Method: Hvordan skal den sendes?
+    <form class="content-layout" action="/submit-inquiry" method="POST"> -->
+
+                    <div class="form-group">
+                <span class="form-label-box">VÆLG BREDDE</span>
+                <select class="form-control" name="bredde">
+                    <!-- Indsæt i test-øjemed-->
+                    <option value="240">240 cm</option>
+                    <option value="360">360 cm</option>
+                    <option value="">Vælg bredde...</option>
+
+                </select>
+            </div>
+
+    </form>
+</div>
+</body>
+</html>
