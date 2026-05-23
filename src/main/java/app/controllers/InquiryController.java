@@ -18,6 +18,7 @@ public class InquiryController {
     private InquiryService inquiryService = new InquiryService();
     private PdfService pdfService = new PdfService();
     private EmailService emailService = new EmailService();
+    private CustomerService customerService = new CustomerService();
 
     public void addRoutes(Javalin app, ConnectionPool connectionPool) {
         app.get("/inquiry", ctx -> ctx.render("index.html"));
@@ -60,10 +61,7 @@ public class InquiryController {
 
     private int handleCustomer(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         Customer newCustomer = getCustomerFromFormParam(ctx);
-
-        //Send videre til service
-        CustomerService customerService = new CustomerService();
-        return customerService.createCustomer(newCustomer, connectionPool);
+         return customerService.createCustomer(newCustomer, connectionPool);
     }
 
     //hjælpemetode til handleCustomer og createInquiry med formParam

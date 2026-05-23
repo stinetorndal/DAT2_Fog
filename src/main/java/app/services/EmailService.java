@@ -12,7 +12,7 @@ public class EmailService {
             Message message = createMimeMessage(session, toEmail, subject, bodyText);
             Transport.send(message);
         } catch (MessagingException e) {
-            System.out.println("Afsendelse af email fejlede: " + e.getMessage());
+            System.err.println("Afsendelse af email fejlede: " + e.getMessage());
         }
     }
     private Message createMimeMessage (Session session, String toEmail, String subject, String bodyText) throws MessagingException {
