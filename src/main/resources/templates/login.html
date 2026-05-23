@@ -6,3 +6,39 @@
 
         KATARINA LAVER DENNE
 -->
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velkommen til Fog</title>
+    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="main-container">
+    <div class="center-container">
+
+        <header class="header-section" th:fragment="fog-header">
+            <div class="logo-box">Fog</div>
+            <h1 class="main-title">Velkommen til Fog</h1>
+        </header>
+
+        <div class="content-layout-2">
+            <div>
+                <div class="button-container-2">
+                    <a href="/inquiry" class="btn">Er du kunde?<br>Tryk her</a>
+                </div>
+            </div>
+
+            <div>
+                <div class="button-container-2">
+                    <a href="/login" class="btn">Er du Fog-sælger?<br>Tryk her</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
