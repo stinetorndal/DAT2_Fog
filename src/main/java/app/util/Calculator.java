@@ -1,6 +1,15 @@
 package app.util;
 
 import app.entities.Inquiry;
+import app.entities.Material;
+import app.enums.MaterialCategory;
+import app.exceptions.DatabaseException;
+import app.persistence.ConnectionPool;
+import app.services.MaterialService;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Calculator {
 
@@ -22,7 +31,7 @@ public class Calculator {
         // Tilføjer rem-objekter til stykliste.
         bom.addAll(calculateRem(inquiry, connectionPool));
 
-        //
+        // Til
     }
 
     public List<Material> calculatePosts(Inquiry inquiry, ConnectionPool connectionPool) throws DatabaseException {
@@ -62,18 +71,14 @@ public class Calculator {
         return carportBeams;
     }
 
-        //etStykkeTræ = listeMedLængder.getFirst();
-        //310
-        // [200,250,300,350,400]
-        //if (etStykkeTræ < rest) {
-        //kør videre
-        //else if (etStykkeTræ > rest): tag det næste tal der er =>
-        //else det er = en længde: STOP
-        //for (længder l : listeMedLængder) {
-        //if (l >= rest
-
-        //Hvis rest ikke er lig med nul, tag rest, loop igennem liste (som er sorteret), hvis træ er lig med eller længere end rest, læg træ til variabel der holder på rem til én side
-
+    private Material getLongestBeam(ConnectionPool connectionPool) throws DatabaseException {
+        Material longestBeam = materialService.getMaterialsByCategory(MaterialCategory.BEAM, connectionPool).getFirst();
+        for (Material m : materialService.getMaterialsByCategory(MaterialCategory.BEAM, connectionPool)) {
+            if (m.getLength() > longestBeam.getLength()) {
+                longestBeam = m;
+            }
+        }
+        return longestBeam; // (longest tree)
     }
 
     public List<Material> calculateRafts(Inquiry inquiry, ConnectionPool connectionPool) throws DatabaseException {
