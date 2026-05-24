@@ -35,8 +35,8 @@ public class InquiryController {
     }
 
     private void createInquiry(Context ctx, ConnectionPool connectionPool) {
-        int length = getLength(ctx);
-        int width = getWidth(ctx);
+        int length = Integer.parseInt(ctx.formParam("længde"));
+        int width = Integer.parseInt(ctx.formParam("bredde"));
         int shedLength = getShedLength(ctx);
         int shedWidth = getShedWidth(ctx);
 
@@ -110,15 +110,6 @@ public class InquiryController {
 
         //Uddelegér til emailservice-forsendelse
         emailService.sendEmail(customer.getEmail(), subject, bodyText);
-
-    }
-
-    private int getLength(Context ctx) {
-        return Integer.parseInt(ctx.formParam("længde"));
-    }
-
-    private int getWidth(Context ctx) {
-        return Integer.parseInt(ctx.formParam("bredde"));
     }
 
     //Hent data fra formular. Citatnavne skal matche html-navne
