@@ -17,6 +17,7 @@ public class QuoteController {
 
     }
 
+    //TODO er det i createQuote, at svg skal tegnes? Skal svg gemmes i databasen?
     private void createQuote(Context ctx, ConnectionPool connectionPool) {
         try {
             int inquiryId = Integer.parseInt(ctx.pathParam("id"));
