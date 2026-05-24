@@ -5,6 +5,7 @@ import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.InquiryMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InquiryService {
@@ -15,5 +16,13 @@ public class InquiryService {
        //Sætter automatisk dato på forespørgsel
         inquiry.setDate(java.time.LocalDateTime.now());
         inquiryMapper.saveInquiry(inquiry, connectionPool);
+    }
+
+    public List<Inquiry> getAllInquiries(ConnectionPool connectionPool) throws DatabaseException {
+        return inquiryMapper.getAllInquiries(connectionPool);
+    }
+
+    public Inquiry getInquiryById(int inquiryId, ConnectionPool connectionPool) throws DatabaseException {
+        return inquiryMapper.getInquiryBy(inquiryId, connectionPool);
     }
 }
