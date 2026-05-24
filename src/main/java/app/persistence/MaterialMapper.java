@@ -16,7 +16,7 @@ public class MaterialMapper {
     public List<Material> getAllMaterials(ConnectionPool connectionPool) throws DatabaseException {
         List<Material> allMaterials = new ArrayList<>();
 
-        String sql = "SELECT * FROM materials ORDER BY materials_id";
+        String sql = "SELECT * FROM materials ORDER BY material_id";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);

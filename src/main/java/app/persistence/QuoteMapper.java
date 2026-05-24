@@ -16,8 +16,10 @@ public class QuoteMapper {
         ) {
             ps.setInt(1, quote.getInquiryId());
             ps.setInt(2, quote.getSalespersonId());
-            ps.setDouble(3, quote.getPrice());
-            ps.setInt(4, quote.getQuotationNumber());
+            ps.setInt(3, quote.getLength());
+            ps.setInt(4, quote.getWidth());
+            ps.setDouble(5, quote.getPrice());
+            ps.setInt(6, quote.getQuotationNumber());
 
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
