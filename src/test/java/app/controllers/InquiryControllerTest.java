@@ -1,4 +1,4 @@
-package controllers;
+package app.controllers;
 
 import app.controllers.InquiryController;
 import app.persistence.ConnectionPool;

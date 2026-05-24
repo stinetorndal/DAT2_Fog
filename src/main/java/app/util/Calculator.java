@@ -22,18 +22,6 @@ public class Calculator {
     private double min_afstand = 150;
 
 
-    public void calculateCarport(Inquiry inquiry, ConnectionPool connectionPool) throws DatabaseException {
-        List<Material> bom = new ArrayList<>();
-
-        // Tilføjer stolpe-objekter til stykliste.
-        bom.addAll(calculatePosts(inquiry, connectionPool));
-
-        // Tilføjer rem-objekter til stykliste.
-        bom.addAll(calculateRem(inquiry, connectionPool));
-
-        // Til
-    }
-
     public List<Material> calculatePosts(Inquiry inquiry, ConnectionPool connectionPool) throws DatabaseException {
         List<Material> carportPosts = new ArrayList<>();
         Material post = materialService.getMaterialsByCategory(MaterialCategory.POST, connectionPool).getFirst();
@@ -48,7 +36,7 @@ public class Calculator {
         return carportPosts;
     }
 
-    public List<Material> calculateRem(Inquiry inquiry, ConnectionPool connectionPool) throws DatabaseException {
+    public List<Material> calculateBeam(Inquiry inquiry, ConnectionPool connectionPool) throws DatabaseException {
         List<Material> carportBeams = new ArrayList<>();
 
         int carportLength = inquiry.getCarportLength();

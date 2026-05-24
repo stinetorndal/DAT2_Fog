@@ -9,7 +9,7 @@ public class QuoteMapper {
 
     public int createQuote(Quote quote, ConnectionPool connectionPool) throws DatabaseException {
 
-        String sql = "INSERT INTO quotes (inquiry_id, salesperson_id, price, quotation_number) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO quotes (inquiry_id, salesperson_id, length, width, price, quotation_number) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS); //RETURN_GENERATED_KEYS returnerer det autogenererede id fra databasen. Det er smart.
