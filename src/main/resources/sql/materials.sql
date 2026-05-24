@@ -1,7 +1,7 @@
 INSERT INTO public.material_categories (category_name)
-VALUES ('ROOF'),
-       ('STRUCTURE'),
-       ('SIDING'),
+VALUES ('POST'),
+       ('RAFT'),
+       ('BEAM'),
        ('ASSEMBLY');
 
 INSERT INTO public.materials (name, length, description, unit, price_per_unit)
@@ -12,9 +12,10 @@ VALUES ('25x200 mm. trykimp. Brædt', 360, 'understernbrædder til for & bag end
        ('38x73 mm. Lægte ubh.', 420, 'til z på bagside af dør', 'stk', 10.00),
        ('45x95 mm. Reglar ub.', 270, 'løsholter til skur gavle', 'stk', 10.00),
        ('45x95 mm. Reglar ub.', 240, 'løsholter til skur sider', 'stk', 10.00),
-       ('45x195 mm. spærtræ ubh.', 600, 'Remme i sider, sadles ned i stolper', 'Stk', 10.00),
-       ('45x195 mm. spærtræ ubh.', 480, 'Remme i sider (skur del)', 'Stk', 10.00),
-       ('45x195 mm. spærtræ ubh.', 600, 'Spær, monteres på rem', 'Stk', 10.00),
+       ('45x195 mm. spærtræ ubh.', 300, 'Remme i sider, sadles ned i stolper', 'Stk', 10.00),
+       ('45x195 mm. spærtræ ubh.', 360, 'Remme i sider, sadles ned i stolper', 'Stk', 10.00),
+       ('45x195 mm. spærtræ ubh.', 540, 'Remme i sider, sadles ned i stolper', 'Stk', 10.00),
+       ('45x195 mm. spærtræ ubh.', 300, 'Spær, monteres på rem', 'Stk', 10.00),
        ('97x97 mm. trykimp. Stolpe', 300, 'Stolper nedgraves 90 cm. i jord', 'stk', 10.00),
        ('19x100 mm. trykimp. Brædt', 210, 'til beklædning af skur 1 på 2', 'stk', 10.00),
        ('19x100 mm. trykimp. Brædt', 540, 'vandbrædt på stern i sider', 'Stk', 10.00),
@@ -36,26 +37,26 @@ VALUES ('25x200 mm. trykimp. Brædt', 360, 'understernbrædder til for & bag end
        ('vinkelbeslag 35', NULL, 'Til montering af løsholter i skur', 'Stk', 10.00);
 
 INSERT INTO public.material_category_link (material_id, category_id)
-VALUES (1, 2),
-       (2, 2),
-       (3, 2),
-       (4, 2),
-       (5, 2),
-       (6, 2),
-       (7, 2),
-       (8, 2),
-       (9, 2),
-       (10, 2),
-       (11, 2),
-       (13, 2),
-       (14, 2);
+VALUES (8, 3),
+       (9, 3),
+       (10, 3);
 INSERT INTO public.material_category_link (material_id, category_id)
-VALUES (12, 3);
+VALUES (11, 2);
 INSERT INTO public.material_category_link (material_id, category_id)
-VALUES (15, 1),
-       (16, 1);
+VALUES (12, 1);
 INSERT INTO public.material_category_link (material_id, category_id)
-VALUES (17, 4),
+VALUES (1, 4),
+       (2, 4),
+       (3, 4),
+       (4, 4),
+       (5, 4),
+       (6, 4),
+       (7, 4),
+       (13, 4),
+       (14, 4),
+       (15, 4),
+       (16, 4),
+       (17, 4),
        (18, 4),
        (19, 4),
        (20, 4),

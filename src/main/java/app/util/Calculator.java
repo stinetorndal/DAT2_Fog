@@ -4,58 +4,63 @@ import app.entities.Inquiry;
 
 public class Calculator {
 
-    //Hent kundes valgte mål-objekt
-    //Hent liste med carport-længder
-    //Hent liste med carport-bredder
-    //Hent liste med træ-længder - skal først bruges til remme (til remme og spær)
-    private double carportL1 = 540;
-    private double carportL2 = 600;
-    private double carportL3 = 720;
-    private double carportB1 = 300;
-    private double carportB2 = 600;
-
-    private double spærlængde1 = 540;
-    private double spærlængde2 = 360;
-    private double spærlængde3 = 300;
-
+    MaterialService materialService = new MaterialService();
+    private double raftSpace = 55;
     private double frontudhæng = 100;
     private double bagudhæng = 20;
     private double stolpebredde = 10;
     private double max_afstand = 300;
     private double min_afstand = 150;
 
-    //Vi vælger til beregning: Længde 720, bredde 300 til test
 
-    public int calculatePosts(Inquiry inquiry) {
-        double postsOneSide = (inquiry.getCarportLength() - frontudhæng - bagudhæng) / ((max_afstand - min_afstand) + stolpebredde);
+    public void calculateCarport(Inquiry inquiry, ConnectionPool connectionPool) throws DatabaseException {
+        List<Material> bom = new ArrayList<>();
 
-        return (int) Math.ceil(postsOneSide) * 2;
+        // Tilføjer stolpe-objekter til stykliste.
+        bom.addAll(calculatePosts(inquiry, connectionPool));
+
+        // Tilføjer rem-objekter til stykliste.
+        bom.addAll(calculateRem(inquiry, connectionPool));
+
+        //
     }
 
-    public void calculateRem(Inquiry inquiry) {
-        //totallængde - vælg altid længste først
-        //Hvad er der tilbage totallængde - længste rem (540)
-        //Match med passende længde i rem-varianterne
+    public List<Material> calculatePosts(Inquiry inquiry, ConnectionPool connectionPool) throws DatabaseException {
+        List<Material> carportPosts = new ArrayList<>();
+        Material post = materialService.getMaterialsByCategory(MaterialCategory.POST, connectionPool).getFirst();
 
-        //int carportLength = inquiry.getCarportLength();
-        //int totalTræ = Tag først den længste fra ArrayList.
-        //if (carportLength > totalTræ) {
-        //Så træk dem fra hinanden og gør noget mere
-         //else : (så er længden på rem og carport den samme)
+        double postsOneSide = (inquiry.getCarportLength() - frontudhæng - bagudhæng) / ((max_afstand - min_afstand) + stolpebredde);
+        int totalAmountPosts = (int) Math.ceil(postsOneSide) * 2;
 
+        while (totalAmountPosts > 0) {
+            carportPosts.add(post);
+            totalAmountPosts--;
+        }
+        return carportPosts;
+    }
 
-        //int carportLength = inquiry.getCarportLength();
-        //int længsteTræ = Tag først den længste fra ArrayList.
-        //int rest = carportLength - længsteTræ;
-        //int remEnSide = længsteTræ;
-        //if (rest != 0) {
-        //for (Material m : listeMedLængder) {
-        //     if (m.getLength() >= rest) {
-        //          remEnSide += m;
-        //return remEnside;
-        //else return remEnSide; TODO VI SKAL HUSKE AT GANGE MED TO!!! OGSÅ OVENOVER!!
-        //TODO den skal vist returnerer en liste af materiale-objekter.
+    public List<Material> calculateRem(Inquiry inquiry, ConnectionPool connectionPool) throws DatabaseException {
+        List<Material> carportBeams = new ArrayList<>();
 
+        int carportLength = inquiry.getCarportLength();
+        Material longestBeam = getLongestBeam(connectionPool);
+        int longestBeamLength = longestBeam.getLength();
+        int remainingBeamLength = carportLength - longestBeamLength;
+
+        carportBeams.add(longestBeam);
+        carportBeams.add(longestBeam);
+
+        if (remainingBeamLength != 0) {
+            for (Material m : materialService.getBeams(connectionPool)) {
+                if (m.getLength() >= remainingBeamLength) {
+                    carportBeams.add(m);
+                    carportBeams.add(m);
+                }
+            }
+            return carportBeams;
+        }
+        return carportBeams;
+    }
 
         //etStykkeTræ = listeMedLængder.getFirst();
         //310
@@ -69,6 +74,26 @@ public class Calculator {
 
         //Hvis rest ikke er lig med nul, tag rest, loop igennem liste (som er sorteret), hvis træ er lig med eller længere end rest, læg træ til variabel der holder på rem til én side
 
+    }
+
+    public List<Material> calculateRafts(Inquiry inquiry, ConnectionPool connectionPool) throws DatabaseException {
+        List<Material> carportRafts = new ArrayList<>();
+        Material raft = materialService.getMaterialsByCategory(MaterialCategory.RAFT, connectionPool).getFirst();
+
+        double NumberOfRafts = inquiry.getCarportLength() / raftSpace;
+        int totalAmountRafts = (int) Math.ceil(NumberOfRafts);
+
+        int carportWidth = inquiry.getCarportWidth();
+        if (carportWidth > 300) {
+            totalAmountRafts = totalAmountRafts * 2;
+        }
+
+        while (totalAmountRafts > 0) {
+            carportRafts.add(raft);
+            totalAmountRafts--;
+        }
+
+        return carportRafts;
     }
 
 }

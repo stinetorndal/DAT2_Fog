@@ -38,7 +38,8 @@ public class MaterialMapper {
         String sql = "SELECT m.material_id, m.name, m.description, m.unit, m.price_per_unit FROM materials m" +
                 " JOIN material_category_link mcl ON m.material_id = mcl.material_id" +
                 " JOIN material_categories mc ON mcl.category_id = mc.category_id" +
-                " WHERE mc.category_name = ?";
+                " WHERE mc.category_name = ?" +
+                "ORDER BY length";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
