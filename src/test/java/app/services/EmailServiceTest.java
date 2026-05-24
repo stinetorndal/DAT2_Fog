@@ -1,6 +1,5 @@
-package services;
+package app.services;
 
-import app.services.EmailService;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;

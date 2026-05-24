@@ -1,7 +1,5 @@
-package services;
+package app.services;
 
-import app.services.PdfService;
-import io.javalin.http.SinglePageHandler;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

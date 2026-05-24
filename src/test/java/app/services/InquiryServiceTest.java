@@ -1,9 +1,8 @@
-package services;
+package app.services;
 
 import app.entities.Inquiry;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
-import app.services.InquiryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
