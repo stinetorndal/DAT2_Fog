@@ -39,7 +39,7 @@ public class MaterialMapper {
                 " JOIN material_category_link mcl ON m.material_id = mcl.material_id" +
                 " JOIN material_categories mc ON mcl.category_id = mc.category_id" +
                 " WHERE mc.category_name = ?" +
-                "ORDER BY length";
+                " ORDER BY length";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
