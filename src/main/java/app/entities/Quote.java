@@ -12,14 +12,13 @@ public class Quote {
     private int quotationNumber;
     private int version;
 
-    public Quote(int inquiryId, int salespersonId, int length, int width, double price, int quotationNumber) {
+    public Quote(int inquiryId, int salespersonId, int length, int width, double price) {
         this.inquiryId = inquiryId;
         this.salespersonId = salespersonId;
         this.length = length;
         this.width = width;
         this.price = price;
         this.status = "pending";
-        this.quotationNumber = quotationNumber;
         this.version = 1;
     }
 
