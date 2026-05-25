@@ -222,3 +222,35 @@ body {
     color: var(--color-fog-blue);
     text-transform: none; /* Tvinger browseren til at vise teksten præcis som skrevet i HTML */
 }
+
+/* --- TABEL STYLING (ALLE FORESPØRGSLER) --- */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px;
+    background-color: var(--color-white);
+}
+
+/* Overskrifter */
+.data-table th {
+    background-color: var(--color-fog-light-blue);
+    color: var(--color-fog-blue);
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: bold;
+    font-size: 14px;
+    border-bottom: 2px solid var(--color-gray-border);
+}
+
+/* Celler */
+.data-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--color-gray-border);
+    font-size: 14px;
+}
+
+/* Gør hver anden række let grå, så det er nemt at læse */
+.data-table tbody tr:nth-child(even) {
+    background-color: #fbeeed; /* En let lys nuance eller bare #fafafa */
+}

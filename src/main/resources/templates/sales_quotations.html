@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FOG Carport-forespørgsel</title>
+    <title>FOG Carport-tilbud</title>
     <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 <body>
@@ -16,15 +16,40 @@
 
     <header class="header-section" th:fragment="fog-header">
         <div class="logo-box">Fog</div>
-        <h1 class="main-title">ALLE FORESPØRGSLER</h1>
+        <h1 class="main-title">ALLE TILBUD</h1>
     </header>
+    <section class="selection-box user-details wide-box">
+        <h2 class="view-title">ALLE TILBUD</h2>
+        <table class="data-table">
+            <thead>
+            <tr>
+                <th>TILBUD</th>
+                <th>KUNDE</th>
+                <th>CARPORT MÅL</th>
+                <th>SKUR</th>
+                <th>DATO</th>
+                <th>HANDLING</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="inquiry : ${alleForespoergsler}">
+                <td th:text="'Forespørgsel ' + ${inquiry.inquiryId}"></td>
 
-    <h2 class="normal-text">Du har valgt [Alle forespørgsler]</h2>
-    <!-- Her kommer en liste med forespørgsler. Man skal kunne markere den forespørgsel, man vil arbejde med
-            Skal man dobbeltklikke på tilbud for at åbne i en ny side?
-            Enkeltklik + OK??
-    -->
+                <td th:text="${inquiry.customerName}"></td>
 
+                <td th:text="${inquiry.carportLength} + ' x ' + ${inquiry.carportWidth} + ' cm'"></td>
+
+                <td th:text="${inquiry.shedLength == 0} ? 'Ikke valgt' : ${inquiry.shedLength} + ' x ' + ${inquiry.shedWidth} + ' cm'"></td>
+
+                <td th:text="${#temporals.format(inquiry.date, 'dd-MM-yyyy')}"></td>
+
+                <td>
+                    <a th:href="@{/vis-foresporgsel/{id}(id=${inquiry.inquiryId})}" class="btn-action">Behandl</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
 </div>
 
 </form>
