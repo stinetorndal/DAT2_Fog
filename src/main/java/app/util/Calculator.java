@@ -21,12 +21,20 @@ public class Calculator {
     private double max_afstand = 300;
     private double min_afstand = 150;
 
+    private int length;
+    private int width;
 
-    public List<Material> calculatePosts(Inquiry inquiry, ConnectionPool connectionPool) throws DatabaseException {
+    public Calculator(int length, int width) {
+        this.length = length;
+        this.width = width;
+    }
+
+
+    public List<Material> calculatePosts(int length, ConnectionPool connectionPool) throws DatabaseException {
         List<Material> carportPosts = new ArrayList<>();
         Material post = materialService.getMaterialsByCategory(MaterialCategory.POST, connectionPool).getFirst();
 
-        double postsOneSide = (inquiry.getCarportLength() - frontudhæng - bagudhæng) / ((max_afstand - min_afstand) + stolpebredde);
+        double postsOneSide = (length - frontudhæng - bagudhæng) / ((max_afstand - min_afstand) + stolpebredde);
         int totalAmountPosts = (int) Math.ceil(postsOneSide) * 2;
 
         while (totalAmountPosts > 0) {
@@ -36,13 +44,12 @@ public class Calculator {
         return carportPosts;
     }
 
-    public List<Material> calculateBeam(Inquiry inquiry, ConnectionPool connectionPool) throws DatabaseException {
+    public List<Material> calculateBeams(int length, ConnectionPool connectionPool) throws DatabaseException {
         List<Material> carportBeams = new ArrayList<>();
 
-        int carportLength = inquiry.getCarportLength();
         Material longestBeam = getLongestBeam(connectionPool);
         int longestBeamLength = longestBeam.getLength();
-        int remainingBeamLength = carportLength - longestBeamLength;
+        int remainingBeamLength = length - longestBeamLength;
 
         carportBeams.add(longestBeam);
         carportBeams.add(longestBeam);
@@ -69,15 +76,14 @@ public class Calculator {
         return longestBeam; // (longest tree)
     }
 
-    public List<Material> calculateRafts(Inquiry inquiry, ConnectionPool connectionPool) throws DatabaseException {
+    public List<Material> calculateRafts(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
         List<Material> carportRafts = new ArrayList<>();
         Material raft = materialService.getMaterialsByCategory(MaterialCategory.RAFT, connectionPool).getFirst();
 
-        double NumberOfRafts = inquiry.getCarportLength() / raftSpace;
+        double NumberOfRafts = length / raftSpace;
         int totalAmountRafts = (int) Math.ceil(NumberOfRafts);
 
-        int carportWidth = inquiry.getCarportWidth();
-        if (carportWidth > 300) {
+        if (width > 300) {
             totalAmountRafts = totalAmountRafts * 2;
         }
 
@@ -88,5 +94,4 @@ public class Calculator {
 
         return carportRafts;
     }
-
 }
