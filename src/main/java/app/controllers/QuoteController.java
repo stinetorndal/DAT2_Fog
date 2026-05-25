@@ -5,6 +5,7 @@ import app.entities.Quote;
 import app.entities.Salesperson;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
+import app.services.CarportSvg;
 import app.services.InquiryService;
 import app.services.QuoteService;
 import app.util.CalculateTotalPrice;
@@ -15,29 +16,29 @@ public class QuoteController {
 
     private InquiryService inquiryService = new InquiryService();
     private QuoteService quoteService = new QuoteService();
-    private CalculateTotalPrice calculateTotalPrice = new CalculateTotalPrice();
+    private CalculateTotalPrice calculateTotalPrice;
 
     public void addRoutes(Javalin app, ConnectionPool connectionPool) {
         app.post("/sales/inquiry/{id}", ctx -> createQuote(ctx, connectionPool));
-
+        app.get("/sales/quote/{id}", ctx -> showQuote(ctx, connectionPool));
     }
 
     private void createQuote(Context ctx, ConnectionPool connectionPool) {
         try {
             int inquiryId = Integer.parseInt(ctx.pathParam("id"));
             Inquiry inquiry = inquiryService.getInquiryById(inquiryId, connectionPool);
+            calculateTotalPrice = new CalculateTotalPrice(inquiry.getCarportLength(), inquiry.getCarportWidth());
             Salesperson salesperson = ctx.sessionAttribute("currentUser");
 
             if (salesperson != null) {
                 int salespersonId = salesperson.getSalespersonId();
                 int length = inquiry.getCarportLength();
                 int width = inquiry.getCarportWidth();
-                double quotePrice = calculateTotalPrice.calculatePrice(inquiry, connectionPool);
-                int quotationNumber = quoteService.getQuotationNumber(connectionPool);
-                Quote quote = new Quote(inquiryId, salespersonId, length, width, quotePrice, quotationNumber);
-                quoteService.createQuote(quote, connectionPool);
-                //TODO skal der komme en meddelelse om, at tilbuddet blev oprettet??
-                ctx.redirect("/sales/all-inquiries"); //redirect() fordi ellers vil url'en stadig vise url'en til den enkelte forespørgsel.
+                double quotePrice = calculateTotalPrice.calculatePrice(length, width, connectionPool);
+                Quote quote = new Quote(inquiryId, salespersonId, length, width, quotePrice);
+                int quotationId = quoteService.createQuote(quote, connectionPool);
+
+                ctx.redirect("/sales/quote/" + quotationId); //redirect() fordi ellers vil url'en stadig vise url'en til den enkelte forespørgsel.
             } else {
                 ctx.redirect("/login");
             }
@@ -45,6 +46,21 @@ public class QuoteController {
             ctx.attribute("message", e.getMessage());
             ctx.redirect("/sales/all-inquiries");
         }
-        //TODO hvad skal der ske, når en forespørgsel er blevet lavet om til tilbud? Skal den stadig ligge under forespørgsler? Skal den gøre "inaktiv"?
+    }
+
+    private void showQuote(Context ctx, ConnectionPool connectionPool) {
+        try {
+            int quotationId = Integer.parseInt(ctx.pathParam("id"));
+            Quote quote = quoteService.getQuoteById(quotationId, connectionPool);
+
+            CarportSvg carportSvg = new CarportSvg(quote.getLength(), quote.getWidth(), connectionPool);
+            ctx.attribute("svg", carportSvg.toString());
+
+            ctx.attribute("quote", quote);
+            ctx.render("quote.html");
+        } catch (DatabaseException | NumberFormatException e) {
+            ctx.attribute("message", e.getMessage());
+            ctx.render("all-quotes.html");
+        }
     }
 }
