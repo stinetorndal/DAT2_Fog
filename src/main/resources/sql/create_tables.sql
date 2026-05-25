@@ -77,10 +77,12 @@ CREATE TABLE public.quotes
     quotation_id     SERIAL PRIMARY KEY,
     inquiry_id       INT REFERENCES public.inquiries (inquiry_id),
     salesperson_id   INT REFERENCES public.salespersons (salesperson_id),
+    length   INT            NOT NULL,
+    width    INT            NOT NULL,
     price            DECIMAL(10, 2) NOT NULL,
     status           VARCHAR(255)   NOT NULL DEFAULT 'pending',
-    quotation_number INT NOT NULL,
-    version          INT NOT NULL DEFAULT 1
+    quotation_number INT            NOT NULL,
+    version          INT            NOT NULL DEFAULT 1
 );
 
 CREATE TABLE public.orders

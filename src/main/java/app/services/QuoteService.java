@@ -12,7 +12,7 @@ import java.util.List;
 public class QuoteService {
     private QuoteMapper quoteMapper = new QuoteMapper();
 
-    public List<Quote> handleAllQuotes(Quote quote, ConnectionPool connectionPool) throws DatabaseException {
+    public List<Quote> handleAllQuotes(ConnectionPool connectionPool) throws DatabaseException {
         return quoteMapper.getAllQuotes(connectionPool);
     }
 }

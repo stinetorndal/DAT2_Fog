@@ -254,3 +254,21 @@ body {
 .data-table tbody tr:nth-child(even) {
     background-color: #fbeeed; /* En let lys nuance eller bare #fafafa */
 }
+/* Knap til brug inde i tabeller */
+.btn-table {
+    background-color: var(--color-fog-blue);
+    color: var(--color-white);
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: bold;
+    border-radius: 4px;
+    text-decoration: none; /* Fjerner understregning på linket */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-block;
+    transition: background-color 0.2s ease;
+}
+
+.btn-table:hover {
+    background-color: #00254a;
+}
