@@ -6,6 +6,7 @@ import app.enums.MaterialCategory;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.services.MaterialService;
+import org.jetbrains.annotations.TestOnly;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,9 +53,12 @@ public class Calculator {
                 if (m.getLength() >= remainingBeamLength) {
                     carportBeams.add(m);
                     carportBeams.add(m);
+                    //Vigtigt da løkken kører videre og bliver ved med at tilføje. Indsat efter test
+                    break;
                 }
             }
-            return carportBeams;
+            //kommenteret ud efter at have kørt test. Den tilføjet et ekstra sæt
+            //return carportBeams;
         }
         return carportBeams;
     }
@@ -88,5 +92,6 @@ public class Calculator {
 
         return carportRafts;
     }
+
 
 }
