@@ -15,4 +15,8 @@ public class QuoteService {
         return quoteMapper.createQuote(quote, connectionPool);
     }
 
+    public Quote getQuoteById(int quotationId, ConnectionPool connectionPool) throws DatabaseException {
+        return quoteMapper.getQuoteById(quotationId, connectionPool);
+    }
+
 }
