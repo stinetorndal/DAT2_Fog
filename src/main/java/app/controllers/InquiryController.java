@@ -27,7 +27,6 @@ public class InquiryController {
         app.post("/submit-inquiry", ctx -> createInquiry(ctx, connectionPool));
         //Kalder metoder, der sender pdf tilbage til browser efter generering
         app.get("/download-pdf", ctx -> downloadPdf(ctx));
-        app.post("/submit-inquiry", ctx -> createInquiry(ctx, connectionPool));
         app.get("/sales/all-inquiries", ctx -> showAllInquiries(ctx, connectionPool));
         app.get("/sales/inquiry/{id}", ctx -> showInquiry(ctx, connectionPool));
         // Krølleparenteserne er Javalins syntaks for en path parameter.
