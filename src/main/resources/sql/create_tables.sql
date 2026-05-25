@@ -77,10 +77,12 @@ CREATE TABLE public.quotes
     quotation_id     SERIAL PRIMARY KEY,
     inquiry_id       INT REFERENCES public.inquiries (inquiry_id),
     salesperson_id   INT REFERENCES public.salespersons (salesperson_id),
+    length           INT,
+    width            INT,
     price            DECIMAL(10, 2) NOT NULL,
     status           VARCHAR(255)   NOT NULL DEFAULT 'pending',
-    quotation_number INT NOT NULL,
-    version          INT NOT NULL DEFAULT 1
+    quotation_number INT            NOT NULL,
+    version          INT            NOT NULL DEFAULT 1
 );
 
 CREATE TABLE public.orders
@@ -96,7 +98,7 @@ CREATE TABLE public.orders
 CREATE TABLE public.BOM_lines
 (
     BOM_lines_id SERIAL PRIMARY KEY,
-    order_id     INT REFERENCES public.orders (order_id),
+    quotation_id INT REFERENCES public.quotes (quotation_id),
     material_id  INT REFERENCES public.materials (material_id),
     quantity     INT         NOT NULL,
     length       INT,

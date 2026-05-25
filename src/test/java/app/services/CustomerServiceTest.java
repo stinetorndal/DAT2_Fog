@@ -1,4 +1,4 @@
-package services;
+package app.services;
 
 import app.entities.Customer;
 import app.entities.Zipcode;
