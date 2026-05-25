@@ -124,7 +124,7 @@ class QuoteMapperTest {
     @Test
     void createQuote() throws DatabaseException {
         // Arrange
-        Quote quote = new Quote(3, 1, 49995);
+        Quote quote = new Quote(3, 1, 540, 300, 49995);
 
         // Act
         int quotationId = quoteMapper.createQuote(quote, connectionPool);
@@ -135,7 +135,7 @@ class QuoteMapperTest {
 
     @Test
     void createQuoteInEmptyTable() throws DatabaseException {
-        Quote quote = new Quote(1, 1, 12495);
+        Quote quote = new Quote(1, 1, 600, 300, 12495);
 
         int quotationId = quoteMapper.createQuote(quote, connectionPool);
 
