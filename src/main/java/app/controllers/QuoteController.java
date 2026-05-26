@@ -65,4 +65,16 @@ public class QuoteController {
             ctx.render("all-quotes.html");
         }
     }
+    private void viewAllQuotations (Context ctx, ConnectionPool connectionPool) {
+        try {
+            List<Quote> quotes = quoteService.handleAllQuotes(connectionPool);
+
+            //Så Thymeleaf kan læse den
+            ctx.attribute("alleTilbud", quotes);
+            ctx.render("sales_quotations.html");
+        } catch (DatabaseException e) {
+            ctx.attribute("message", "Kunne ikke hente alle tilbud " + e.getMessage());
+            ctx.render("sales_dashboard.html");
+        }
+    }
 }
