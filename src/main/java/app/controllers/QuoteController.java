@@ -7,7 +7,7 @@ import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.services.InquiryService;
 import app.services.QuoteService;
-import app.util.CalculateTotalPrice;
+import app.services.CalculateTotalPrice;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 

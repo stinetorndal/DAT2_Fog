@@ -1,6 +1,5 @@
-package app.util;
+package app.services;
 
-import app.Main;
 import app.entities.Inquiry;
 import app.entities.Material;
 import app.exceptions.DatabaseException;

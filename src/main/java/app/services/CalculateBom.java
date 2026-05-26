@@ -1,4 +1,4 @@
-package app.util;
+package app.services;
 
 import app.entities.Inquiry;
 import app.entities.Material;

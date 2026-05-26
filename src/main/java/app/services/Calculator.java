@@ -1,12 +1,10 @@
-package app.util;
+package app.services;
 
 import app.entities.Inquiry;
 import app.entities.Material;
 import app.enums.MaterialCategory;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
-import app.services.MaterialService;
-import org.jetbrains.annotations.TestOnly;
 
 import java.util.ArrayList;
 import java.util.List;
