@@ -1,0 +1,48 @@
+<!--  INDHOLD PÅ DENNE SIDE:   -->
+
+<!-- Denne side indeholder en liste over alle forespørgsler
+
+       KATARINA LAVER DENNE
+-->
+
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alle forespørgsler</title>
+    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="main-container">
+
+    <header class="header-section" th:fragment="fog-header">
+        <div class="logo-box">Fog</div>
+        <h1 class="main-title">Alle forespørgsler</h1>
+    </header>
+
+    <form class="form-control content-layout-2" method="post">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Forespørgselsid</th>
+                <th>Kundeid</th>
+                <th>Dato</th>
+                <th>Handling</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="inquiry:${allInquiries}">
+                <td th:text="${inquiry.inquiryId}"></td>
+                <td th:text="${inquiry.customerId}"></td>
+                <td th:text="${inquiry.date}"></td>
+                <td>
+                    <button class="btn" type="submit" name="inquiryId" th:value="${inquiry.inquiryId}"
+                            formaction="showInquiry">Vis forespørgsel
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>

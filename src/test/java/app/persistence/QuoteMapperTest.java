@@ -2,6 +2,8 @@ package app.persistence;
 
 import app.entities.Quote;
 import app.exceptions.DatabaseException;
+import app.persistence.ConnectionPool;
+import app.persistence.QuoteMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -140,5 +143,32 @@ class QuoteMapperTest {
         int quotationId = quoteMapper.createQuote(quote, connectionPool);
 
         assertEquals(1, quotationId);
+    }
+
+    @Test
+    void getAllQuotesWithJoin() throws DatabaseException {
+        // Arrange
+        QuoteMapper quoteMapper = new QuoteMapper();
+
+        // Act: Kald jeres mapper for at hente listen, som udfører SQL-JOIN
+        List<Quote> quotes = quoteMapper.getAllQuotes(connectionPool);
+
+        // Assert 1: Tjek om listen overhovedet indeholder noget
+        assertNotNull(quotes);
+        assertTrue(quotes.size() > 0);
+
+        // Hent tilbud der lige er indsat i databasen
+        Quote testQuote = quotes.get(0);
+
+        // Assert 2: Test om JOIN henter kundens rigtige navn ud fra customers-tabellen
+        // Databasen burde joine fornavn og efternavn
+        assertEquals("Test Testesen", testQuote.getCustomerName());
+
+        // Assert 3: Test om JOIN har hentet målene korrekt op fra inquiries-tabellen
+        assertEquals(600, testQuote.getLength());
+        assertEquals(400, testQuote.getWidth());
+
+        System.out.println("Succes! Integrationstesten bekræfter at JOIN virker");
+        System.out.println("Navn fra DB: " + testQuote.getCustomerName() + " Mål fra DB: " + testQuote.getLength() + "x" + testQuote.getWidth());
     }
 }

@@ -1,4 +1,4 @@
-package app.util;
+package app.services;
 
 import app.entities.Inquiry;
 import app.entities.Material;
@@ -59,9 +59,12 @@ public class Calculator {
                 if (m.getLength() >= remainingBeamLength) {
                     carportBeams.add(m);
                     carportBeams.add(m);
+                    //Vigtigt da løkken kører videre og bliver ved med at tilføje. Indsat efter test
+                    break;
                 }
             }
-            return carportBeams;
+            //kommenteret ud efter at have kørt test. Den tilføjet et ekstra sæt
+            //return carportBeams;
         }
         return carportBeams;
     }

@@ -1,7 +1,6 @@
 package app.entities;
 
 public class Quote {
-
     private int quotationId;
     private int inquiryId;
     private int salespersonId;
@@ -11,6 +10,9 @@ public class Quote {
     private String status;
     private int quotationNumber;
     private int version;
+
+    // Ekstra felt til brug i Thymeleaf-tabellen
+    private String customerName;
 
     public Quote(int inquiryId, int salespersonId, int length, int width, double price) {
         this.inquiryId = inquiryId;
@@ -93,4 +95,6 @@ public class Quote {
     public void setVersion(int version) {
         this.version = version;
     }
+    public String getCustomerName() {
+        return customerName; }
 }

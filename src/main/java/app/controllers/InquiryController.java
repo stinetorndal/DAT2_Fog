@@ -33,9 +33,9 @@ public class InquiryController {
         // {id} er en variabel del af URL'en, som hentes med ctx.pathParam("id").
     }
 
-        private void createInquiry(Context ctx, ConnectionPool connectionPool) {
-        int length = getLength(ctx);
-        int width = getWidth(ctx);
+    private void createInquiry(Context ctx, ConnectionPool connectionPool) {
+        int length = Integer.parseInt(ctx.formParam("længde"));
+        int width = Integer.parseInt(ctx.formParam("bredde"));
         int shedLength = getShedLength(ctx);
         int shedWidth = getShedWidth(ctx);
 
@@ -47,7 +47,7 @@ public class InquiryController {
             inquiryService.handleInquiry(newInquiry, connectionPool);
 
             Customer customerInquiryPdf = getCustomerFromFormParam(ctx);
-            byte[] pdfBytes = pdfService.generateInquiryPdf (customerInquiryPdf, newInquiry);
+            byte[] pdfBytes = pdfService.generateInquiryPdf(customerInquiryPdf, newInquiry);
 
             ctx.sessionAttribute("currentInquiry", newInquiry);
             ctx.sessionAttribute("pdfBytes", pdfBytes);
@@ -59,7 +59,6 @@ public class InquiryController {
 
         } catch (DatabaseException e) {
             //"message" fra th-reference i html - her får vi system-fejlmeddelelse
-            //TODO check hvor i html den er - skal måske ændres / opdateres?
             ctx.attribute("message", e.getMessage());
             ctx.render("carport.html");
         }
@@ -67,7 +66,7 @@ public class InquiryController {
 
     private int handleCustomer(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         Customer newCustomer = getCustomerFromFormParam(ctx);
-         return customerService.createCustomer(newCustomer, connectionPool);
+        return customerService.createCustomer(newCustomer, connectionPool);
     }
 
     //hjælpemetode til handleCustomer og createInquiry med formParam
@@ -83,9 +82,9 @@ public class InquiryController {
         return customer;
     }
 
-    private void downloadPdf (Context ctx) {
+    private void downloadPdf(Context ctx) {
         byte[] pdfBytes = ctx.sessionAttribute("pdfBytes");
-        if (pdfBytes!= null) {
+        if (pdfBytes != null) {
             //Fortæller browser dette er en pdf-fil
             ctx.contentType("application/pdf");
             //Giver browser besked på download + definerer navn
@@ -100,29 +99,20 @@ public class InquiryController {
     }
 
     //Hjælpemetode til bodyText i email.
-    //TODO bør laves som DTO
-    private void sendConfirmationEmail (Customer customer){
+    private void sendConfirmationEmail(Customer customer) {
         String subject = "Bekræftelse på din carport-forespørgsel";
         //Body-tekst
         String bodyText = "Kære " + customer.getFirstname() + ",\n\n"
-        + "Tak for din forespørgsel hos Fog\n"
-        + "Vi har modtaget dine specifikationer og går i gang med at beregne et tilbud til dig.\n\n"
-        + "Venlig hilsen, \nFog Byggecenter";
+                + "Tak for din forespørgsel hos Fog\n"
+                + "Vi har modtaget dine specifikationer og går i gang med at beregne et tilbud til dig.\n\n"
+                + "Venlig hilsen, \nFog Byggecenter";
 
         //Uddelegér til emailservice-forsendelse
         emailService.sendEmail(customer.getEmail(), subject, bodyText);
-
-    }
-    private int getLength(Context ctx) {
-        return Integer.parseInt(ctx.formParam("længde"));
-    }
-
-    private int getWidth(Context ctx) {
-        return Integer.parseInt(ctx.formParam("bredde"));
     }
 
     //Hent data fra formular. Citatnavne skal matche html-navne
-        private int getShedLength(Context ctx) {
+    private int getShedLength(Context ctx) {
         String hasShed = ctx.formParam("skur_ja_nej");
         if ("ja".equals(hasShed)) {
             return Integer.parseInt(ctx.formParam("skur_længde"));
@@ -130,7 +120,7 @@ public class InquiryController {
         return 0;
     }
 
-private int getShedWidth(Context ctx) {
+    private int getShedWidth(Context ctx) {
         String hasShed = ctx.formParam("skur_ja_nej");
         if ("ja".equals(hasShed)) {
             return Integer.parseInt(ctx.formParam("skur_bredde"));
@@ -159,7 +149,8 @@ private int getShedWidth(Context ctx) {
 
             ctx.attribute("inquiry", inquiry);
             ctx.render("inquiry.html");
-        } catch (DatabaseException | NumberFormatException e) { //NumberFormatException er med her, fordi vi i try-blokken
+        } catch (DatabaseException |
+                 NumberFormatException e) { //NumberFormatException er med her, fordi vi i try-blokken
             // forsøger at parse til en int. Hvis url'en f.eks. indeholder "abc" i stedet for "5",
             // så kan den ikke parses/konverteres til en int, og det vil give en fejl/exception
             // (som vi selvfølgelig skal tage os af 😄).

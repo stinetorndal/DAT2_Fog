@@ -1,4 +1,4 @@
-package app.util;
+package app.services;
 
 import app.entities.Material;
 import app.exceptions.DatabaseException;

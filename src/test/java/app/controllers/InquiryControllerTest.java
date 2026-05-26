@@ -78,4 +78,3 @@ public class InquiryControllerTest {
         return client.send(request, java.net.http.HttpResponse.BodyHandlers.ofString()).statusCode();
     }
 }
-

@@ -8,9 +8,10 @@ import app.persistence.ConnectionPool;
 import app.services.CarportSvg;
 import app.services.InquiryService;
 import app.services.QuoteService;
-import app.util.CalculateTotalPrice;
+import app.services.CalculateTotalPrice;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+import java.util.List;
 
 public class QuoteController {
 
@@ -21,6 +22,7 @@ public class QuoteController {
     public void addRoutes(Javalin app, ConnectionPool connectionPool) {
         app.post("/sales/inquiry/{id}", ctx -> createQuote(ctx, connectionPool));
         app.get("/sales/quote/{id}", ctx -> showQuote(ctx, connectionPool));
+        app.get("/sales-dashboard/all-quotations", ctx -> viewAllQuotations(ctx, connectionPool));
     }
 
     private void createQuote(Context ctx, ConnectionPool connectionPool) {
