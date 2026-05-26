@@ -20,9 +20,10 @@ public class QuoteController {
     private CalculateTotalPrice calculateTotalPrice;
 
     public void addRoutes(Javalin app, ConnectionPool connectionPool) {
-        app.post("/sales/inquiry/{id}", ctx -> createQuote(ctx, connectionPool));
+        app.post("/convert-to-quotation/{id}", ctx -> createQuote(ctx, connectionPool));
         app.get("/sales/quote/{id}", ctx -> showQuote(ctx, connectionPool));
-        app.get("/sales-dashboard/all-quotations", ctx -> viewAllQuotations(ctx, connectionPool));
+        app.get("/sales_quotations", ctx -> viewAllQuotations(ctx, connectionPool));
+        app.get("/sales_quotation_details/{id}", ctx -> showQuote(ctx, connectionPool));
     }
 
     private void createQuote(Context ctx, ConnectionPool connectionPool) {
@@ -40,7 +41,7 @@ public class QuoteController {
                 Quote quote = new Quote(inquiryId, salespersonId, length, width, quotePrice);
                 int quotationId = quoteService.createQuote(quote, connectionPool);
 
-                ctx.redirect("/sales/quote/" + quotationId); //redirect() fordi ellers vil url'en stadig vise url'en til den enkelte forespørgsel.
+                ctx.redirect("/sales_quotation_details/" + quotationId); //redirect() fordi ellers vil url'en stadig vise url'en til den enkelte forespørgsel.
             } else {
                 ctx.redirect("/login");
             }
@@ -59,10 +60,10 @@ public class QuoteController {
             ctx.attribute("svg", carportSvg.toString());
 
             ctx.attribute("quote", quote);
-            ctx.render("quote.html");
+            ctx.render("sales_quotation_details.html");
         } catch (DatabaseException | NumberFormatException e) {
             ctx.attribute("message", e.getMessage());
-            ctx.render("all-quotes.html");
+            ctx.render("sales_quotation.html");
         }
     }
     private void viewAllQuotations (Context ctx, ConnectionPool connectionPool) {
@@ -70,7 +71,7 @@ public class QuoteController {
             List<Quote> quotes = quoteService.handleAllQuotes(connectionPool);
 
             //Så Thymeleaf kan læse den
-            ctx.attribute("alleTilbud", quotes);
+            ctx.attribute("allQuotations", quotes);
             ctx.render("sales_quotations.html");
         } catch (DatabaseException e) {
             ctx.attribute("message", "Kunne ikke hente alle tilbud " + e.getMessage());

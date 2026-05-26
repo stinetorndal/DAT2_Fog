@@ -27,8 +27,8 @@ public class InquiryController {
         app.post("/submit-inquiry", ctx -> createInquiry(ctx, connectionPool));
         //Kalder metoder, der sender pdf tilbage til browser efter generering
         app.get("/download-pdf", ctx -> downloadPdf(ctx));
-        app.get("/sales/all-inquiries", ctx -> showAllInquiries(ctx, connectionPool));
-        app.get("/sales/inquiry/{id}", ctx -> showInquiry(ctx, connectionPool));
+        app.get("/sales-inquiries", ctx -> showAllInquiries(ctx, connectionPool));
+        app.get("/sales_inquiry_details/{id}", ctx -> showInquiry(ctx, connectionPool));
         // Krølleparenteserne er Javalins syntaks for en path parameter.
         // {id} er en variabel del af URL'en, som hentes med ctx.pathParam("id").
     }
@@ -133,10 +133,10 @@ public class InquiryController {
             List<Inquiry> allInquiries = inquiryService.getAllInquiries(connectionPool);
 
             ctx.attribute("allInquiries", allInquiries);
-            ctx.render("all-inquiries.html");
+            ctx.render("sales_inquiries.html");
         } catch (DatabaseException e) {
             ctx.attribute("message", e.getMessage());
-            ctx.render("sales.html");
+            ctx.render("sales_dashboard.html");
         }
     }
 
@@ -148,14 +148,14 @@ public class InquiryController {
             Inquiry inquiry = inquiryService.getInquiryById(inquiryId, connectionPool);
 
             ctx.attribute("inquiry", inquiry);
-            ctx.render("inquiry.html");
+            ctx.render("sales_inquiry_details.html");
         } catch (DatabaseException |
                  NumberFormatException e) { //NumberFormatException er med her, fordi vi i try-blokken
             // forsøger at parse til en int. Hvis url'en f.eks. indeholder "abc" i stedet for "5",
             // så kan den ikke parses/konverteres til en int, og det vil give en fejl/exception
             // (som vi selvfølgelig skal tage os af 😄).
             ctx.attribute("message", e.getMessage());
-            ctx.render("all-inquiries.html");
+            ctx.render("sales_inquiries.html");
         }
     }
 }

@@ -1,0 +1,36 @@
+<!--  INDHOLD PÅ DENNE SIDE:   -->
+
+<!-- Denne side indeholder to knapper:
+        1. Sælger login
+        2. Kunde: Gå til carport-side(her skal du nok vælge et kortere navn til knappen :-))
+
+        KATARINA LAVER DENNE
+-->
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velkommen til Fog</title>
+    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="main-container">
+
+    <header class="header-section" th:fragment="fog-header">
+        <div class="logo-box">Fog</div>
+        <h1 class="main-title">Velkommen til Fog</h1>
+    </header>
+
+    <div class="sales-dashboard-btn-container">
+
+        <a href="/inquiry" class="sales-dashboard-large">Er du kunde? <br/> Tryk her</a>
+
+        <a href="/login" class="sales-dashboard-large">Er du Fog-sælger? <br/> Tryk her</a>
+
+    </div>
+
+</div>
+</body>
+</html>

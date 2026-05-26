@@ -340,3 +340,10 @@ body {
 .btn-table:hover {
     background-color: #00254a;
 }
+
+/* Sikrer at login-felterne har præcis samme bredde som dashboard-knapperne */
+.login-box-width {
+    width: 100%;
+    max-width: 280px;
+    text-align: left;
+}

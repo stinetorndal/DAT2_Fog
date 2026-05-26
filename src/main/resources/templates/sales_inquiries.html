@@ -21,14 +21,14 @@
         <h1 class="main-title">Alle forespørgsler</h1>
     </header>
 
-    <form class="form-control content-layout-2" method="post">
-        <table class="table">
+    <form class="selection-box user-details wide-box">
+        <table class="data-table">
             <thead>
             <tr>
-                <th>Forespørgselsid</th>
-                <th>Kundeid</th>
-                <th>Dato</th>
-                <th>Handling</th>
+                <th>FORESPØRGSELSID</th>
+                <th>KUNDEID</th>
+                <th>DATO</th>
+                <th>HANDLING</th>
             </tr>
             </thead>
             <tbody>
@@ -37,9 +37,7 @@
                 <td th:text="${inquiry.customerId}"></td>
                 <td th:text="${inquiry.date}"></td>
                 <td>
-                    <button class="btn" type="submit" name="inquiryId" th:value="${inquiry.inquiryId}"
-                            formaction="showInquiry">Vis forespørgsel
-                    </button>
+                    <a th:href="@{/sales_inquiry_details/{id}(id=${inquiry.inquiryId})}" class="btn-table">Vis forespørgsel</a>
                 </td>
             </tr>
             </tbody>

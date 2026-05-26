@@ -12,7 +12,8 @@ public class SalespersonController {
     private SalespersonService salespersonService = new SalespersonService();
 
     public void addRoutes(Javalin app, ConnectionPool connectionPool) {
-        app.post("/login", ctx -> login(ctx, connectionPool));
+        app.get("/login", ctx -> ctx.render("login.html"));
+        app.post("login", ctx -> login(ctx, connectionPool));
         app.get("/logout", ctx -> logout(ctx));
     }
 
@@ -31,7 +32,7 @@ public class SalespersonController {
             ctx.sessionAttribute("currentUser", salesperson);
 
             //Send videre til sælgersiden.
-            ctx.render("sales.html");
+            ctx.render("sales_dashboard.html");
         } catch (DatabaseException e) { //Hvis sælgeren ikke findes i databasen, ryger man herned.
             //Viser en fejlmeddelelse i frontend, hvis vi kobler den op på en th:text="${message}" i html.
             ctx.attribute("message", e.getMessage());

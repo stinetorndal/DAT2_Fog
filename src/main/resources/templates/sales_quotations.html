@@ -19,8 +19,7 @@
         <h1 class="main-title">ALLE TILBUD</h1>
     </header>
 
-    <section class="selection-box user-details wide-box">
-        <h2 class="view-title">ALLE TILBUD</h2>
+    <form class="selection-box user-details wide-box">
         <table class="data-table">
             <thead>
             <tr>
@@ -33,19 +32,19 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="quote : ${alleTilbud}">
+            <tr th:each="quote : ${allQuotations}">
                 <td th:text="'#' + ${quote.quotationNumber}"></td>
                 <td th:text="${quote.customerName}"></td>
                 <td th:text="${quote.length} + ' x ' + ${quote.width} + ' cm'"></td>
                 <td th:text="${quote.price} + ' kr.'"></td>
                 <td th:text="'v' + ${quote.version}"></td>
                 <td>
-                    <a th:href="@{/vis-tilbud/{id}(id=${quote.quotationId})}" class="btn-table">Gør noget her</a>
+                    <a th:href="@{//sales_quotation_details/{id}(id=${quote.quotationId})}" class="btn-table">Vis tilbud</a>
                 </td>
             </tr>
             </tbody>
         </table>
-    </section>
+    </form>
 </div>
 
 </body>
