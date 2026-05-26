@@ -3,7 +3,7 @@ package app.services;
 import app.entities.Material;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
-import app.util.Calculator;
+import app.services.Calculator;
 
 import java.util.List;
 
