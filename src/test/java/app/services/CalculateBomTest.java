@@ -25,8 +25,10 @@ public class CalculateBomTest {
         String pw = System.getenv("DB_PASS");
         String url = System.getenv("DB_URL");
         connectionPool = ConnectionPool.getInstance(user, pw, url, "fog_test");
-        calculateBom = new CalculateBom();
-        testInquiry = new Inquiry(1, 600, 600, 0, 0);
+        int length = 600;
+        int width = 600;
+        calculateBom = new CalculateBom(length, width);
+        testInquiry = new Inquiry(1, length, width, 0, 0);
     }
 
     @Test
@@ -36,7 +38,7 @@ public class CalculateBomTest {
         int expectedMaterials = 32;
 
         //Act
-        List<Material> result = calculateBom.calculateCarport(testInquiry, connectionPool);
+        List<Material> result = calculateBom.calculateCarport(testInquiry.getCarportLength(), testInquiry.getCarportWidth(), connectionPool);
         System.out.println("Forventet: " + expectedMaterials);
         System.out.println("Faktisk: " + result);
 

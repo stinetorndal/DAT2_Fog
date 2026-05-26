@@ -22,8 +22,10 @@ public class CalculateTotalPriceTest {
         String pw = System.getenv("DB_PASS");
         String url = System.getenv("DB_URL");
         connectionPool = ConnectionPool.getInstance(user, pw, url, "fog_test");
-        calculateTotalPrice = new CalculateTotalPrice();
-        testInquiry = new Inquiry(1, 600, 600, 0, 0);
+        int length = 600;
+        int width = 600;
+        calculateTotalPrice = new CalculateTotalPrice(length, width);
+        testInquiry = new Inquiry(1, length, width, 0, 0);
     }
 
 
@@ -34,7 +36,7 @@ public void findCorrectTotalPrice () throws DatabaseException {
     int expectedPrice = 8340;
 
     //Act
-    double result = calculateTotalPrice.calculatePrice(testInquiry, connectionPool);
+    double result = calculateTotalPrice.calculatePrice(testInquiry.getCarportLength(), testInquiry.getCarportWidth(), connectionPool);
     System.out.println("Forventet: " + expectedPrice);
     System.out.println("Faktisk: " + result);
 

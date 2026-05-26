@@ -55,7 +55,7 @@ public class Calculator {
         carportBeams.add(longestBeam);
 
         if (remainingBeamLength != 0) {
-            for (Material m : materialService.getBeams(connectionPool)) {
+            for (Material m : materialService.getMaterialsByCategory(MaterialCategory.BEAM, connectionPool)) {
                 if (m.getLength() >= remainingBeamLength) {
                     carportBeams.add(m);
                     carportBeams.add(m);

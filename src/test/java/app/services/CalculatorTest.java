@@ -25,13 +25,12 @@ public class CalculatorTest {
         String pw = System.getenv("DB_PASS");
         String url = System.getenv("DB_URL");
         connectionPool = ConnectionPool.getInstance(user, pw, url, "fog_test");
-        calculator = new Calculator();
-        testInquiry = new Inquiry(1, 600, 600, 0, 0);
-        testInquiry2 = new Inquiry(1, 600, 200, 0, 0);
+        int length = 600;
+        int width = 600;
+        calculator = new Calculator(length, width);
 
         // Testforespørgsel på gyldige mål
-        testInquiry = new Inquiry(1, 600, 600, 0, 0);
-        testInquiry2 = new Inquiry(1, 600, 200, 0, 0);
+        testInquiry = new Inquiry(1, length, width, 0, 0);
 
     }
 
@@ -48,7 +47,7 @@ public class CalculatorTest {
         int expectedAmount = 22;
 
         // Act:
-        List<Material> result = calculator.calculateRafts(testInquiry, connectionPool);
+        List<Material> result = calculator.calculateRafts(testInquiry.getCarportLength(), testInquiry.getCarportWidth(), connectionPool);
         System.out.println("Forventet antal: " + expectedAmount);
         System.out.println("Faktisk antal: " + result.size());
 
@@ -64,7 +63,7 @@ public class CalculatorTest {
         int expectedAmount = 4;
 
         // Act:
-        List<Material> result = calculator.calculateBeam(testInquiry, connectionPool);
+        List<Material> result = calculator.calculateBeams(testInquiry.getCarportLength(), connectionPool);
         System.out.println("Forventet antal: " + expectedAmount);
         System.out.println("Faktisk antal: " + result.size());
 
@@ -81,7 +80,7 @@ public class CalculatorTest {
         int expectedAmount = 6;
 
         //Act
-        List<Material> result = calculator.calculatePosts(testInquiry, connectionPool);
+        List<Material> result = calculator.calculatePosts(testInquiry.getCarportLength(), connectionPool);
         System.out.println("Forventet antal: " + expectedAmount);
         System.out.println("Faktisk antal: " + result.size());
 
