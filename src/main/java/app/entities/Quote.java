@@ -19,7 +19,6 @@ public class Quote {
         this.width = width;
         this.price = price;
         this.status = "pending";
-        this.quotationNumber = quotationNumber;
         this.version = 1;
     }
 

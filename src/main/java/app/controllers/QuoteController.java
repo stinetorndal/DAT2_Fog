@@ -36,7 +36,6 @@ public class QuoteController {
                 int quotationNumber = quoteService.getQuotationNumber(connectionPool);
                 Quote quote = new Quote(inquiryId, salespersonId, length, width, quotePrice, quotationNumber);
                 quoteService.createQuote(quote, connectionPool);
-                //TODO skal der komme en meddelelse om, at tilbuddet blev oprettet??
                 ctx.redirect("/sales/all-inquiries"); //redirect() fordi ellers vil url'en stadig vise url'en til den enkelte forespørgsel.
             } else {
                 ctx.redirect("/login");
@@ -45,6 +44,5 @@ public class QuoteController {
             ctx.attribute("message", e.getMessage());
             ctx.redirect("/sales/all-inquiries");
         }
-        //TODO hvad skal der ske, når en forespørgsel er blevet lavet om til tilbud? Skal den stadig ligge under forespørgsler? Skal den gøre "inaktiv"?
     }
 }

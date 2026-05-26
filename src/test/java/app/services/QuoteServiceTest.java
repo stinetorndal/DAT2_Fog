@@ -1,7 +1,8 @@
-package app.persistence;
+package app.services;
 
 import app.entities.Quote;
 import app.exceptions.DatabaseException;
+import app.persistence.ConnectionPool;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,10 +13,10 @@ import java.sql.Statement;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class QuoteMapperTest {
+class QuoteServiceTest {
 
     private static ConnectionPool connectionPool;
-    private static QuoteMapper quoteMapper = new QuoteMapper();
+    private static QuoteService quoteService = new QuoteService();
 
     @BeforeAll
     public static void setUpClass() {
@@ -109,12 +110,13 @@ class QuoteMapperTest {
                 stmt.execute("INSERT INTO test.inquiries (customer_id, carport_length, carport_width, shed_length, shed_width) VALUES " +
                         "(1, 600, 400, 200, 200), " +
                         "(2, 500, 300, 0, 0), " +
-                        "(3, 400, 500, 0, 0)");
+                        "(3, 400, 500, 0, 0), " +
+                        "(1, 540, 300, 0, 0)");
 
                 // Indsæt tilbud
-                stmt.execute("INSERT INTO test.quotes (inquiry_id, salesperson_id, price, quotation_number) VALUES " +
+            /*    stmt.execute("INSERT INTO test.quotes (inquiry_id, salesperson_id, price, quotation_number) VALUES " +
                         "(1, 1, 12495, 100), " +
-                        "(2, 2, 9995, 101)");
+                        "(2, 2, 9995, 101)");  */
             }
         } catch (SQLException throwables) {
             fail(throwables.getMessage());
@@ -123,22 +125,50 @@ class QuoteMapperTest {
 
     @Test
     void createQuote() throws DatabaseException {
-        // Arrange
-        Quote quote = new Quote(3, 1, 600, 300, 49995, 102);
+        // Arrange - opret de objekter og værdier, du skal bruge til testen.
+        Quote quote = new Quote(3, 1, 12345);
 
-        // Act
-        int quotationId = quoteMapper.createQuote(quote, connectionPool);
+        // Act - udfør den handling, du vil teste.
+        quoteService.createQuote(quote, connectionPool);
 
-        // Assert
-        assertEquals(3, quotationId);
+        // Assert - tjek, at resultatet er som forventet.
+        assertEquals(102, quote.getQuotationNumber());
     }
 
     @Test
-    void createQuoteInEmptyTabel() throws DatabaseException {
-        Quote quote = new Quote(1, 1, 600, 300, 12495, 100);
+    void createTwoQuotes() throws DatabaseException {
+        Quote quote1 = new Quote(3, 1, 1234);
+        Quote quote2 = new Quote(4, 2, 5124);
 
-        int quotationId = quoteMapper.createQuote(quote, connectionPool);
+        quoteService.createQuote(quote1, connectionPool);
+        quoteService.createQuote(quote2, connectionPool);
 
-        assertEquals(1, quotationId);
+        assertEquals(103, quote2.getQuotationNumber());
+    }
+
+    @Test
+    void createQuoteInEmptyTable() throws DatabaseException {
+        // Arrange - opret de objekter og værdier, du skal bruge til testen.
+        Quote quote = new Quote(3, 1, 12345);
+
+        // Act - udfør den handling, du vil teste.
+        quoteService.createQuote(quote, connectionPool);
+
+        // Assert - tjek, at resultatet er som forventet.
+        assertEquals(1, quote.getQuotationNumber());
+    }
+
+    @Test
+    void createTwoQuotesInEmptyTable() throws DatabaseException {
+        // Arrange - opret de objekter og værdier, du skal bruge til testen.
+        Quote quote1 = new Quote(3, 1, 1234);
+        Quote quote2 = new Quote(4, 2, 5124);
+
+        // Act - udfør den handling, du vil teste.
+        quoteService.createQuote(quote1, connectionPool);
+        quoteService.createQuote(quote2, connectionPool);
+
+        // Assert - tjek, at resultatet er som forventet.
+        assertEquals(2, quote2.getQuotationNumber());
     }
 }

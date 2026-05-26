@@ -1,23 +1,21 @@
 package app.controllers;
 
 import app.controllers.InquiryController;
+import app.entities.Inquiry;
 import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class InquiryControllerTest {
+        private static ConnectionPool connectionPool;
 
-    private ConnectionPool connectionPool;
-
-    @BeforeEach
-    void setUp() {
-        String user = System.getenv("DB_USER");
-        String pw = System.getenv("DB_PASS");
-        String url = System.getenv("DB_URL");
-        connectionPool = ConnectionPool.getInstance("postgres", "postgres", "jdbc:postgresql://localhost:5432/%s", "fog_test");
+    @BeforeAll
+    //Statisk fordi sådan er JUnit opbygget
+    static void setUpClass() {
+        connectionPool = ConnectionPool.getInstance(null, null, null, null);
 
     }
 
@@ -66,7 +64,7 @@ public class InquiryControllerTest {
         //Port 0 betyder "find en vilkårlig ledig port og brug den"
         return app.start(0);
     }
-
+        //Hjælpemetoder
     private int sendPostRequest(int port, String path, String data) throws Exception {
         //En falsk browser
         java.net.http.HttpClient client = java.net.http.HttpClient.newHttpClient();

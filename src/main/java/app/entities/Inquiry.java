@@ -2,7 +2,6 @@ package app.entities;
 
 import java.time.LocalDateTime;
 
-
 public class Inquiry {
     private int inquiryId;
     private int customerId;
@@ -19,15 +18,16 @@ public class Inquiry {
         this.carportWidth = carportWidth;
         this.shedLength = shedLength;
         this.shedWidth = shedWidth;
-        this.date = date;
+        this.date = java.time.LocalDateTime.now();
     }
+
     public Inquiry(int customerId, int carportLength, int carportWidth, int shedLength, int shedWidth) {
         this.customerId = customerId;
         this.carportLength = carportLength;
         this.carportWidth = carportWidth;
         this.shedLength = shedLength;
         this.shedWidth = shedWidth;
-            }
+    }
 
     public LocalDateTime getDate() {
         return date;
