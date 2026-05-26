@@ -3,6 +3,7 @@ package app.services;
 import app.entities.Customer;
 import app.entities.Zipcode;
 import app.exceptions.DatabaseException;
+import app.services.CustomerService;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

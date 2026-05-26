@@ -1,8 +1,8 @@
 package app.enums;
 
 public enum MaterialCategory {
-    ROOF,
-    STRUCTURE,
-    SIDING,
+    POST,
+    RAFT,
+    BEAM,
     ASSEMBLY
 }

@@ -5,20 +5,38 @@ public class Quote {
     private int quotationId;
     private int inquiryId;
     private int salespersonId;
+    private int length;
+    private int width;
     private double price;
     private String status;
     private int quotationNumber;
     private int version;
 
-    public Quote(int inquiryId, int salespersonId, double price) {
+    public Quote(int inquiryId, int salespersonId, int length, int width, double price, int quotationNumber) {
         this.inquiryId = inquiryId;
         this.salespersonId = salespersonId;
+        this.length = length;
+        this.width = width;
         this.price = price;
         this.status = "pending";
         this.version = 1;
     }
 
+    public int getLength() {
+        return length;
+    }
 
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
 
     public int getQuotationId() {
         return quotationId;
