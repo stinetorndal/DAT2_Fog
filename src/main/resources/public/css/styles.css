@@ -27,6 +27,8 @@ body {
 /* Hovedcontainer */
 .main-container {
     max-width: 1200px;
+    min-height: 750px;
+    max-height: 1200px;
     margin: 0 auto;
     background-color: var(--color-white);
     border: 1px solid var(--color-gray-border);
@@ -67,6 +69,17 @@ body {
 .content-layout {
     display: flex;
     gap: 30px;
+}
+
+/* 2-Kolonne Layout med mere gap */
+.content-layout-2 {
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+}
+
+.center-container {
+    text-align: center;
 }
 
 /* Venstre side: Formular / Valgmuligheder */
@@ -164,6 +177,15 @@ body {
     padding-top: 20px;
 }
 
+/* Container uden grå streg */
+.button-container-2 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    padding-top: 10px;
+}
+
 .btn-submit {
     background-color: var(--color-fog-blue);
     color: var(--color-white);
@@ -182,6 +204,28 @@ body {
 .btn-submit:hover {
     background-color: #00254a;
 }
+
+.btn {
+    background-color: var(--color-fog-blue);
+    color: var(--color-white);
+    border: none;
+    padding: 12px 35px;
+    font-family: var(--font-main);
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: background-color 0.2s ease;
+    display: inline-block;
+}
+
+.btn:hover {
+    background-color: #00254a;
+}
+
 .sales-dashboard-btn-container {
     display: flex;
     flex-direction: column;
@@ -221,6 +265,30 @@ body {
 .normal-text {
     color: var(--color-fog-blue);
     text-transform: none; /* Tvinger browseren til at vise teksten præcis som skrevet i HTML */
+}
+
+/* Styles til tabeller */
+.table {
+    border-collapse: collapse;
+    font-size: 1.2rem;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    min-width: 400px;
+    max-width: 1100px;
+}
+
+.table th {
+    background-color: var(--color-fog-blue);
+    color: var(--color-white);
+}
+
+.table td, .table th {
+    border: 1px solid gray;
+    padding: 10px;
+}
+
+.table tr:nth-child(even) {
+    background-color: var(--color-fog-light-blue);
 }
 
 /* --- TABEL STYLING (ALLE FORESPØRGSLER) --- */
