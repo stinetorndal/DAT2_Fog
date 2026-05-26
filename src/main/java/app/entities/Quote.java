@@ -14,47 +14,87 @@ public class Quote {
     // Ekstra felt til brug i Thymeleaf-tabellen
     private String customerName;
 
-    public Quote(int quotationId, int inquiryId, int salespersonId, int length, int width, double price, String status, int quotationNumber, int version, String customerName) {
-        this.quotationId = quotationId;
+    public Quote(int inquiryId, int salespersonId, int length, int width, double price, int quotationNumber) {
         this.inquiryId = inquiryId;
         this.salespersonId = salespersonId;
         this.length = length;
         this.width = width;
         this.price = price;
-        this.status = status;
-        this.quotationNumber = quotationNumber;
-        this.version = version;
-        this.customerName = customerName;
+        this.status = "pending";
+        this.version = 1;
     }
 
-
-    public int getQuotationId() {
-        return quotationId; }
-
-    public int getInquiryId() {
-        return inquiryId; }
-
-    public int getSalespersonId() {
-        return salespersonId; }
-
     public int getLength() {
-        return length; }
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
 
     public int getWidth() {
-        return width; }
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getQuotationId() {
+        return quotationId;
+    }
+
+    public void setQuotationId(int quotationId) {
+        this.quotationId = quotationId;
+    }
+
+    public int getInquiryId() {
+        return inquiryId;
+    }
+
+    public void setInquiryId(int inquiryId) {
+        this.inquiryId = inquiryId;
+    }
+
+    public int getSalespersonId() {
+        return salespersonId;
+    }
+
+    public void setSalespersonId(int salespersonId) {
+        this.salespersonId = salespersonId;
+    }
 
     public double getPrice() {
-        return price; }
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
     public String getStatus() {
-        return status; }
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public int getQuotationNumber() {
-        return quotationNumber; }
+        return quotationNumber;
+    }
+
+    public void setQuotationNumber(int quotationNumber) {
+        this.quotationNumber = quotationNumber;
+    }
 
     public int getVersion() {
-        return version; }
+        return version;
+    }
 
+    public void setVersion(int version) {
+        this.version = version;
+    }
     public String getCustomerName() {
         return customerName; }
 }

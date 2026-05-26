@@ -1,4 +1,4 @@
-package controllers;
+package app.controllers;
 
 import app.controllers.InquiryController;
 import app.entities.Inquiry;
@@ -78,4 +78,3 @@ public class InquiryControllerTest {
         return client.send(request, java.net.http.HttpResponse.BodyHandlers.ofString()).statusCode();
     }
 }
-

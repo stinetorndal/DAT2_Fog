@@ -1,13 +1,8 @@
-package persistence;
+package app.persistence;
 
-import app.entities.Customer;
-import app.entities.Zipcode;
 import app.exceptions.DatabaseException;
 import app.entities.Inquiry;
-import app.persistence.ConnectionPool;
-import app.persistence.InquiryMapper;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;

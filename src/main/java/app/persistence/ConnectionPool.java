@@ -45,11 +45,25 @@ public class ConnectionPool {
                                 System.getenv("JDBC_CONNECTION_STRING"),
                                 System.getenv("JDBC_DB"));
                     } else {
+                        String resolvedUrl;
+                        if (url != null) {
+                            resolvedUrl = url;
+                        } else {
+                            resolvedUrl = System.getenv("DB_URL");
+                        }
+
+                        String resolvedDb;
+                        if (db != null) {
+                            resolvedDb = db;
+                        } else {
+                            resolvedDb = System.getenv("DB_NAME");
+                        }
+
                         ds = createHikariConnectionPool(
                                 System.getenv("DB_USER"),
                                 System.getenv("DB_PASS"),
-                                System.getenv("DB_URL"),
-                                System.getenv("DB_NAME"));
+                                resolvedUrl,
+                                resolvedDb);
                     }
                     instance = new ConnectionPool();
                 }

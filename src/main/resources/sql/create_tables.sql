@@ -98,7 +98,7 @@ CREATE TABLE public.orders
 CREATE TABLE public.BOM_lines
 (
     BOM_lines_id SERIAL PRIMARY KEY,
-    order_id     INT REFERENCES public.orders (order_id),
+    quotation_id INT REFERENCES public.quotes (quotation_id),
     material_id  INT REFERENCES public.materials (material_id),
     quantity     INT         NOT NULL,
     length       INT,

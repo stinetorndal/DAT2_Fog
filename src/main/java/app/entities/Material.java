@@ -3,13 +3,15 @@ package app.entities;
 public class Material {
     private int materialId;
     private String name;
+    private int length;
     private String description;
     private String unit;
     private double pricePerUnit;
 
-    public Material(int materialId, String name, String description, String unit, double pricePerUnit) {
+    public Material(int materialId, String name, int length, String description, String unit, double pricePerUnit) {
         this.materialId = materialId;
         this.name = name;
+        this.length = length;
         this.description = description;
         this.unit = unit;
         this.pricePerUnit = pricePerUnit;
@@ -37,6 +39,14 @@ public class Material {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
     }
 
     public String getUnit() {
