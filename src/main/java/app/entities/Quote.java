@@ -24,6 +24,19 @@ public class Quote {
         this.version = 1;
     }
 
+    public Quote(int quotationId, int inquiryId, int salespersonId, int length, int width, double price, String status, int quotationNumber, int version, String customerName) {
+        this.quotationId = quotationId;
+        this.inquiryId = inquiryId;
+        this.salespersonId = salespersonId;
+        this.length = length;
+        this.width = width;
+        this.price = price;
+        this.status = status;
+        this.quotationNumber = quotationNumber;
+        this.version = version;
+        this.customerName = customerName;
+    }
+
     public int getLength() {
         return length;
     }
