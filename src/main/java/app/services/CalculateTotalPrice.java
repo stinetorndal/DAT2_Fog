@@ -9,10 +9,18 @@ import java.util.List;
 
 public class CalculateTotalPrice {
 
-    private CalculateBom calculateBom = new CalculateBom();
+    private int length;
+    private int width;
 
-    public double calculatePrice(Inquiry inquiry, ConnectionPool connectionPool) throws DatabaseException {
-        List<Material> bom = calculateBom.calculateCarport(inquiry, connectionPool);
+    public CalculateTotalPrice(int length, int width) {
+        this.length = length;
+        this.width = width;
+    }
+
+    private CalculateBom calculateBom = new CalculateBom(length, width);
+
+    public double calculatePrice(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
+        List<Material> bom = calculateBom.calculateCarport(length, width, connectionPool);
 
         double carportPrice = 0;
 

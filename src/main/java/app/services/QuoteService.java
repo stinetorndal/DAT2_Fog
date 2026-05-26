@@ -10,6 +10,7 @@ import java.util.List;
 
 
 public class QuoteService {
+
     private QuoteMapper quoteMapper = new QuoteMapper();
 
     public int createQuote(Quote quote, ConnectionPool connectionPool) throws DatabaseException {
@@ -21,4 +22,9 @@ public class QuoteService {
     public List<Quote> handleAllQuotes(ConnectionPool connectionPool) throws DatabaseException {
         return quoteMapper.getAllQuotes(connectionPool);
     }
+
+    public Quote getQuoteById(int quotationId, ConnectionPool connectionPool) throws DatabaseException {
+        return quoteMapper.getQuoteById(quotationId, connectionPool);
+    }
+
 }

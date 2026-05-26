@@ -2,6 +2,7 @@ package app.persistence;
 
 import app.entities.Quote;
 import app.exceptions.DatabaseException;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,5 +89,31 @@ public class QuoteMapper {
                 rs.getInt("version"),
                 rs.getString("customer_name")
         );
+    }
+
+    public Quote getQuoteById(int quotationId, ConnectionPool connectionPool) throws DatabaseException {
+        Quote quote = null;
+
+        String sql = "SELECT * FROM quotes WHERE quotation_id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql);
+        ) {
+            ps.setInt(1, quotationId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int inquiryId = rs.getInt("inquiry_id");
+                int salespersonId = rs.getInt("salesperson_id");
+                int length = rs.getInt("length");
+                int width = rs.getInt("width");
+                double price = rs.getDouble("price");
+
+                quote = new Quote(inquiryId, salespersonId, length, width, price);
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Databasefejl: ", e.getMessage());
+        }
+        return quote;
     }
 }

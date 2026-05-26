@@ -14,7 +14,7 @@ public class Quote {
     // Ekstra felt til brug i Thymeleaf-tabellen
     private String customerName;
 
-    public Quote(int inquiryId, int salespersonId, int length, int width, double price, int quotationNumber) {
+    public Quote(int inquiryId, int salespersonId, int length, int width, double price) {
         this.inquiryId = inquiryId;
         this.salespersonId = salespersonId;
         this.length = length;

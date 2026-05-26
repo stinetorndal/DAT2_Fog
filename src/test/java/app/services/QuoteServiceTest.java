@@ -126,7 +126,7 @@ class QuoteServiceTest {
     @Test
     void createQuote() throws DatabaseException {
         // Arrange - opret de objekter og værdier, du skal bruge til testen.
-        Quote quote = new Quote(3, 1, 12345);
+        Quote quote = new Quote(3, 1, 600, 300, 12345);
 
         // Act - udfør den handling, du vil teste.
         quoteService.createQuote(quote, connectionPool);
@@ -137,8 +137,8 @@ class QuoteServiceTest {
 
     @Test
     void createTwoQuotes() throws DatabaseException {
-        Quote quote1 = new Quote(3, 1, 1234);
-        Quote quote2 = new Quote(4, 2, 5124);
+        Quote quote1 = new Quote(3, 1, 600, 600, 1234);
+        Quote quote2 = new Quote(4, 2, 720, 600, 5124);
 
         quoteService.createQuote(quote1, connectionPool);
         quoteService.createQuote(quote2, connectionPool);
@@ -149,7 +149,7 @@ class QuoteServiceTest {
     @Test
     void createQuoteInEmptyTable() throws DatabaseException {
         // Arrange - opret de objekter og værdier, du skal bruge til testen.
-        Quote quote = new Quote(3, 1, 12345);
+        Quote quote = new Quote(3, 1, 540, 600, 12345);
 
         // Act - udfør den handling, du vil teste.
         quoteService.createQuote(quote, connectionPool);
@@ -161,8 +161,8 @@ class QuoteServiceTest {
     @Test
     void createTwoQuotesInEmptyTable() throws DatabaseException {
         // Arrange - opret de objekter og værdier, du skal bruge til testen.
-        Quote quote1 = new Quote(3, 1, 1234);
-        Quote quote2 = new Quote(4, 2, 5124);
+        Quote quote1 = new Quote(3, 1, 540, 300, 1234);
+        Quote quote2 = new Quote(4, 2, 600, 300, 5124);
 
         // Act - udfør den handling, du vil teste.
         quoteService.createQuote(quote1, connectionPool);
