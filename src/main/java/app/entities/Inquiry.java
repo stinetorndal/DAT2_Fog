@@ -11,6 +11,20 @@ public class Inquiry {
     private int shedWidth;
     private LocalDateTime date;
 
+    // Ekstra felt til brug i Thymeleaf-tabellen
+    private String customerName;
+
+    public Inquiry(int inquiryId, int customerId, int carportLength, int carportWidth, int shedLength, int shedWidth, LocalDateTime date, String customerName) {
+        this.inquiryId = inquiryId;
+        this.customerId = customerId;
+        this.carportLength = carportLength;
+        this.carportWidth = carportWidth;
+        this.shedLength = shedLength;
+        this.shedWidth = shedWidth;
+        this.date = date;
+        this.customerName = customerName;
+    }
+
     public Inquiry(int inquiryId, int customerId, int carportLength, int carportWidth, int shedLength, int shedWidth, LocalDateTime date) {
         this.inquiryId = inquiryId;
         this.customerId = customerId;
@@ -18,7 +32,7 @@ public class Inquiry {
         this.carportWidth = carportWidth;
         this.shedLength = shedLength;
         this.shedWidth = shedWidth;
-        this.date = java.time.LocalDateTime.now();
+        this.date = date;
     }
 
     public Inquiry(int customerId, int carportLength, int carportWidth, int shedLength, int shedWidth) {
@@ -85,5 +99,11 @@ public class Inquiry {
         this.shedWidth = shedWidth;
     }
 
+    public String getCustomerName() {
+        return customerName;
+    }
 
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
 }
