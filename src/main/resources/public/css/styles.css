@@ -9,8 +9,8 @@
     --font-main: 'Dinpro', system-ui, -apple-system, sans-serif;
 }
 
-/* Reset og standard opsætning */
-* {
+/* Reset og standard opsætning (undgår svg) */
+*:not(svg *) {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
