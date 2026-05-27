@@ -14,7 +14,7 @@
         <h1 class="main-title">Tilbud - detaljer</h1>
     </header>
 
-    <form action="/quotation-action" method="POST">
+    <form method="post">
 
         <div class="content-layout">
 
@@ -58,11 +58,9 @@
         </div>
 
         <div class="button-container">
-            <input type="hidden" name="quotationId" th:value="${quote.quotationId}"/>
-
             <button type="submit" name="action" value="edit" class="btn-submit">Rediger tilbud</button>
-            <button type="submit" name="action" value="generate-bom" class="btn-submit">Generer Stykliste</button>
-            <button type="submit" name="action" value="show-drawing" class="btn-submit">Vis tegning</button>
+            <a th:href="@{/showBom/{id}(id=${quote.quotationId})}" class="btn-submit">Vis stykliste</a>
+            <a th:href="@{/showSvg/{id}(id=${quote.quotationId})}" class="btn-submit">Vis tegning</a>
             <button type="submit" name="action" value="send-customer" class="btn-submit">Send tilbud</button>
         </div>
 
