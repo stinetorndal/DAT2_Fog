@@ -1,13 +1,18 @@
 package app.persistence;
 
+import app.entities.Customer;
 import app.entities.Quote;
+import app.entities.Zipcode;
 import app.exceptions.DatabaseException;
+import app.services.ZipcodeService;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class QuoteMapper {
+    private ZipcodeService zipcodeService = new ZipcodeService();
+
 
     public int createQuote(Quote quote, ConnectionPool connectionPool) throws DatabaseException {
 
@@ -50,6 +55,7 @@ public class QuoteMapper {
             throw new DatabaseException("Databasefejl.", e.getMessage());
         }
     }
+
     // Henter alle tilbud ud til sælgeren
     public List<Quote> getAllQuotes(ConnectionPool connectionPool) throws DatabaseException {
         List<Quote> quotesList = new ArrayList<>();
@@ -116,4 +122,33 @@ public class QuoteMapper {
         }
         return quote;
     }
+
+    public Customer getCustomerByQuote(int quoteId, ConnectionPool connectionPool) throws DatabaseException {
+        Customer customer = null;
+        String sql = "SELECT c.* FROM customers c\n" +
+                "JOIN inquiries i ON c.customer_id = i.customer_id\n" +
+                "JOIN quotes q ON i.inquiry_id = q.inquiry_id\n" +
+                "WHERE q.quotation_id = ?";
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql);
+        ) {
+
+            ps.setInt(1, quoteId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int id = rs.getInt("customer_id");
+                String firstName = rs.getString("first_name");
+                String lastName = rs.getString("last_name");
+                String address = rs.getString("address");
+                int zipcode = rs.getInt("zipcode");
+                String email = rs.getString("email");
+
+            Zipcode zipcodeObject = zipcodeService.getZipcodeObject(zipcode, connectionPool);
+            customer = new Customer(id, firstName, lastName, address, zipcodeObject, email);
+        }
+    } catch (SQLException e) {
+        throw new DatabaseException("Databasefejl: ", e.getMessage());
+    }
+        return customer;
+}
 }

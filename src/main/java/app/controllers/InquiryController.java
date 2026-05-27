@@ -29,6 +29,7 @@ public class InquiryController {
         app.get("/download-pdf", ctx -> downloadPdf(ctx));
         app.get("/sales-inquiries", ctx -> showAllInquiries(ctx, connectionPool));
         app.get("/sales_inquiry_details/{id}", ctx -> showInquiry(ctx, connectionPool));
+        //app.post("/convert-to-quotation", ctx -> createInquiry(ctx, connectionPool));
         // Krølleparenteserne er Javalins syntaks for en path parameter.
         // {id} er en variabel del af URL'en, som hentes med ctx.pathParam("id").
     }

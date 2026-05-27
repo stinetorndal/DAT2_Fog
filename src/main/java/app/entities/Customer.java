@@ -15,7 +15,6 @@ public class Customer {
         this.lastname = lastname;
         this.address = address;
         this.zipcode = zipcode;
-        this.city = city;
         this.email = email;
     }
 

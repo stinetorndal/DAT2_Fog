@@ -1,16 +1,15 @@
 package app.controllers;
 
+import app.entities.Customer;
 import app.entities.Inquiry;
 import app.entities.Quote;
 import app.entities.Salesperson;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
-import app.services.CarportSvg;
-import app.services.InquiryService;
-import app.services.QuoteService;
-import app.services.CalculateTotalPrice;
+import app.services.*;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+
 import java.util.List;
 
 public class QuoteController {
@@ -18,11 +17,12 @@ public class QuoteController {
     private InquiryService inquiryService = new InquiryService();
     private QuoteService quoteService = new QuoteService();
     private CalculateTotalPrice calculateTotalPrice;
+    private CustomerService customerService = new CustomerService();
 
     public void addRoutes(Javalin app, ConnectionPool connectionPool) {
         app.post("/convert-to-quotation/{id}", ctx -> createQuote(ctx, connectionPool));
         app.get("/sales/quote/{id}", ctx -> showQuote(ctx, connectionPool));
-        app.get("/sales_quotations", ctx -> viewAllQuotations(ctx, connectionPool));
+        app.get("/sales-quotations", ctx -> viewAllQuotations(ctx, connectionPool));
         app.get("/sales_quotation_details/{id}", ctx -> showQuote(ctx, connectionPool));
     }
 
@@ -56,9 +56,12 @@ public class QuoteController {
             int quotationId = Integer.parseInt(ctx.pathParam("id"));
             Quote quote = quoteService.getQuoteById(quotationId, connectionPool);
 
-            CarportSvg carportSvg = new CarportSvg(quote.getLength(), quote.getWidth(), connectionPool);
-            ctx.attribute("svg", carportSvg.toString());
+            Customer customerObject = customerService.getCustomerByQuote(quotationId, connectionPool);
 
+            //TODO Flyt eventuelt til anden metode
+            //CarportSvg carportSvg = new CarportSvg(quote.getLength(), quote.getWidth(), connectionPool);
+            //ctx.attribute("svg", carportSvg.toString());
+            ctx.attribute("customer", customerObject);
             ctx.attribute("quote", quote);
             ctx.render("sales_quotation_details.html");
         } catch (DatabaseException | NumberFormatException e) {
@@ -66,7 +69,8 @@ public class QuoteController {
             ctx.render("sales_quotation.html");
         }
     }
-    private void viewAllQuotations (Context ctx, ConnectionPool connectionPool) {
+
+    private void viewAllQuotations(Context ctx, ConnectionPool connectionPool) {
         try {
             List<Quote> quotes = quoteService.handleAllQuotes(connectionPool);
 
