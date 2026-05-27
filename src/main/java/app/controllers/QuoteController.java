@@ -20,7 +20,7 @@ public class QuoteController {
     private CustomerService customerService = new CustomerService();
 
     public void addRoutes(Javalin app, ConnectionPool connectionPool) {
-        app.post("/convert-to-quotation/{id}", ctx -> createQuote(ctx, connectionPool));
+        app.post("convertToQuote", ctx -> createQuote(ctx, connectionPool));
         app.get("/sales/quote/{id}", ctx -> showQuote(ctx, connectionPool));
         app.get("/sales-quotations", ctx -> viewAllQuotations(ctx, connectionPool));
         app.get("/sales_quotation_details/{id}", ctx -> showQuote(ctx, connectionPool));
@@ -28,7 +28,7 @@ public class QuoteController {
 
     private void createQuote(Context ctx, ConnectionPool connectionPool) {
         try {
-            int inquiryId = Integer.parseInt(ctx.pathParam("id"));
+            int inquiryId = Integer.parseInt(ctx.formParam("id"));
             Inquiry inquiry = inquiryService.getInquiryById(inquiryId, connectionPool);
             calculateTotalPrice = new CalculateTotalPrice(inquiry.getCarportLength(), inquiry.getCarportWidth());
             Salesperson salesperson = ctx.sessionAttribute("currentUser");
@@ -41,13 +41,13 @@ public class QuoteController {
                 Quote quote = new Quote(inquiryId, salespersonId, length, width, quotePrice);
                 int quotationId = quoteService.createQuote(quote, connectionPool);
 
-                ctx.redirect("/sales_quotation_details/" + quotationId); //redirect() fordi ellers vil url'en stadig vise url'en til den enkelte forespørgsel.
+                ctx.redirect("sales_quotation_details/" + quotationId); //redirect() fordi ellers vil url'en stadig vise url'en til den enkelte forespørgsel.
             } else {
                 ctx.redirect("/login");
             }
         } catch (DatabaseException | NumberFormatException e) {
             ctx.attribute("message", e.getMessage());
-            ctx.redirect("/sales/all-inquiries");
+            ctx.redirect("/sales_inquiries");
         }
     }
 
@@ -58,15 +58,20 @@ public class QuoteController {
 
             Customer customerObject = customerService.getCustomerByQuote(quotationId, connectionPool);
 
-            //TODO Flyt eventuelt til anden metode
-            //CarportSvg carportSvg = new CarportSvg(quote.getLength(), quote.getWidth(), connectionPool);
-            //ctx.attribute("svg", carportSvg.toString());
             ctx.attribute("customer", customerObject);
             ctx.attribute("quote", quote);
             ctx.render("sales_quotation_details.html");
         } catch (DatabaseException | NumberFormatException e) {
             ctx.attribute("message", e.getMessage());
             ctx.render("sales_quotation.html");
+        }
+    }
+
+    private void showSvg(Context ctx, ConnectionPool connectionPool) {
+        try {
+            //TODO Flyt eventuelt til anden metode
+            //CarportSvg carportSvg = new CarportSvg(quote.getLength(), quote.getWidth(), connectionPool);
+            //ctx.attribute("svg", carportSvg.toString());
         }
     }
 

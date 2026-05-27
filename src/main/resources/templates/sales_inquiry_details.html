@@ -15,8 +15,7 @@
         <h1 class="main-title">Forespørgsel - detaljer</h1>
     </header>
     <!-- OBS HER - post -->
-    <form action="/convert-to-quotation" method="POST">
-
+    <form method="post" action="/convertToQuote">
         <div class="content-layout">
 
             <aside class="sidebar-form">
@@ -64,8 +63,9 @@
         </div>
 
         <div class="button-container">
-            <input type="hidden" name="inquiryId" th:value="${inquiry.inquiryId}"/>
-            <button type="submit" class="btn-submit">Konverter til tilbud</button>
+
+        <!--    <input type="hidden" name="inquiryId" th:value="${inquiry.inquiryId}"/> -->
+            <button type="submit" class="btn-submit" name="id" th:value="${inquiry.inquiryId}">Konverter til tilbud</button>
         </div>
 
     </form>
