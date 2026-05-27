@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stykliste</title>
+    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="main-container">
+
+    <header class="header-section" th:fragment="fog-header">
+        <div class="logo-box">Fog</div>
+        <h1 class="main-title">Stykliste</h1>
+    </header>
+
+    <form class="selection-box user-details wide-box">
+        <table class="data-table">
+            <thead>
+            <tr>
+                <th>MATERIALE</th>
+                <th>LÆNGDE</th>
+                <th>BESKRIVELSE</th>
+                <th>ENHED</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="material:${bom}">
+                <td th:text="${material.name}"></td>
+                <td th:text="${material.length}"></td>
+                <td th:text="${material.description}"></td>
+                <td th:text="${material.unit}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+</body>
+</html>
