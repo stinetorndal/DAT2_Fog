@@ -1,5 +1,7 @@
 package app.services;
 
+import java.util.Locale;
+
 public class Svg {
 
     // Er static, fordi der kun må findes én.
@@ -28,7 +30,7 @@ public class Svg {
     }
 
     public void addRectangle(int x, int y, double length, double width) {
-        svg.append(String.format(SVG_RECT_TEMPLATE, x, y, length, width, "stroke: #000000; fill: none;"));
+        svg.append(String.format(Locale.US, SVG_RECT_TEMPLATE, x, y, length, width, "stroke: #000000; fill: none;"));
     }
 
     public void addLine(int x1, int y1, int x2, int y2, String style) {
