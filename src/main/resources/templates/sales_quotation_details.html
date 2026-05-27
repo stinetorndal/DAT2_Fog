@@ -54,12 +54,10 @@
                     <input type="text" th:value="${quote.shedLength > 0 ? quote.shedLength + ' cm' : 'Intet skur'}" class="form-control" disabled="disabled"/>
                 </div>
             </section>
-
         </div>
 
         <div class="button-container">
             <input type="hidden" name="quotationId" th:value="${quote.quotationId}"/>
-
             <button type="submit" name="action" value="edit" class="btn-submit">Rediger tilbud</button>
             <button type="submit" name="action" value="generate-bom" class="btn-submit">Generer Stykliste</button>
             <button type="submit" name="action" value="show-drawing" class="btn-submit">Vis tegning</button>

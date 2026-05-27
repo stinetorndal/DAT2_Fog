@@ -14,8 +14,8 @@
         <div class="logo-box">Fog</div>
         <h1 class="main-title">Forespørgsel - detaljer</h1>
     </header>
-    <!-- OBS HER - post -->
-    <form action="/convert-to-quotation" method="POST">
+    <!-- OBS HER - post
+    <form action="/convert-to-quotation" method="POST"> -->
 
         <div class="content-layout">
 
@@ -64,8 +64,10 @@
         </div>
 
         <div class="button-container">
+             <form action="/convert-to-quotation" method="POST">
             <input type="hidden" name="inquiryId" th:value="${inquiry.inquiryId}"/>
             <button type="submit" class="btn-submit">Konverter til tilbud</button>
+            </form>
         </div>
 
     </form>

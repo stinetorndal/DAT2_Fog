@@ -11,6 +11,7 @@ import app.services.InquiryService;
 import app.services.PdfService;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -29,10 +30,10 @@ public class InquiryController {
         app.get("/download-pdf", ctx -> downloadPdf(ctx));
         app.get("/sales-inquiries", ctx -> showAllInquiries(ctx, connectionPool));
         app.get("/sales_inquiry_details/{id}", ctx -> showInquiry(ctx, connectionPool));
-        //app.post("/convert-to-quotation", ctx -> createInquiry(ctx, connectionPool));
-        // Krølleparenteserne er Javalins syntaks for en path parameter.
+          // Krølleparenteserne er Javalins syntaks for en path parameter.
         // {id} er en variabel del af URL'en, som hentes med ctx.pathParam("id").
     }
+
 
     private void createInquiry(Context ctx, ConnectionPool connectionPool) {
         int length = Integer.parseInt(ctx.formParam("længde"));
