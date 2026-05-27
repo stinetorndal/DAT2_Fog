@@ -5,7 +5,6 @@ import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.InquiryMapper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class InquiryService {
@@ -23,6 +22,6 @@ public class InquiryService {
     }
 
     public Inquiry getInquiryById(int inquiryId, ConnectionPool connectionPool) throws DatabaseException {
-        return inquiryMapper.getInquiryBy(inquiryId, connectionPool);
+        return inquiryMapper.getInquiryById(inquiryId, connectionPool);
     }
 }

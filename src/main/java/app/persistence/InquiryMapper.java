@@ -69,7 +69,7 @@ public class InquiryMapper {
         return allInquiries;
     }
 
-    public Inquiry getInquiryBy(int inquiryId, ConnectionPool connectionPool) throws DatabaseException {
+    public Inquiry getInquiryById(int inquiryId, ConnectionPool connectionPool) throws DatabaseException {
         Inquiry inquiry = null;
 
         String sql = "SELECT * FROM inquiries WHERE inquiry_id = ?";

@@ -146,11 +146,14 @@ public class InquiryController {
             //pathParam returnerer en String. Derfor parser vi, så f.eks. "5" bliver lavet om til 5.
             int inquiryId = Integer.parseInt(ctx.pathParam("id"));
             Inquiry inquiry = inquiryService.getInquiryById(inquiryId, connectionPool);
+            Customer customerObject = customerService.getCustomerById(inquiry.getCustomerId(), connectionPool);
 
             ctx.attribute("inquiry", inquiry);
+            ctx.attribute("customer", customerObject);
             ctx.render("sales_inquiry_details.html");
         } catch (DatabaseException |
-                 NumberFormatException e) { //NumberFormatException er med her, fordi vi i try-blokken
+                 NumberFormatException e) {
+            //NumberFormatException er med her, fordi vi i try-blokken
             // forsøger at parse til en int. Hvis url'en f.eks. indeholder "abc" i stedet for "5",
             // så kan den ikke parses/konverteres til en int, og det vil give en fejl/exception
             // (som vi selvfølgelig skal tage os af 😄).

@@ -22,11 +22,13 @@
             <aside class="sidebar-form">
                 <div class="form-group">
                     <span class="form-label-box">KUNDEOPLYSNINGER</span>
-                    <input type="text" name="customerName" th:value="${inquiry.customerName}" value="[Kundeobjekt]"
+                    <input type="text" name="customerName" th:value="${customer.firstname} + ' ' + ${customer.lastname}"
                            class="form-control" readonly/>
-                    <input type="text" name="customerAddress" th:value="${inquiry.customerAddress}"
-                           value="[Kundeobjekt]" class="form-control" readonly/>
-                    <input type="email" name="customerEmail" th:value="${inquiry.customerEmail}" value="[Kundeobjekt]"
+                    <input type="text" name="customerAddress" th:value="${customer.address}"
+                            class="form-control" readonly/>
+                    <input type="text" name="zipcodeAndCity" th:value="${customer.zipcode.zipcode} + ' ' + ${customer.zipcode.city}"
+                           class="form-control" readonly/>
+                    <input type="email" name="customerEmail" th:value="${customer.email}"
                            class="form-control" readonly/>
                 </div>
             </aside>
@@ -35,34 +37,34 @@
                 <div class="form-group">
                     <span class="form-label-box">ØNSKET CARPORT BREDDE</span>
                     <input type="text" name="carportWidth" th:value="${inquiry.carportWidth + ' cm'}"
-                           value="[Forespørgsel-objekt]" class="form-control" readonly/>
+                           class="form-control" readonly/>
                 </div>
 
                 <div class="form-group">
                     <span class="form-label-box">ØNSKET CARPORT LÆNGDE</span>
                     <input type="text" name="carportLength" th:value="${inquiry.carportLength + ' cm'}"
-                           value="[Forespørgsel-objekt]" class="form-control" readonly/>
+                            class="form-control" readonly/>
                 </div>
 
                 <div class="form-group">
                     <span class="form-label-box">ØNSKET SKUR BREDDE</span>
                     <input type="text" name="shedWidth"
                            th:value="${inquiry.shedWidth > 0 ? inquiry.shedWidth + ' cm' : 'Intet skur'}"
-                           value="[Forespørgsel-objekt]" class="form-control" readonly/>
+                            class="form-control" readonly/>
                 </div>
 
                 <div class="form-group">
                     <span class="form-label-box">ØNSKET SKUR LÆNGDE</span>
                     <input type="text" name="shedLength"
                            th:value="${inquiry.shedLength > 0 ? inquiry.shedLength + ' cm' : 'Intet skur'}"
-                           value="[Forespørgsel-objekt]" class="form-control" readonly/>
+                            class="form-control" readonly/>
                 </div>
             </section>
 
         </div>
 
         <div class="button-container">
-            <input type="hidden" name="inquiryId" th:value="${inquiry.id}"/>
+            <input type="hidden" name="inquiryId" th:value="${inquiry.inquiryId}"/>
             <button type="submit" class="btn-submit">Konverter til tilbud</button>
         </div>
 
