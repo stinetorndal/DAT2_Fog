@@ -37,13 +37,15 @@ public class InquiryMapper {
         } catch (SQLException e) {
             throw new DatabaseException("Fejl da forespørgsel skulle gemmes: " + e.getMessage());
         }
-
     }
 
     public List<Inquiry> getAllInquiries(ConnectionPool connectionPool) throws DatabaseException {
         List<Inquiry> allInquiries = new ArrayList<>();
 
-        String sql = "SELECT * FROM inquiries";
+        String sql = "SELECT i.*, (c.first_name || ' ' || c.last_name) AS customer_name" +
+                " FROM inquiries i" +
+                " JOIN customers c ON i.customer_id = c.customer_id" +
+                " ORDER BY i.inquiry_id DESC";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
@@ -60,8 +62,9 @@ public class InquiryMapper {
                 LocalDateTime date = rs.getTimestamp("date").toLocalDateTime();
                 // rs.getTimestamp() returnerer en java.sql.Timestamp (gammel SQL-type).
                 // .toLocalDateTime() konverterer den til en moderne LocalDateTime.
+                String customerName = rs.getString("customer_name");
 
-                allInquiries.add(new Inquiry(inquiryId, customerId, carportLength, carportWidth, shedLength, shedWidth, date));
+                allInquiries.add(new Inquiry(inquiryId, customerId, carportLength, carportWidth, shedLength, shedWidth, date, customerName));
             }
         } catch (SQLException e) {
             throw new DatabaseException("Fejl ved hentning af forespørgsler:", e.getMessage());

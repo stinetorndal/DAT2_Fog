@@ -100,7 +100,11 @@ public class QuoteMapper {
     public Quote getQuoteById(int quotationId, ConnectionPool connectionPool) throws DatabaseException {
         Quote quote = null;
 
-        String sql = "SELECT * FROM quotes WHERE quotation_id = ?";
+        String sql = "SELECT q.*, (c.first_name || ' ' || c.last_name) AS customer_name" +
+                " FROM quotes q" +
+                " JOIN inquiries i ON q.inquiry_id = i.inquiry_id" +
+                " JOIN customers c ON i.customer_id = c.customer_id" +
+                " WHERE quotation_id = ?";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
@@ -109,13 +113,7 @@ public class QuoteMapper {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                int inquiryId = rs.getInt("inquiry_id");
-                int salespersonId = rs.getInt("salesperson_id");
-                int length = rs.getInt("length");
-                int width = rs.getInt("width");
-                double price = rs.getDouble("price");
-
-                quote = new Quote(inquiryId, salespersonId, length, width, price);
+                quote = createQuoteObject(rs);
             }
         } catch (SQLException e) {
             throw new DatabaseException("Databasefejl: ", e.getMessage());
@@ -125,10 +123,10 @@ public class QuoteMapper {
 
     public Customer getCustomerByQuote(int quoteId, ConnectionPool connectionPool) throws DatabaseException {
         Customer customer = null;
-        String sql = "SELECT c.* FROM customers c\n" +
-                "JOIN inquiries i ON c.customer_id = i.customer_id\n" +
-                "JOIN quotes q ON i.inquiry_id = q.inquiry_id\n" +
-                "WHERE q.quotation_id = ?";
+        String sql = "SELECT c.* FROM customers c" +
+                " JOIN inquiries i ON c.customer_id = i.customer_id" +
+                " JOIN quotes q ON i.inquiry_id = q.inquiry_id" +
+                " WHERE q.quotation_id = ?";
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
         ) {

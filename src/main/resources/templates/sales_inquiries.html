@@ -18,8 +18,9 @@
         <table class="data-table">
             <thead>
             <tr>
-                <th>FORESPØRGSELSID</th>
-                <th>KUNDEID</th>
+                <th>FORESPØRGSELS-ID</th>
+                <th>KUNDE-ID</th>
+                <th>KUNDENAVN</th>
                 <th>DATO</th>
                 <th>HANDLING</th>
             </tr>
@@ -28,9 +29,10 @@
             <tr th:each="inquiry:${allInquiries}">
                 <td th:text="${inquiry.inquiryId}"></td>
                 <td th:text="${inquiry.customerId}"></td>
-                <td th:text="${inquiry.date}"></td>
+                <td th:text="${inquiry.customerName}"></td>
+                <td th:text="${#temporals.format(inquiry.date, 'dd-MM-yyyy HH:mm')}"></td>
                 <td>
-                    <a th:href="@{/sales_inquiry_details/{id}(id=${inquiry.inquiryId})}" class="btn-table">Vis forespørgsel</a>
+                    <a th:href="@{/sales-inquiry-details/{id}(id=${inquiry.inquiryId})}" class="btn-table">Vis forespørgsel</a>
 
                 </td>
             </tr>
@@ -38,3 +40,5 @@
         </table>
     </form>
 </div>
+</body>
+</html>

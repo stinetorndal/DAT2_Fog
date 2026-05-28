@@ -28,6 +28,8 @@ public class CalculateTotalPrice {
             carportPrice += m.getPricePerUnit();
         }
 
+        carportPrice = carportPrice * 1.25;
+
         return carportPrice;
     }
 }

@@ -11,7 +11,6 @@ import app.services.InquiryService;
 import app.services.PdfService;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -29,11 +28,10 @@ public class InquiryController {
         //Kalder metoder, der sender pdf tilbage til browser efter generering
         app.get("/download-pdf", ctx -> downloadPdf(ctx));
         app.get("/sales-inquiries", ctx -> showAllInquiries(ctx, connectionPool));
-        app.get("/sales_inquiry_details/{id}", ctx -> showInquiry(ctx, connectionPool));
-          // Krølleparenteserne er Javalins syntaks for en path parameter.
-        // {id} er en variabel del af URL'en, som hentes med ctx.pathParam("id").
+        // Krølleparenteserne er Javalins syntaks for en path parameter. {id} er en variabel del af URL'en,
+        // som hentes med ctx.pathParam("id").
+        app.get("/sales-inquiry-details/{id}", ctx -> showInquiry(ctx, connectionPool));
     }
-
 
     private void createInquiry(Context ctx, ConnectionPool connectionPool) {
         int length = Integer.parseInt(ctx.formParam("længde"));
@@ -144,14 +142,13 @@ public class InquiryController {
 
     public void showInquiry(Context ctx, ConnectionPool connectionPool) {
         try {
-            //Id hentes fra URL'en. I html skal hver forespørgsel gøres klikbar med et link, der indeholder id'et.
-            //pathParam returnerer en String. Derfor parser vi, så f.eks. "5" bliver lavet om til 5.
+            //Id hentes fra URL'en. pathParam returnerer en String. Derfor parser vi, så f.eks. "5" bliver lavet om til 5.
             int inquiryId = Integer.parseInt(ctx.pathParam("id"));
             Inquiry inquiry = inquiryService.getInquiryById(inquiryId, connectionPool);
-            Customer customerObject = customerService.getCustomerById(inquiry.getCustomerId(), connectionPool);
+            Customer customer = customerService.getCustomerById(inquiry.getCustomerId(), connectionPool);
 
             ctx.attribute("inquiry", inquiry);
-            ctx.attribute("customer", customerObject);
+            ctx.attribute("customer", customer);
             ctx.render("sales_inquiry_details.html");
         } catch (DatabaseException |
                  NumberFormatException e) {

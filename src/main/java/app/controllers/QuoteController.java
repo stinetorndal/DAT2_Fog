@@ -1,9 +1,6 @@
 package app.controllers;
 
-import app.entities.Customer;
-import app.entities.Inquiry;
-import app.entities.Quote;
-import app.entities.Salesperson;
+import app.entities.*;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.services.*;
@@ -18,17 +15,20 @@ public class QuoteController {
     private QuoteService quoteService = new QuoteService();
     private CalculateTotalPrice calculateTotalPrice;
     private CustomerService customerService = new CustomerService();
+    private CalculateBom calculateBom;
 
     public void addRoutes(Javalin app, ConnectionPool connectionPool) {
-        app.post("/convert-to-quotation/{id}", ctx -> createQuote(ctx, connectionPool));
+        app.post("convertToQuote", ctx -> createQuote(ctx, connectionPool));
         app.get("/sales/quote/{id}", ctx -> showQuote(ctx, connectionPool));
         app.get("/sales-quotations", ctx -> viewAllQuotations(ctx, connectionPool));
         app.get("/sales_quotation_details/{id}", ctx -> showQuote(ctx, connectionPool));
+        app.get("/showSvg/{id}", ctx -> showSvg(ctx, connectionPool));
+        app.get("/showBom/{id}", ctx -> showBom(ctx, connectionPool));
     }
 
     private void createQuote(Context ctx, ConnectionPool connectionPool) {
         try {
-            int inquiryId = Integer.parseInt(ctx.pathParam("id"));
+            int inquiryId = Integer.parseInt(ctx.formParam("id"));
             Inquiry inquiry = inquiryService.getInquiryById(inquiryId, connectionPool);
             calculateTotalPrice = new CalculateTotalPrice(inquiry.getCarportLength(), inquiry.getCarportWidth());
             Salesperson salesperson = ctx.sessionAttribute("currentUser");
@@ -47,7 +47,7 @@ public class QuoteController {
             }
         } catch (DatabaseException | NumberFormatException e) {
             ctx.attribute("message", e.getMessage());
-            ctx.redirect("/sales/all-inquiries");
+            ctx.redirect("/sales_inquiries");
         }
     }
 
@@ -58,15 +58,43 @@ public class QuoteController {
 
             Customer customerObject = customerService.getCustomerByQuote(quotationId, connectionPool);
 
-            //TODO Flyt eventuelt til anden metode
-            //CarportSvg carportSvg = new CarportSvg(quote.getLength(), quote.getWidth(), connectionPool);
-            //ctx.attribute("svg", carportSvg.toString());
             ctx.attribute("customer", customerObject);
             ctx.attribute("quote", quote);
             ctx.render("sales_quotation_details.html");
         } catch (DatabaseException | NumberFormatException e) {
             ctx.attribute("message", e.getMessage());
             ctx.render("sales_quotation.html");
+        }
+    }
+
+    private void showSvg(Context ctx, ConnectionPool connectionPool) {
+        try {
+            int quotationId = Integer.parseInt(ctx.pathParam("id"));
+            Quote quote = quoteService.getQuoteById(quotationId, connectionPool);
+
+            CarportSvg carportSvg = new CarportSvg(quote.getLength(), quote.getWidth(), connectionPool);
+
+            ctx.attribute("svg", carportSvg.toString());
+            ctx.render("svg.html");
+        } catch (DatabaseException e) {
+            ctx.attribute("message", e.getMessage());
+            ctx.render("sales_quotation_details.html");
+        }
+    }
+
+    private void showBom(Context ctx, ConnectionPool connectionPool) {
+        try {
+            int quotationId = Integer.parseInt(ctx.pathParam("id"));
+            Quote quote = quoteService.getQuoteById(quotationId, connectionPool);
+
+            calculateBom = new CalculateBom(quote.getLength(), quote.getWidth());
+            List<Material> bom = calculateBom.calculateCarport(quote.getLength(), quote.getWidth(), connectionPool);
+
+            ctx.attribute("bom", bom);
+            ctx.render("bom.html");
+        } catch (DatabaseException e) {
+            ctx.attribute("message", e.getMessage());
+            ctx.render("sales_quotation_details.html");
         }
     }
 
