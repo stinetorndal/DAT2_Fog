@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOG Carport-forespørgsel</title>
+    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="main-container">
+
+    <header class="header-section" th:fragment="fog-header">
+        <div class="logo-box">Fog</div>
+        <h1 class="main-title">Fog Carport-forespørgsel</h1>
+    </header>
+
+    <!-- action: Hvor skal den hen? Method: Hvordan skal den sendes?-->
+    <form class="content-layout" action="/submit-inquiry" method="POST">
+
+        <aside class="sidebar-form">
+
+            <div class="form-group">
+                <span class="form-label-box">VÆLG BREDDE</span>
+                <select class="form-control" name="bredde">
+                    <!-- Indsæt i test-øjemed-->
+                    <option value="300">300 cm</option>
+                    <option value="600">600 cm</option>
+                    <option value="">Vælg bredde...</option>
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <span class="form-label-box">VÆLG LÆNGDE</span>
+                <select class="form-control" name="længde">
+
+                    <option value="540">540 cm</option>
+                    <option value="600">600 cm</option>
+                    <option value="720">720 cm</option>
+                    <option value="">Vælg længde...</option>
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <span class="form-label-box">TILVALG AF SKUR</span>
+                <div class="checkbox-group">
+                    <label class="option-inline">
+                        <input type="checkbox" name="skur_ja_nej" value="ja"> Ja, jeg ønsker skur
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <span class="form-label-box">VÆLG BREDDE (SKUR)</span>
+                <select class="form-control" name="skur_bredde">
+                    <option value="300">300 cm</option>
+                    <option value="600">600 cm</option>
+                    <option value="">Vælg bredde...</option>
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <span class="form-label-box">VÆLG LÆNGDE (SKUR)</span>
+                <select class="form-control" name="skur_længde">
+                    <!-- Indsæt i test-øjemed-->
+                    <option value="240">240 cm</option>
+                    <option value="360">360 cm</option>
+                    <option value="">Vælg længde...</option>
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <span class="form-label-box">INDTAST OPLYSNINGER</span>
+                <input type="text" name="fornavn" class="form-control" placeholder="Dit fornavn" required>
+                <input type="text" name="efternavn" class="form-control" placeholder="Dit efternavn" required>
+                <input type="text" name="adresse" class="form-control" placeholder="Din adresse" required>
+                <input type="text" name="postnummer" class="form-control" placeholder="Dit postnummer" required>
+                <input type="email" name="email" class="form-control" placeholder="Din e-mailadresse" required>
+            </div>
+
+            <div class="form-group">
+                 <span class="button-container">
+                <button type="submit" class="btn-submit">Send Forespørgsel</button>
+                 </span>
+            </div>
+
+
+        </aside>
+
+        <section class="image-gallery">
+            <img th:src="@{/images/carport_med_skur.jpg}" src="../public/images/carport_med_skur.jpg"
+                 alt="Carport model 1" class="gallery-image">
+            <img th:src="@{/images/carport_uden_skur.jpg}" src="../public/images/carport_uden_skur.jpg"
+                 alt="Carport model 2" class="gallery-image">
+        </section>
+
+    </form>
+</div>
+
+</body>
+</html>

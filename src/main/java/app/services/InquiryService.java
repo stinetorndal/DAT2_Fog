@@ -14,4 +14,12 @@ public class InquiryService {
     public void handleInquiry(Inquiry inquiry, ConnectionPool connectionPool) throws DatabaseException{
         inquiryMapper.saveInquiry(inquiry, connectionPool);
     }
+
+    public List<Inquiry> getAllInquiries(ConnectionPool connectionPool) throws DatabaseException {
+        return inquiryMapper.getAllInquiries(connectionPool);
+    }
+
+    public Inquiry getInquiryById(int inquiryId, ConnectionPool connectionPool) throws DatabaseException {
+        return inquiryMapper.getInquiryById(inquiryId, connectionPool);
+    }
 }

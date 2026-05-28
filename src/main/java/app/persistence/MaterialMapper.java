@@ -13,11 +13,10 @@ import java.util.List;
 
 public class MaterialMapper {
 
-    //TODO skal vi overhovedet bruge denne her metode??? Bliver den ikke ret tung?
     public List<Material> getAllMaterials(ConnectionPool connectionPool) throws DatabaseException {
         List<Material> allMaterials = new ArrayList<>();
 
-        String sql = "select * from materials order by materials_id";
+        String sql = "SELECT * FROM materials ORDER BY material_id";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
@@ -36,10 +35,11 @@ public class MaterialMapper {
     public List<Material> getMaterialsByCategory(MaterialCategory category, ConnectionPool connectionPool) throws DatabaseException {
         List<Material> materialByCategory = new ArrayList<>();
 
-        String sql = "SELECT m.material_id, m.name, m.description, m.unit, m.price_per_unit FROM materials m" +
+        String sql = "SELECT m.material_id, m.name, m.length, m.description, m.unit, m.price_per_unit FROM materials m" +
                 " JOIN material_category_link mcl ON m.material_id = mcl.material_id" +
                 " JOIN material_categories mc ON mcl.category_id = mc.category_id" +
-                " WHERE mc.category_name = ?";
+                " WHERE mc.category_name = ?" +
+                " ORDER BY length";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
@@ -47,13 +47,8 @@ public class MaterialMapper {
             ps.setString(1, category.name());
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                int materialId = rs.getInt("material_id");
-                String name = rs.getString("name");
-                String description = rs.getString("description");
-                String unit = rs.getString("unit");
-                double pricePerUnit = rs.getDouble("price_per_unit");
-
-                materialByCategory.add(new Material(materialId, name, description, unit, pricePerUnit));
+                Material material = createMaterialObject(rs);
+                materialByCategory.add(material);
             }
         } catch (SQLException e) {
             throw new DatabaseException("Fejl. Kunne ikke finde materialer." + e.getMessage());
@@ -65,10 +60,11 @@ public class MaterialMapper {
 
         int materialId = rs.getInt("material_id");
         String name = rs.getString("name");
+        int length = rs.getInt("length");
         String description = rs.getString("description");
         String unit = rs.getString("unit");
         double pricePerUnit = rs.getDouble("price_per_unit");
 
-        return new Material(materialId, name, description, unit, pricePerUnit);
+        return new Material(materialId, name, length, description, unit, pricePerUnit);
     }
 }

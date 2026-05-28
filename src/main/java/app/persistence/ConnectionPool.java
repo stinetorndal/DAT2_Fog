@@ -20,7 +20,7 @@ public class ConnectionPool {
     /***
      * Private constructor to enforce Singleton pattern.
      */
-    public ConnectionPool() {
+    private ConnectionPool() {
         // Prevent instantiation
     }
 
@@ -45,7 +45,25 @@ public class ConnectionPool {
                                 System.getenv("JDBC_CONNECTION_STRING"),
                                 System.getenv("JDBC_DB"));
                     } else {
-                        ds = createHikariConnectionPool(user, password, url, db);
+                        String resolvedUrl;
+                        if (url != null) {
+                            resolvedUrl = url;
+                        } else {
+                            resolvedUrl = System.getenv("DB_URL");
+                        }
+
+                        String resolvedDb;
+                        if (db != null) {
+                            resolvedDb = db;
+                        } else {
+                            resolvedDb = System.getenv("DB_NAME");
+                        }
+
+                        ds = createHikariConnectionPool(
+                                System.getenv("DB_USER"),
+                                System.getenv("DB_PASS"),
+                                resolvedUrl,
+                                resolvedDb);
                     }
                     instance = new ConnectionPool();
                 }
@@ -110,13 +128,3 @@ public class ConnectionPool {
         return new HikariDataSource(config);
     }
 }
-
-/*
-create table IF NOT EXISTS user
-(
-    user_id  serial  primary key,
-    username varchar(50) not null,
-    password varchar(50) not null
-);
-CREATE UNIQUE INDEX IF NOT EXISTS idx_user_name ON user(username);
- */

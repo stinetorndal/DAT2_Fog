@@ -1,0 +1,54 @@
+<!--  INDHOLD PÅ DENNE SIDE:   -->
+
+<!-- Denne side indeholder en liste over alle tilbud -->
+
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOG Carport-tilbud</title>
+    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="main-container">
+
+    <header class="header-section" th:fragment="fog-header">
+        <div class="logo-box">Fog</div>
+        <h1 class="main-title">ALLE TILBUD</h1>
+    </header>
+
+    <form class="selection-box user-details wide-box">
+        <table class="data-table">
+            <thead>
+            <tr>
+                <th>TILBUDSNUMMER</th>
+                <th>KUNDE</th>
+                <th>CARPORT-MÅL</th>
+                <th>PRIS</th>
+                <th>VERSION</th>
+                <th>HANDLING</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="quote : ${allQuotations}">
+                <td th:text="'#' + ${quote.quotationNumber}"></td>
+                <td th:text="${quote.customerName}"></td>
+                <td th:text="${quote.length} + ' x ' + ${quote.width} + ' cm'"></td>
+                <td th:text="${quote.price} + ' kr.'"></td>
+                <td th:text="'v' + ${quote.version}"></td>
+                <td>
+                    <a th:href="@{/sales_quotation_details/{id}(id=${quote.quotationId})}" class="btn-table">Vis tilbud</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+
+</body>
+</html>
+</div>
+</body>
+</html>

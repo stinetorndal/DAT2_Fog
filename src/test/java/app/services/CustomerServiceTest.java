@@ -1,4 +1,4 @@
-package services;
+package app.services;
 
 import app.entities.Customer;
 import app.entities.Zipcode;
@@ -17,7 +17,7 @@ public class CustomerServiceTest {
         //Arrange
         CustomerService customerService = new CustomerService();
         Zipcode testZipcode = new Zipcode (4400, "Kalundborg");
-        Customer incorrectCustomer = new Customer(0, "Herr", "Test", "Test Alle 1", testZipcode, "jeg har glemtsnabela");
+        Customer incorrectCustomer = new Customer( "Herr", "Test", "Test Alle 1", testZipcode, "jeg har glemtsnabela");
 
         //Assert and Act
         try {

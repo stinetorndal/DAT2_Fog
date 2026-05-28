@@ -2,7 +2,6 @@ package app.entities;
 
 import java.time.LocalDateTime;
 
-
 public class Inquiry {
     private int inquiryId;
     private int customerId;
@@ -11,6 +10,20 @@ public class Inquiry {
     private int shedLength;
     private int shedWidth;
     private LocalDateTime date;
+
+    // Ekstra felt til brug i Thymeleaf-tabellen
+    private String customerName;
+
+    public Inquiry(int inquiryId, int customerId, int carportLength, int carportWidth, int shedLength, int shedWidth, LocalDateTime date, String customerName) {
+        this.inquiryId = inquiryId;
+        this.customerId = customerId;
+        this.carportLength = carportLength;
+        this.carportWidth = carportWidth;
+        this.shedLength = shedLength;
+        this.shedWidth = shedWidth;
+        this.date = date;
+        this.customerName = customerName;
+    }
 
     public Inquiry(int inquiryId, int customerId, int carportLength, int carportWidth, int shedLength, int shedWidth, LocalDateTime date) {
         this.inquiryId = inquiryId;
@@ -21,13 +34,14 @@ public class Inquiry {
         this.shedWidth = shedWidth;
         this.date = date;
     }
+
     public Inquiry(int customerId, int carportLength, int carportWidth, int shedLength, int shedWidth) {
         this.customerId = customerId;
         this.carportLength = carportLength;
         this.carportWidth = carportWidth;
         this.shedLength = shedLength;
         this.shedWidth = shedWidth;
-            }
+    }
 
     public LocalDateTime getDate() {
         return date;
@@ -85,5 +99,11 @@ public class Inquiry {
         this.shedWidth = shedWidth;
     }
 
+    public String getCustomerName() {
+        return customerName;
+    }
 
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
 }

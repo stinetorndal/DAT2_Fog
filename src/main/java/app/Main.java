@@ -1,12 +1,18 @@
 package app;
 
+import app.controllers.InquiryController;
 import app.config.SessionConfig;
 import app.config.ThymeleafConfig;
+import app.controllers.QuoteController;
+import app.controllers.SalespersonController;
 import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
 
 public class Main {
+
+    private static final ConnectionPool connectionPool = ConnectionPool.getInstance(null, null, null, null);
+
     public static void main(String[] args) {
         // Initializing Javalin and Jetty webserver
 
@@ -17,8 +23,15 @@ public class Main {
         }).start(7070);
 
         // Routing
-
         app.get("/", ctx -> ctx.render("index.html"));
 
+        InquiryController inquiryController = new InquiryController();
+        inquiryController.addRoutes(app, connectionPool);
+
+        QuoteController quoteController = new QuoteController();
+        quoteController.addRoutes(app, connectionPool);
+
+        SalespersonController salespersonController = new SalespersonController();
+        salespersonController.addRoutes(app, connectionPool);
     }
 }

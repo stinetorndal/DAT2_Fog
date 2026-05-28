@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alle forespørgsler</title>
+    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="main-container">
+
+    <header class="header-section" th:fragment="fog-header">
+        <div class="logo-box">Fog</div>
+        <h1 class="main-title">Alle forespørgsler</h1>
+    </header>
+
+    <form class="selection-box user-details wide-box">
+        <table class="data-table">
+            <thead>
+            <tr>
+                <th>FORESPØRGSELS-ID</th>
+                <th>KUNDE-ID</th>
+                <th>KUNDENAVN</th>
+                <th>DATO</th>
+                <th>HANDLING</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="inquiry:${allInquiries}">
+                <td th:text="${inquiry.inquiryId}"></td>
+                <td th:text="${inquiry.customerId}"></td>
+                <td th:text="${inquiry.customerName}"></td>
+                <td th:text="${#temporals.format(inquiry.date, 'dd-MM-yyyy HH:mm')}"></td>
+                <td>
+                    <a th:href="@{/sales-inquiry-details/{id}(id=${inquiry.inquiryId})}" class="btn-table">Vis forespørgsel</a>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+</body>
+</html>
