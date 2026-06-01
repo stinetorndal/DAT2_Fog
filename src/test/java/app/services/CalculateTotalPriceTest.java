@@ -32,8 +32,8 @@ public class CalculateTotalPriceTest {
     @Test
 public void findCorrectTotalPrice () throws DatabaseException {
     // Arrange
-    //Stolper = 6, pris = 10 , Remme = 4, pris= (540+300)*2, Spær = 22, pris = 300
-    int expectedPrice = 8340;
+    //Stolper = 6, pris = 10 , Remme = 4, pris= (540+300)*2, Spær = 22, pris = 300, moms 25%
+    int expectedPrice = 10425;
 
     //Act
     double result = calculateTotalPrice.calculatePrice(testInquiry.getCarportLength(), testInquiry.getCarportWidth(), connectionPool);

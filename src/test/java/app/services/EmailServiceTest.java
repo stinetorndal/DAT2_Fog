@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 public class EmailServiceTest {
 
+
     @Test
     void testEmailService () {
         //Arrange

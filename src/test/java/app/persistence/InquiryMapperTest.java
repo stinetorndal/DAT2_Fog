@@ -26,10 +26,13 @@ class InquiryMapperTest {
             try (Connection connection = connectionPool.getConnection()) {
                 try (Statement stmt = connection.createStatement()) {
 
+                    stmt.execute("DELETE FROM quotes");
                     stmt.execute("DELETE FROM inquiries");
+
                     stmt.execute("DELETE FROM customers");
                     stmt.execute("INSERT INTO customers (customer_id, first_name, last_name, address, zipcode, email) " +
                             "VALUES (1, 'test', 'testefternavn', 'testvej 1', 4700, 'test@test.dk')");
+
 
                 }
             }
