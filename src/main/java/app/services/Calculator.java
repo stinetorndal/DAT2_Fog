@@ -15,11 +15,11 @@ public class Calculator {
 
     MaterialService materialService = new MaterialService();
     private double raftSpace = 55;
-    private double frontudhæng = 100;
-    private double bagudhæng = 20;
-    private double stolpebredde = 10;
-    private double max_afstand = 300;
-    private double min_afstand = 150;
+    private double frontOverhang = 100;
+    private double backOverhang = 20;
+    private double postWidth = 10;
+    private double max_space = 300;
+    private double min_space = 150;
 
     private int length;
     private int width;
@@ -34,7 +34,7 @@ public class Calculator {
         List<Material> carportPosts = new ArrayList<>();
         Material post = materialService.getMaterialsByCategory(MaterialCategory.POST, connectionPool).getFirst();
 
-        double postsOneSide = (length - frontudhæng - bagudhæng) / ((max_afstand - min_afstand) + stolpebredde);
+        double postsOneSide = (length - frontOverhang - backOverhang) / ((max_space - min_space) + postWidth);
         int totalAmountPosts = (int) Math.ceil(postsOneSide) * 2;
 
         while (totalAmountPosts > 0) {
